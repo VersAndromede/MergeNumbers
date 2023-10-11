@@ -6,40 +6,55 @@ namespace TrainingSystem
     public class Training
     {
         [field: SerializeField] public bool IsViewed { get; private set; }
-        
-        private readonly GameObject[] _pageContent;
-        
-        private int _currentPageIndex;
 
+        private readonly GameObject[] _pageContent;
+
+        public int CurrentPageIndex { get; private set; }
+        public int LastPageIndex => _pageContent.Length - 1;
+
+        public event Action PageSwitched;
         public event Action Viewed;
 
         public Training(bool isViewed, GameObject[] pageContent)
         {
             IsViewed = isViewed;
             _pageContent = pageContent;
+            _pageContent[CurrentPageIndex].SetActive(true);
         }
 
-        public void SwitchPage()
+        public void Complete()
         {
-            _pageContent[_currentPageIndex].SetActive(false);
-            _currentPageIndex++;
+            IsViewed = true;
+            Viewed?.Invoke();
+        }
 
-            if (TryComplete())
+        public void SwitchNextPage()
+        {
+            if (CurrentPageIndex == LastPageIndex)
                 return;
 
-            _pageContent[_currentPageIndex].SetActive(true);
+            SwitchPage(true);
         }
 
-        private bool TryComplete()
+        public void SwitchBackPage()
         {
-            if (_currentPageIndex >= _pageContent.Length)
-            {
-                IsViewed = true;
-                Viewed?.Invoke();
-                return true;
-            }
+            if (CurrentPageIndex == 0)
+                return;
 
-            return false;
+            SwitchPage(false);
+        }
+
+        private void SwitchPage(bool next)
+        {
+            _pageContent[CurrentPageIndex].SetActive(false);
+
+            if (next)
+                CurrentPageIndex++;
+            else
+                CurrentPageIndex--;
+
+            _pageContent[CurrentPageIndex].SetActive(true);
+            PageSwitched?.Invoke();
         }
     }
 }

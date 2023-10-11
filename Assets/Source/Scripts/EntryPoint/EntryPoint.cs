@@ -24,6 +24,8 @@ public class EntryPoint : MonoBehaviour
     [SerializeField] private Button _bossMapExitButton;
     [SerializeField] private BossMapScroll _bossMapScroll;
     [SerializeField] private GameObject[] _pageContent;
+    [SerializeField] private TrainingSetup _trainingSetup;
+    [SerializeField] private CurrentTrainingPageView _currentTrainingPageView;
 
     private GameSaver _saver;
 
@@ -39,22 +41,21 @@ public class EntryPoint : MonoBehaviour
 
     private IEnumerator Init()
     {
-        yield return YandexGamesSdk.Initialize();
-        InitLocalization();
+        if (Application.isEditor == false)
+        {
+            yield return YandexGamesSdk.Initialize();
+            InitLocalization();
+        }
 
         SaveSystem.Load(saveData =>
         {
             _setSaveDataButton.Init(saveData);
-            Wallet wallet = new Wallet();
-            Training training = new Training(saveData.TrainingIsViewed, _pageContent);
-            _walletSetup.Init(wallet);
-            wallet.Init(saveData.Coins);
+            InitTraining(saveData.TrainingIsViewed, out Training training);
+            InitWallet(saveData.Coins, out Wallet wallet);
             InitUpgrades(saveData.UpgradeDatas);
             InitUpgradeButtons(wallet);
             _bossMap.Init(saveData.BossAwards, saveData.BossDataIndex, wallet);
             _bossMapScroll.Init(saveData.BossMapContentYPosition);
-            _saver = new GameSaver(_gameOverController, wallet, _bossLoader, _upgrades, saveData.BossAwards, _bossMapExitButton, _bossMapScroll);
-            _saver.Enable();
             _bossLoader.Init(saveData.BossDataIndex);
             _gameOverController.Init(_bossLoader.CurrentBoss);
             _damageToCoinTranslator.Init(wallet, _bossLoader.CurrentBoss.BossHealth);
@@ -64,6 +65,9 @@ public class EntryPoint : MonoBehaviour
             _bossDamageView.Init(_bossLoader.CurrentBoss);
             _battlefield.Init(_bossLoader.CurrentBoss);
             _playerHealthBar.Init(_playerHealth);
+
+            _saver = new GameSaver(_gameOverController, wallet, _bossLoader, _upgrades, saveData.BossAwards, _bossMapExitButton, _bossMapScroll, training);
+            _saver.Enable();
         });
     }
 
@@ -71,6 +75,20 @@ public class EntryPoint : MonoBehaviour
     {
         LocalizationSetter localizationSetter = new LocalizationSetter();
         localizationSetter.Set(YandexGamesSdk.Environment.i18n.lang);
+    }
+
+    private void InitTraining(bool trainingIsViewed, out Training training)
+    {
+        training = new Training(trainingIsViewed, _pageContent);
+        _trainingSetup.Init(training);
+        _currentTrainingPageView.Init(training);
+    }
+
+    private void InitWallet(int coins, out Wallet wallet)
+    {
+        wallet = new Wallet();
+        _walletSetup.Init(wallet);
+        wallet.Init(coins);
     }
 
     private void InitUpgrades(UpgradeData[] upgradesData)

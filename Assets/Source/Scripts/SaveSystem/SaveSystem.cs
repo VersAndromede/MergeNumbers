@@ -8,7 +8,7 @@ public static class SaveSystem
 
     public static void Save(Action<SaveData> callback)
     {
-        if (PlayerAccount.IsAuthorized == false)
+        if (Application.isEditor || PlayerAccount.IsAuthorized == false)
         {
             SaveToPrefs(callback);
             return;
@@ -24,7 +24,7 @@ public static class SaveSystem
 
     public static void Load(Action<SaveData> callback)
     {
-        if (PlayerAccount.IsAuthorized == false)
+        if (Application.isEditor || PlayerAccount.IsAuthorized == false)
         {
             callback?.Invoke(LoadFromPrefs());
             return;

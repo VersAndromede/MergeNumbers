@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TrainingSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,10 +12,11 @@ public class GameSaver
     private readonly List<BossAward> _bossAwards;
     private readonly Button _bossMapExitButton;
     private readonly BossMapScroll _bossMapScroll;
+    private readonly Training _training;
 
     public GameSaver(GameOverController gameOverController, Wallet wallet, BossLoader bossLoader, 
         List<Upgrade> upgrades, List<BossAward> bossAwards, Button bossMapExitButton,
-        BossMapScroll bossMapScroll)
+        BossMapScroll bossMapScroll, Training training)
     {
         _gameOverController = gameOverController;
         _wallet = wallet;
@@ -23,11 +25,13 @@ public class GameSaver
         _bossAwards = bossAwards;
         _bossMapExitButton = bossMapExitButton;
         _bossMapScroll = bossMapScroll;
+        _training = training;
     }
 
     public void Enable()
     {
         _gameOverController.GameOver += OnGameOver;
+        _training.Viewed += OnTrainingViewed;
         _bossMapExitButton.onClick.AddListener(OnBossMapExitButton);
 
         foreach (Upgrade upgrade in _upgrades)
@@ -40,6 +44,7 @@ public class GameSaver
     public void Disable()
     {
         _gameOverController.GameOver -= OnGameOver;
+        _training.Viewed -= OnTrainingViewed;
         _bossMapExitButton.onClick.RemoveListener(OnBossMapExitButton);
 
         foreach (Upgrade upgrade in _upgrades)
@@ -99,6 +104,14 @@ public class GameSaver
         SaveSystem.Save(data =>
         {
             data.BossMapContentYPosition = _bossMapScroll.YPosition;
+        });
+    }
+
+    private void OnTrainingViewed()
+    {
+        SaveSystem.Save(data =>
+        {
+            data.TrainingIsViewed = true;
         });
     }
 }

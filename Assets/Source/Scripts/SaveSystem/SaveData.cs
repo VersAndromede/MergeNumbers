@@ -15,4 +15,6 @@ public class SaveData
     public List<BossAward> BossAwards = new List<BossAward>();
     [field: Preserve]
     public float BossMapContentYPosition;
+    [field: Preserve]
+    public bool TrainingIsViewed;
 }

@@ -1,6 +1,7 @@
 using Agava.YandexGames;
 using System.Collections;
 using System.Collections.Generic;
+using TrainingSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,7 @@ public class EntryPoint : MonoBehaviour
     [SerializeField] private SetSaveDataButton _setSaveDataButton;
     [SerializeField] private Button _bossMapExitButton;
     [SerializeField] private BossMapScroll _bossMapScroll;
+    [SerializeField] private GameObject[] _pageContent;
 
     private GameSaver _saver;
 
@@ -44,6 +46,7 @@ public class EntryPoint : MonoBehaviour
         {
             _setSaveDataButton.Init(saveData);
             Wallet wallet = new Wallet();
+            Training training = new Training(saveData.TrainingIsViewed, _pageContent);
             _walletSetup.Init(wallet);
             wallet.Init(saveData.Coins);
             InitUpgrades(saveData.UpgradeDatas);

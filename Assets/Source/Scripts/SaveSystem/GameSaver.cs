@@ -68,7 +68,6 @@ public class GameSaver
                 return;
 
             data.BossAwards[data.BossDataIndex - 1].LetTake();
-            Debug.Log(JsonUtility.ToJson(data, true));
         });
     }
 

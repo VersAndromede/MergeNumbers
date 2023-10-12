@@ -26,6 +26,7 @@ public class EntryPoint : MonoBehaviour
     [SerializeField] private GameObject[] _pageContent;
     [SerializeField] private TrainingSetup _trainingSetup;
     [SerializeField] private CurrentTrainingPageView _currentTrainingPageView;
+    [SerializeField] private TrainingCursor _trainingCursor;
 
     private GameSaver _saver;
 
@@ -59,6 +60,7 @@ public class EntryPoint : MonoBehaviour
             _bossLoader.Init(saveData.BossDataIndex);
             _gameOverController.Init(_bossLoader.CurrentBoss);
             _damageToCoinTranslator.Init(wallet, _bossLoader.CurrentBoss.BossHealth);
+            _trainingCursor.Init(_bossLoader.CurrentBoss.BossHealth, saveData.BossDataIndex);
             BossAnimator bossAnimator = _bossLoader.CurrentBoss.GetComponent<BossAnimator>();
             bossAnimator.Init(_gameMoves);
             _bossHealthBar.Init(_bossLoader.CurrentBoss.BossHealth.Health);

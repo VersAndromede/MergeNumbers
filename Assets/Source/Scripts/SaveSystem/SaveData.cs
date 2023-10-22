@@ -17,4 +17,6 @@ public class SaveData
     public float BossMapContentYPosition;
     [field: Preserve]
     public bool TrainingIsViewed;
+    [field: Preserve]
+    public bool IsSoundButtonEnabled = true;
 }

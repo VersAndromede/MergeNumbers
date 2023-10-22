@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using TrainingSystem;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class GameSaver
@@ -13,10 +12,11 @@ public class GameSaver
     private readonly Button _bossMapExitButton;
     private readonly BossMapScroll _bossMapScroll;
     private readonly Training _training;
+    private readonly RewardButton _rewardButton;
 
     public GameSaver(GameOverController gameOverController, Wallet wallet, BossLoader bossLoader, 
         List<Upgrade> upgrades, List<BossAward> bossAwards, Button bossMapExitButton,
-        BossMapScroll bossMapScroll, Training training)
+        BossMapScroll bossMapScroll, Training training, RewardButton rewardButton)
     {
         _gameOverController = gameOverController;
         _wallet = wallet;
@@ -26,12 +26,14 @@ public class GameSaver
         _bossMapExitButton = bossMapExitButton;
         _bossMapScroll = bossMapScroll;
         _training = training;
+        _rewardButton = rewardButton;
     }
 
     public void Enable()
     {
         _gameOverController.GameOver += OnGameOver;
         _training.Viewed += OnTrainingViewed;
+        _rewardButton.RewardGetted += OnRewardGetted;
         _bossMapExitButton.onClick.AddListener(OnBossMapExitButton);
 
         foreach (Upgrade upgrade in _upgrades)
@@ -45,6 +47,7 @@ public class GameSaver
     {
         _gameOverController.GameOver -= OnGameOver;
         _training.Viewed -= OnTrainingViewed;
+        _rewardButton.RewardGetted -= OnRewardGetted;
         _bossMapExitButton.onClick.RemoveListener(OnBossMapExitButton);
 
         foreach (Upgrade upgrade in _upgrades)
@@ -68,7 +71,6 @@ public class GameSaver
                 return;
 
             data.BossAwards[data.BossDataIndex - 1].LetTake();
-            Debug.Log(JsonUtility.ToJson(data, true));
         });
     }
 
@@ -112,6 +114,14 @@ public class GameSaver
         SaveSystem.Save(data =>
         {
             data.TrainingIsViewed = true;
+        });
+    }
+
+    private void OnRewardGetted()
+    {
+        SaveSystem.Save(data =>
+        {
+            data.Coins = _wallet.Coins;
         });
     }
 }

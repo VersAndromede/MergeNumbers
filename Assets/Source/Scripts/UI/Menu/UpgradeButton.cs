@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UpgradeButton : MonoBehaviour
 {
+    [SerializeField] private UnityEvent _upgraded;
+
     private Wallet _wallet;
 
     public void Init(Wallet wallet)
@@ -15,6 +18,7 @@ public class UpgradeButton : MonoBehaviour
         {
             _wallet.RemoveCoins((uint)upgrade.Price);
             upgrade.Improve();
+            _upgraded?.Invoke();
         }
     }
 }

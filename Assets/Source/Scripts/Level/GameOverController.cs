@@ -14,6 +14,8 @@ public class GameOverController : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private float _delayToResult;
     [SerializeField] private UnityEvent _gameOver;
+    [SerializeField] private UnityEvent _winning;
+    [SerializeField] private UnityEvent _defeat;
 
     private WaitForSeconds _waitTime;
     private Boss _boss;
@@ -53,5 +55,10 @@ public class GameOverController : MonoBehaviour
         yield return _waitTime;
         GameOver?.Invoke(winner);
         _gameOver?.Invoke();
+
+        if (winner == Winner.Player)
+            _winning?.Invoke();
+        else
+            _defeat?.Invoke();
     }
 }

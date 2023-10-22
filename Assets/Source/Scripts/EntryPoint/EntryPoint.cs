@@ -27,6 +27,7 @@ public class EntryPoint : MonoBehaviour
     [SerializeField] private TrainingSetup _trainingSetup;
     [SerializeField] private CurrentTrainingPageView _currentTrainingPageView;
     [SerializeField] private TrainingCursor _trainingCursor;
+    [SerializeField] private RewardButton _rewardButton;
 
     private GameSaver _saver;
 
@@ -55,6 +56,7 @@ public class EntryPoint : MonoBehaviour
             InitWallet(saveData.Coins, out Wallet wallet);
             InitUpgrades(saveData.UpgradeDatas);
             InitUpgradeButtons(wallet);
+            _rewardButton.Init(wallet);
             _bossMap.Init(saveData.BossAwards, saveData.BossDataIndex, wallet);
             _bossMapScroll.Init(saveData.BossMapContentYPosition);
             _bossLoader.Init(saveData.BossDataIndex);
@@ -68,7 +70,7 @@ public class EntryPoint : MonoBehaviour
             _battlefield.Init(_bossLoader.CurrentBoss);
             _playerHealthBar.Init(_playerHealth);
 
-            _saver = new GameSaver(_gameOverController, wallet, _bossLoader, _upgrades, saveData.BossAwards, _bossMapExitButton, _bossMapScroll, training);
+            _saver = new GameSaver(_gameOverController, wallet, _bossLoader, _upgrades, saveData.BossAwards, _bossMapExitButton, _bossMapScroll, training, _rewardButton);
             _saver.Enable();
         });
     }

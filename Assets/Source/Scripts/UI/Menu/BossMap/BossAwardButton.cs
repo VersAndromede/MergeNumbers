@@ -1,6 +1,7 @@
 ﻿using Lean.Localization;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class BossAwardButton : MonoBehaviour
@@ -8,6 +9,7 @@ public class BossAwardButton : MonoBehaviour
     [SerializeField] private Button _button;
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private LeanLocalizedTextMeshProUGUI _localizedTextMeshPro;
+    [SerializeField] private UnityEvent _taken;
 
     [Header("Translation Received String")]
     [SerializeField, LeanTranslationName] private string _translationReceivedString;
@@ -37,6 +39,7 @@ public class BossAwardButton : MonoBehaviour
         {
             _button.interactable = false;
             UpdateText();
+            _taken?.Invoke();
         }
     }
 

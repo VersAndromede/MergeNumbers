@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TranslationName>k__BackingField: Ninja
   <Prefab>k__BackingField: {fileID: 302490578768725564, guid: 831da2d1e0ae89146a15642e91fbf088, type: 3}
-  <Health>k__BackingField: 750
-  <Damage>k__BackingField: 225
-  <Award>k__BackingField: 100
+  <Health>k__BackingField: 5000
+  <Damage>k__BackingField: 600
+  <Award>k__BackingField: 6000

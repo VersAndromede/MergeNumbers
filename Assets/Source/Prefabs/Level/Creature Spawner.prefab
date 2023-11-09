@@ -178,6 +178,6 @@ MonoBehaviour:
   _startingMinPower: 2
   _startingMaxPower: 6
   _dividerPower: 2
-  _probabilityPositiveMonster: 53
-  _probabilityDividerMonster: 30
+  _probabilityPositiveMonster: 56
+  _probabilityDividerMonster: 27
   <HasPlayerAtStart>k__BackingField: 0

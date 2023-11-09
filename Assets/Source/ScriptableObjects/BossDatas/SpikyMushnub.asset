@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TranslationName>k__BackingField: Spiky Mushnub
   <Prefab>k__BackingField: {fileID: 5289213786756122167, guid: 0ef8f990ea525c146961f5af4b76d92d, type: 3}
-  <Health>k__BackingField: 750
-  <Damage>k__BackingField: 225
-  <Award>k__BackingField: 100
+  <Health>k__BackingField: 10000
+  <Damage>k__BackingField: 1250
+  <Award>k__BackingField: 18000

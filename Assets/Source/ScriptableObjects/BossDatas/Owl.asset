@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TranslationName>k__BackingField: Owl
   <Prefab>k__BackingField: {fileID: 5289213786756122167, guid: 18e548b235d60a0499b663ef8ce29bf4, type: 3}
-  <Health>k__BackingField: 750
-  <Damage>k__BackingField: 225
-  <Award>k__BackingField: 100
+  <Health>k__BackingField: 12500
+  <Damage>k__BackingField: 1300
+  <Award>k__BackingField: 20000

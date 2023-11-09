@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TranslationName>k__BackingField: Orc
   <Prefab>k__BackingField: {fileID: 4143747018544370899, guid: 136cae40bcf65a24ea9d676e12f79148, type: 3}
-  <Health>k__BackingField: 600
-  <Damage>k__BackingField: 200
-  <Award>k__BackingField: 50
+  <Health>k__BackingField: 2000
+  <Damage>k__BackingField: 300
+  <Award>k__BackingField: 800

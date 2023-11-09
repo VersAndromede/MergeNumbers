@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TranslationName>k__BackingField: Alien
   <Prefab>k__BackingField: {fileID: 5009922571250171351, guid: 40764158532a21047ad2bd61bb6e7cce, type: 3}
-  <Health>k__BackingField: 750
-  <Damage>k__BackingField: 225
-  <Award>k__BackingField: 100
+  <Health>k__BackingField: 6000
+  <Damage>k__BackingField: 800
+  <Award>k__BackingField: 8000

@@ -15,5 +15,5 @@ MonoBehaviour:
   <TranslationName>k__BackingField: Bob
   <Prefab>k__BackingField: {fileID: 2509287284359202354, guid: f0fd772d3adc6ae44b6dd42ba9828435, type: 3}
   <Health>k__BackingField: 250
-  <Damage>k__BackingField: 150
+  <Damage>k__BackingField: 75
   <Award>k__BackingField: 25

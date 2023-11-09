@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TranslationName>k__BackingField: Cactoro
   <Prefab>k__BackingField: {fileID: 5032957399892279799, guid: 3afb6e95f53d0c94886669a1b0500e42, type: 3}
-  <Health>k__BackingField: 750
-  <Damage>k__BackingField: 225
-  <Award>k__BackingField: 100
+  <Health>k__BackingField: 7000
+  <Damage>k__BackingField: 850
+  <Award>k__BackingField: 10000

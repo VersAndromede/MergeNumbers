@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TranslationName>k__BackingField: Bird
   <Prefab>k__BackingField: {fileID: 906102121272808487, guid: 5246261919f03cb46b0384fe2672c886, type: 3}
-  <Health>k__BackingField: 750
-  <Damage>k__BackingField: 225
-  <Award>k__BackingField: 100
+  <Health>k__BackingField: 2500
+  <Damage>k__BackingField: 350
+  <Award>k__BackingField: 1000

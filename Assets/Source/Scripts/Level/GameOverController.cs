@@ -55,6 +55,7 @@ public class GameOverController : MonoBehaviour
         yield return _waitTime;
         GameOver?.Invoke(winner);
         _gameOver?.Invoke();
+        yield return new WaitForFixedUpdate();
 
         if (winner == Winner.Player)
             _winning?.Invoke();

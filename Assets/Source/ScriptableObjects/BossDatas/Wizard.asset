@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TranslationName>k__BackingField: Wizard
   <Prefab>k__BackingField: {fileID: 9157597633411884581, guid: 746997f16edef5e479467d67a80a33c3, type: 3}
-  <Health>k__BackingField: 750
-  <Damage>k__BackingField: 225
-  <Award>k__BackingField: 100
+  <Health>k__BackingField: 4000
+  <Damage>k__BackingField: 450
+  <Award>k__BackingField: 3000

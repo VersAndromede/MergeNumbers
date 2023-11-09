@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TranslationName>k__BackingField: Green Bob
   <Prefab>k__BackingField: {fileID: 5289213786756122167, guid: 48cff3c7d18e73640bed6013c374279e, type: 3}
-  <Health>k__BackingField: 750
-  <Damage>k__BackingField: 225
+  <Health>k__BackingField: 500
+  <Damage>k__BackingField: 125
   <Award>k__BackingField: 100

@@ -27,8 +27,11 @@ public class EntryPoint : MonoBehaviour
     [SerializeField] private TrainingSetup _trainingSetup;
     [SerializeField] private CurrentTrainingPageView _currentTrainingPageView;
     [SerializeField] private TrainingCursor _trainingCursor;
-    [SerializeField] private RewardButton _rewardButton;
     [SerializeField] private SoundButton _soundButton;
+    [SerializeField] private RewardButton _rewardButton;
+    [SerializeField] private InterstitialAdsDisplay _interstitialAdsDisplay;
+    [SerializeField] private FocusObserver _focusObserver;
+    [SerializeField] private Image _lockPanel;
 
     private GameSaver _saver;
 
@@ -40,6 +43,7 @@ public class EntryPoint : MonoBehaviour
     private void OnDestroy()
     {
         _saver.Disable();
+        _focusObserver.Disable();
     }
 
     private IEnumerator Init()
@@ -57,7 +61,9 @@ public class EntryPoint : MonoBehaviour
             InitWallet(saveData.Coins, out Wallet wallet);
             InitUpgrades(saveData.UpgradeDatas);
             InitUpgradeButtons(wallet);
-            _rewardButton.Init(wallet);
+            PauseController pauseController = new PauseController();
+            _interstitialAdsDisplay.Init(pauseController);
+            _rewardButton.Init(pauseController, wallet);
             _soundButton.Init(saveData.IsSoundButtonEnabled);
             _bossMap.Init(saveData.BossAwards, saveData.BossDataIndex, wallet);
             _bossMapScroll.Init(saveData.BossMapContentYPosition);
@@ -71,9 +77,12 @@ public class EntryPoint : MonoBehaviour
             _bossDamageView.Init(_bossLoader.CurrentBoss);
             _battlefield.Init(_bossLoader.CurrentBoss);
             _playerHealthBar.Init(_playerHealth);
+            _focusObserver.Init(pauseController, _rewardButton, _interstitialAdsDisplay);
 
             _saver = new GameSaver(_gameOverController, wallet, _bossLoader, _upgrades, saveData.BossAwards, _bossMapExitButton, _bossMapScroll, training, _rewardButton, _soundButton);
             _saver.Enable();
+            _focusObserver.Enable();
+            _lockPanel.raycastTarget = false;
         });
     }
 

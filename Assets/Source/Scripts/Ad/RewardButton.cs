@@ -9,10 +9,10 @@ public class RewardButton : MonoBehaviour, IAd
 {
     [SerializeField] private IncomeUpgrade _incomeUpgrade;
     [SerializeField] private Button _button;
-    [SerializeField] private uint _defaulftRewardCount;
+    [SerializeField] private float _defaulftRewardCount;
     [SerializeField] private UnityEvent _rewardGetted;
 
-    private const float RewardMultiplier = 1.6f;
+    private const uint MinRewardCount = 150;
     private const float RewardAdDisplayDalay = 0.04f;
 
     private Wallet _wallet;
@@ -64,7 +64,12 @@ public class RewardButton : MonoBehaviour, IAd
 
     private void OnIncomeUpgradeLevelChanged()
     {
-        RewardCount = _defaulftRewardCount + (uint)(_incomeUpgrade.BonusValue * RewardMultiplier);
+        uint rewardCount = (uint)Mathf.CeilToInt(_defaulftRewardCount * _incomeUpgrade.BonusValue);
+
+        if (rewardCount < MinRewardCount)
+            rewardCount = MinRewardCount;
+
+        RewardCount = rewardCount;
         RewardChanged?.Invoke();
     }
 

@@ -8,7 +8,7 @@ public class MonsterPowerView : PowerView
         if (Monster.Type == MonsterType.Divider)
         {
             Text.color = NegativeColorPower;
-            Text.text = $"%{Power.Value}";
+            Text.text = $"/{Power.Value}";
             return;
         }
 

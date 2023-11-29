@@ -22,6 +22,9 @@ public class InterstitialAdsDisplay : MonoBehaviour, IAd
 
     public void TryShowAd()
     {
+        if (Application.isEditor)
+            return;
+
         if (_currentTimeInSeconds >= _waitTimeInSeconds)
         {
             StopCoroutine(_startWaitTimerJob);

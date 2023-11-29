@@ -1,3 +1,4 @@
+using TrainingSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,23 +12,23 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private Player _player;
 
     private IInput _input;
+    private Training _training;
     private bool _isLockedMovement;
 
-    private void Awake()
-    {
-        _input = _inputGetter.GetInput();
-    }
+    private bool _trainingComplete => _training.IsViewed;
 
-    private void OnEnable()
-    {
-        _input.Received += Handle;
-        _gameMoves.Ended += LockMovement;
-    }
-
-    private void OnDisable()
+    private void OnDestroy()
     {
         _input.Received -= Handle;
         _gameMoves.Ended -= LockMovement;
+    }
+
+    public void Init(Training training)
+    {
+        _training = training;
+        _input = _inputGetter.GetInput();
+        _input.Received += Handle;
+        _gameMoves.Ended += LockMovement;
     }
 
     public void LockMovement()
@@ -38,7 +39,7 @@ public class InputHandler : MonoBehaviour
 
     private void Handle(Direction direction)
     {
-        if (_isLockedMovement)
+        if (_isLockedMovement || _trainingComplete == false)
             return;
 
         Vector3 newDirection;

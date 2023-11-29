@@ -1,5 +1,5 @@
 using Agava.YandexGames;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using TrainingSystem;
 using UnityEngine;
@@ -20,7 +20,6 @@ public class EntryPoint : MonoBehaviour
     [SerializeField] private List<Upgrade> _upgrades;
     [SerializeField] private List<UpgradeButton> _upgradeButtons;
     [SerializeField] private BossMap _bossMap;
-    [SerializeField] private SetSaveDataButton _setSaveDataButton;
     [SerializeField] private Button _bossMapExitButton;
     [SerializeField] private BossMapScroll _bossMapScroll;
     [SerializeField] private GameObject[] _pageContent;
@@ -32,12 +31,16 @@ public class EntryPoint : MonoBehaviour
     [SerializeField] private InterstitialAdsDisplay _interstitialAdsDisplay;
     [SerializeField] private FocusObserver _focusObserver;
     [SerializeField] private Image _lockPanel;
+    [SerializeField] private LeaderboardUpdater _leaderboardUpdater;
+    [SerializeField] private InputHandler _inputHandler;
+    [SerializeField] private HitDamageCountSpawner _hitDamageCountSpawner;
+    [SerializeField] private AttackReadinessIndicator _attackReadinessIndicator;
 
     private GameSaver _saver;
 
     private void Awake()
     {
-        StartCoroutine(Init());
+        Init();
     }
 
     private void OnDestroy()
@@ -46,21 +49,16 @@ public class EntryPoint : MonoBehaviour
         _focusObserver.Disable();
     }
 
-    private IEnumerator Init()
+    private void Init()
     {
-        if (Application.isEditor == false)
-        {
-            yield return YandexGamesSdk.Initialize();
-            InitLocalization();
-        }
-
         SaveSystem.Load(saveData =>
         {
-            _setSaveDataButton.Init(saveData);
+            InitLocalization();
             InitTraining(saveData.TrainingIsViewed, out Training training);
             InitWallet(saveData.Coins, out Wallet wallet);
             InitUpgrades(saveData.UpgradeDatas);
             InitUpgradeButtons(wallet);
+            _leaderboardUpdater.Init(wallet);
             PauseController pauseController = new PauseController();
             _interstitialAdsDisplay.Init(pauseController);
             _rewardButton.Init(pauseController, wallet);
@@ -68,13 +66,17 @@ public class EntryPoint : MonoBehaviour
             _bossMap.Init(saveData.BossAwards, saveData.BossDataIndex, wallet);
             _bossMapScroll.Init(saveData.BossMapContentYPosition);
             _bossLoader.Init(saveData.BossDataIndex);
+            _inputHandler.Init(training);
             _gameOverController.Init(_bossLoader.CurrentBoss);
             _damageToCoinTranslator.Init(wallet, _bossLoader.CurrentBoss.BossHealth);
+            _attackReadinessIndicator.Init(_bossLoader.CurrentBoss.BossHealth);
             _trainingCursor.Init(_bossLoader.CurrentBoss.BossHealth, saveData.BossDataIndex);
             BossAnimator bossAnimator = _bossLoader.CurrentBoss.GetComponent<BossAnimator>();
             bossAnimator.Init(_gameMoves);
             _bossHealthBar.Init(_bossLoader.CurrentBoss.BossHealth.Health);
             _bossDamageView.Init(_bossLoader.CurrentBoss);
+            _hitDamageCountSpawner.Init(_bossLoader.CurrentBoss.BossHealth);
+
             _battlefield.Init(_bossLoader.CurrentBoss);
             _playerHealthBar.Init(_playerHealth);
             _focusObserver.Init(pauseController, _rewardButton, _interstitialAdsDisplay);
@@ -88,6 +90,9 @@ public class EntryPoint : MonoBehaviour
 
     private void InitLocalization()
     {
+        if (Application.isEditor)
+            return;
+
         LocalizationSetter localizationSetter = new LocalizationSetter();
         localizationSetter.Set(YandexGamesSdk.Environment.i18n.lang);
     }
@@ -108,6 +113,10 @@ public class EntryPoint : MonoBehaviour
 
     private void InitUpgrades(UpgradeData[] upgradesData)
     {
+        if (upgradesData[0] == null)
+            for (int i = 0; i < upgradesData.Length; i++)
+                upgradesData[i] = new UpgradeData();
+
         for (int i = 0; i < _upgrades.Count; i++)
             _upgrades[i].Init(upgradesData[i].Level, upgradesData[i].Price, upgradesData[i].BonusValue);
     }

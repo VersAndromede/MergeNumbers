@@ -62,8 +62,6 @@ public class Player : MonoBehaviour
 
     private void OnGameMovesEnded()
     {
-        const int HealthMultiplier = 100;
-
-        Health.Init(Power.Value * HealthMultiplier);
+        Health.Init(Power.Value);
     }
 }

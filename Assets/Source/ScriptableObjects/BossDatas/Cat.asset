@@ -15,5 +15,5 @@ MonoBehaviour:
   <TranslationName>k__BackingField: Cat
   <Prefab>k__BackingField: {fileID: 7960499131123647500, guid: 726c7f24771111344b342e616c34cf01, type: 3}
   <Health>k__BackingField: 1500
-  <Damage>k__BackingField: 250
-  <Award>k__BackingField: 400
+  <Damage>k__BackingField: 2
+  <Award>k__BackingField: 300

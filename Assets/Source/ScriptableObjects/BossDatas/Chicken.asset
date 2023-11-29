@@ -15,5 +15,5 @@ MonoBehaviour:
   <TranslationName>k__BackingField: Chicken
   <Prefab>k__BackingField: {fileID: 6562928042177035489, guid: 49c58c707cda676408389f8a2fdf6a69, type: 3}
   <Health>k__BackingField: 1000
-  <Damage>k__BackingField: 200
+  <Damage>k__BackingField: 2
   <Award>k__BackingField: 200

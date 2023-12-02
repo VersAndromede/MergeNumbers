@@ -7842,18 +7842,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 815899824}
-        m_TargetAssemblyTypeName: ReturnToMenuButton, Assembly-CSharp
-        m_MethodName: ReturnToMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1851635684}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
@@ -7916,6 +7904,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2748dccd28416419ded41b36515b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _button: {fileID: 815899821}
+  _InterstitialAdsDisplay: {fileID: 963194233}
 --- !u!1 &825390850
 GameObject:
   m_ObjectHideFlags: 0
@@ -9221,7 +9211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a16e23f7ff6eb7a46b77dfa9962b6686, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 144
+  _value: -1
 --- !u!114 &963194232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9266,6 +9256,10 @@ MonoBehaviour:
   _soundButton: {fileID: 624185840}
   _musicButton: {fileID: 1793667837}
   _rewardButton: {fileID: 1579475106}
+  _pauseButton: {fileID: 545301216}
+  _returnToMenuButtons:
+  - {fileID: 815899824}
+  - {fileID: 1593943144}
   _interstitialAdsDisplay: {fileID: 963194233}
   _focusObserver: {fileID: 963194234}
   _lockPanel: {fileID: 207670496}
@@ -9285,7 +9279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70be24632fa007f439e5b59dc42737b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waitTimeInSeconds: 5
 --- !u!114 &963194234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14350,6 +14343,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2748dccd28416419ded41b36515b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _button: {fileID: 1593943145}
+  _InterstitialAdsDisplay: {fileID: 963194233}
 --- !u!114 &1593943145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14394,21 +14389,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1593943144}
-        m_TargetAssemblyTypeName: ReturnToMenuButton, Assembly-CSharp
-        m_MethodName: ReturnToMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 963194233}
-        m_TargetAssemblyTypeName: InterstitialAdsDisplay, Assembly-CSharp
-        m_MethodName: TryShowAd
+      - m_Target: {fileID: 1851635684}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

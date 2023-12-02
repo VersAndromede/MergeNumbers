@@ -29,6 +29,8 @@ public class EntryPoint : MonoBehaviour
     [SerializeField] private AudioButton _soundButton;
     [SerializeField] private AudioButton _musicButton;
     [SerializeField] private RewardButton _rewardButton;
+    [SerializeField] private PauseButton _pauseButton;
+    [SerializeField] private ReturnToMenuButton[] _returnToMenuButtons;
     [SerializeField] private InterstitialAdsDisplay _interstitialAdsDisplay;
     [SerializeField] private FocusObserver _focusObserver;
     [SerializeField] private Image _lockPanel;
@@ -59,8 +61,9 @@ public class EntryPoint : MonoBehaviour
             InitWallet(saveData.Coins, out Wallet wallet);
             InitUpgrades(saveData.UpgradeDatas);
             InitUpgradeButtons(wallet);
-            _leaderboardUpdater.Init(wallet);
             PauseController pauseController = new PauseController();
+            InitReturnToMenuButtons();
+            _pauseButton.Init(pauseController);
             _interstitialAdsDisplay.Init(pauseController);
             _rewardButton.Init(pauseController, wallet);
             _soundButton.Init(saveData.IsSoundButtonEnabled);
@@ -69,6 +72,7 @@ public class EntryPoint : MonoBehaviour
             _bossMapScroll.Init(saveData.BossMapContentYPosition);
             _bossLoader.Init(saveData.BossDataIndex);
             _inputHandler.Init(training);
+            _leaderboardUpdater.Init(wallet);
             _gameOverController.Init(_bossLoader.CurrentBoss);
             _damageToCoinTranslator.Init(wallet, _bossLoader.CurrentBoss.BossHealth);
             _attackReadinessIndicator.Init(_bossLoader.CurrentBoss.BossHealth);
@@ -81,7 +85,7 @@ public class EntryPoint : MonoBehaviour
 
             _battlefield.Init(_bossLoader.CurrentBoss);
             _playerHealthBar.Init(_playerHealth);
-            _focusObserver.Init(pauseController, _rewardButton, _interstitialAdsDisplay);
+            _focusObserver.Init(pauseController, _pauseButton, _rewardButton, _interstitialAdsDisplay);
 
             _saver = new GameSaver(_gameOverController, wallet, _bossLoader, _upgrades, saveData.BossAwards, _bossMapExitButton, _bossMapScroll, training, _rewardButton, _soundButton, _musicButton);
             _saver.Enable();
@@ -127,5 +131,12 @@ public class EntryPoint : MonoBehaviour
     {
         for (int i = 0; i < _upgradeButtons.Count; i++)
             _upgradeButtons[i].Init(wallet);
+    }
+
+    private void InitReturnToMenuButtons()
+    {
+        for (int i = 0; i < _returnToMenuButtons.Length; i++)
+            _returnToMenuButtons[i].Init();
+
     }
 }

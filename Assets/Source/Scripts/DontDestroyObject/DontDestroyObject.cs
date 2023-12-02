@@ -4,7 +4,7 @@ public class DontDestroyObject : MonoBehaviour
 {
     private static DontDestroyObject _instance;
 
-    private void Start()
+    private void Awake()
     {
         if (_instance == null)
         {

@@ -13,11 +13,12 @@ public class GameSaver
     private readonly BossMapScroll _bossMapScroll;
     private readonly Training _training;
     private readonly RewardButton _rewardButton;
-    private readonly SoundButton _soundButton;
+    private readonly AudioButton _soundButton;
+    private readonly AudioButton _musicButton;
 
     public GameSaver(GameOverController gameOverController, Wallet wallet, BossLoader bossLoader, 
         List<Upgrade> upgrades, List<BossAward> bossAwards, Button bossMapExitButton,
-        BossMapScroll bossMapScroll, Training training, RewardButton rewardButton, SoundButton soundButton)
+        BossMapScroll bossMapScroll, Training training, RewardButton rewardButton, AudioButton soundButton, AudioButton musicButton)
     {
         _gameOverController = gameOverController;
         _wallet = wallet;
@@ -29,6 +30,7 @@ public class GameSaver
         _training = training;
         _rewardButton = rewardButton;
         _soundButton = soundButton;
+        _musicButton = musicButton;
     }
 
     public void Enable()
@@ -37,6 +39,7 @@ public class GameSaver
         _training.Viewed += OnTrainingViewed;
         _rewardButton.RewardGetted += OnRewardGetted;
         _soundButton.EnabledChanged += OnSoundButtonEnabledChanged;
+        _musicButton.EnabledChanged += OnMusicButtonEnabledChanged;
         _bossMapExitButton.onClick.AddListener(OnBossMapExitButton);
 
         foreach (Upgrade upgrade in _upgrades)
@@ -52,6 +55,7 @@ public class GameSaver
         _training.Viewed -= OnTrainingViewed;
         _rewardButton.RewardGetted -= OnRewardGetted;
         _soundButton.EnabledChanged -= OnSoundButtonEnabledChanged;
+        _musicButton.EnabledChanged -= OnMusicButtonEnabledChanged;
         _bossMapExitButton.onClick.RemoveListener(OnBossMapExitButton);
 
         foreach (Upgrade upgrade in _upgrades)
@@ -71,7 +75,7 @@ public class GameSaver
             if (data.BossAwards.Count == 0)
                 data.BossAwards = _bossAwards;
 
-            if (data.BossDataIndex >= data.BossAwards.Count || winner != Winner.Player)
+            if (data.BossDataIndex - 1 >= data.BossAwards.Count || winner != Winner.Player)
                 return;
 
             data.BossAwards[data.BossDataIndex - 1].LetTake();
@@ -134,6 +138,14 @@ public class GameSaver
         SaveSystem.Save(data =>
         {
             data.IsSoundButtonEnabled = _soundButton.Enabled;
+        });
+    }
+
+    private void OnMusicButtonEnabledChanged()
+    {
+        SaveSystem.Save(data =>
+        {
+            data.IsMusicButtonEnabled = _musicButton.Enabled;
         });
     }
 }

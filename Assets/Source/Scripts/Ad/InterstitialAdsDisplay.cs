@@ -51,7 +51,6 @@ public class InterstitialAdsDisplay : MonoBehaviour, IAd
 
     private void Enable()
     {
-        Debug.Log("Enable");
         _pauseController.SetPause(false);
         AdRunning?.Invoke(false);
     }

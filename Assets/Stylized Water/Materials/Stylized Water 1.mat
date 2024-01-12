@@ -37,11 +37,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DepthDensity: 0.5
+    - _DepthDensity: 1
     - _DistanceDensity: 0.025
     - _EdgeFoamDepth: 0.25
     - _FancyShadows: 1
-    - _FoamContribution: 0.252
+    - _FoamContribution: 0.38
     - _FoamNoiseScale: 0.363
     - _FoamScale: 15
     - _FoamSpeed: 0.1

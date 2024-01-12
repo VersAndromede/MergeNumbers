@@ -21,8 +21,8 @@ public class InterstitialAdsDisplay : MonoBehaviour, IAd
             return;
         }
 
-        AdRunning?.Invoke(true);
         _pauseController.SetPause(true);
+        AdRunning?.Invoke(true);
 
         InterstitialAd.Show(
             onCloseCallback: value => Enable(adOver));

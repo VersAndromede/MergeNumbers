@@ -10,6 +10,7 @@ public class Health : MonoBehaviour
 
     public int MaxValue { get; private set; }
     public int Value { get; private set; }
+    public bool IsDied { get; private set; }
 
     public void Init(int maxHealthValue)
     {
@@ -38,6 +39,9 @@ public class Health : MonoBehaviour
     private void TryDie()
     {
         if (Value <= 0)
+        {
+            IsDied = true;
             Died?.Invoke();
+        }
     }
 }

@@ -17097,6 +17097,14 @@ PrefabInstance:
       propertyPath: <HasPlayerAtStart>k__BackingField
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8825219851215740602, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
+      propertyPath: m_Size.x
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 8825219851215740602, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
+      propertyPath: m_Size.z
+      value: 0.95
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
 --- !u!4 &1803650714 stripped

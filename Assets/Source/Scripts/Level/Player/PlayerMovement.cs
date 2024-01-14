@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _travelTime;
 
     private Coroutine _moveJob;
+    private Coroutine _endMoveJob;
     private WaitForSeconds _waitTime;
     private float _elapsedTime;
 
@@ -33,7 +34,11 @@ public class PlayerMovement : MonoBehaviour
         _elapsedTime = 0;
         Vector3 currentPosition = transform.position;
         targetPosition.y = currentPosition.y;
-        StartCoroutine(EndMovement());
+
+        if (_endMoveJob != null)
+            StopCoroutine(_endMoveJob);
+
+        _endMoveJob = StartCoroutine(EndMovement());
 
         while (Vector3.Distance(transform.position, targetPosition) > 0)
         {

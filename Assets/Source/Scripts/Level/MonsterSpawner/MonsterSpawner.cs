@@ -23,23 +23,17 @@ public class MonsterSpawner : MonoBehaviour
     public event Action<MonsterType, int> Spawned;
     public event Action CounterRestartRequired;
 
-    private void OnEnable()
+    private void OnDestroy()
     {
-        _gameMoves.Changed += TryRandomSpawn;
-        _gameMoves.Changed += TryIncreaseDifficulty;
-        _gameMoves.Ended += OnGameMovesEnded;
-    }
-
-    private void OnDisable()
-    {
-        _gameMoves.Changed -= TryRandomSpawn;
-        _gameMoves.Changed -= TryIncreaseDifficulty;
+        _gameMoves.Changed -= OnGameMovesChanged;
         _gameMoves.Ended -= OnGameMovesEnded;
     }
 
     public void Init(IMonsterNegativeCounter monsterNegativeCounter)
     {
         _monsterNegativeCounter = monsterNegativeCounter;
+        _gameMoves.Changed += OnGameMovesChanged;
+        _gameMoves.Ended += OnGameMovesEnded;
     }
 
     public void SpawnOnlyPositive()
@@ -47,6 +41,12 @@ public class MonsterSpawner : MonoBehaviour
         _currentMonster = Instantiate(_monsterPrefab, transform);
         int power = Random.Range(_startingMinPower, _startingMaxPower);
         InitCurrentMonster(MonsterType.Adding, power);
+    }
+
+    private void OnGameMovesChanged()
+    {
+        TryRandomSpawn();
+        TryIncreaseDifficulty();
     }
 
     private void TryRandomSpawn()
@@ -75,7 +75,7 @@ public class MonsterSpawner : MonoBehaviour
         Spawned?.Invoke(type, power);
     }
 
-    private bool  TrySpawnAddingMonster(int power)
+    private bool TrySpawnAddingMonster(int power)
     {
         if (Randomizer.CheckProbability(_probabilityPositiveMonster))
         {

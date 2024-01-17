@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4645132edefd4c74968a0c941a98fb89, type: 3}
+  m_Name: Audio Database
+  m_EditorClassIdentifier: 
+  _items:
+  - Clip: {fileID: 8300000, guid: 95c5140dbd263984caf5826b39f5a79d, type: 3}
+    Key: MainMusic
+    FolderPath: Source\Audio\Musics\
+    Name: c245b81d72ab0bb.mp3
+    Preload: 1
+    _id: 00ad3599-c1e8-4934-a6d7-d06700cb6972
+  - Clip: {fileID: 8300000, guid: dd19fef3c967dcb4aab047823ed33ee2, type: 3}
+    Key: Defeat
+    FolderPath: Source\Audio\Sounds\
+    Name: 45f8599eec7166a.mp3
+    Preload: 0
+    _id: 634c38a2-a81b-4f76-b338-1861dd5006a3
+  - Clip: {fileID: 8300000, guid: fa7b2d21832505044ba5b8cab5e913f2, type: 3}
+    Key: Victory
+    FolderPath: Source\Audio\Sounds\
+    Name: 1595049022_9f3e49b8de7c9d7.mp3
+    Preload: 0
+    _id: b95dee99-21ec-4c49-adb0-a2b3bb3d4328
+  - Clip: {fileID: 8300000, guid: c31f5d441f9c96746a4407050a63b7a9, type: 3}
+    Key: Coins
+    FolderPath: Source\Audio\Sounds\
+    Name: 1595049549_952782968e924cf.mp3
+    Preload: 0
+    _id: f78b2483-9b3f-43cc-8013-0ff19ba47510
+  - Clip: {fileID: 8300000, guid: 542627da2525ef64db120f74e15549cf, type: 3}
+    Key: Dash
+    FolderPath: Source\Audio\Sounds\
+    Name: audio-editor-output (2) (mp3cut.net).mp3
+    Preload: 0
+    _id: d5996a03-3080-47b3-81e3-4bb53b4b6d92
+  - Clip: {fileID: 8300000, guid: d60df143c0c7ef8478d4c60840970175, type: 3}
+    Key: Explosion
+    FolderPath: Source\Audio\Sounds\
+    Name: Explosion42.wav
+    Preload: 0
+    _id: bc260a83-2fc5-49bb-ac86-8a6c9f395888
+  - Clip: {fileID: 8300000, guid: ebb03b2b009894845b81a64051a5c698, type: 3}
+    Key: UIClick
+    FolderPath: Source\Audio\Sounds\
+    Name: SFX_UI_Click_Organic_Pop_Liquid_Thick_Generic_1.wav
+    Preload: 0
+    _id: 7f91f910-d97e-476a-ac22-bf6c13f70cd3
+  - Clip: {fileID: 8300000, guid: c47f17948f55d41c5876af88204e7f46, type: 3}
+    Key: BossHit1
+    FolderPath: Source\Audio\Sounds\
+    Name: PUNCH_DESIGNED_HEAVY_86.wav
+    Preload: 0
+    _id: dda5789f-0b19-4778-bc8f-2eb720afa0c0
+  - Clip: {fileID: 8300000, guid: 8d745b333dbb6440e9da37b96b264e3a, type: 3}
+    Key: BossHit2
+    FolderPath: Source\Audio\Sounds\
+    Name: PUNCH_PERCUSSIVE_HEAVY_09.wav
+    Preload: 0
+    _id: 77b7adf0-f628-4c51-93b7-dac0e81bd8b3
+  - Clip: {fileID: 8300000, guid: 6a97574b999754ab88af555cfbc0d8f4, type: 3}
+    Key: BossHit3
+    FolderPath: Source\Audio\Sounds\
+    Name: PUNCH_SQUELCH_HEAVY_01.wav
+    Preload: 0
+    _id: 460c48ce-9c18-4264-97f3-505f43115e24

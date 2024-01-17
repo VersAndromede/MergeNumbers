@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class FPS : MonoBehaviour
 {
-    [SerializeField] private uint _value;
+    [SerializeField] private int _value;
 
     private void Awake()
     {
-        Application.targetFrameRate = (int)_value;
+        Application.targetFrameRate = _value;
     }
 }

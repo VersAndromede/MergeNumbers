@@ -12,7 +12,7 @@ public class MovesUpgrade : Upgrade
 
     public override int AffectPrice()
     {
-        int newPrice = Price * 2;
+        int newPrice = Mathf.CeilToInt(Price * 2.5f);
 
         if (newPrice > _maxPrice)
             return _maxPrice;

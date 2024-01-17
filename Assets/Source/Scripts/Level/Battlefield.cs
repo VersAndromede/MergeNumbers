@@ -38,7 +38,7 @@ public class Battlefield : MonoBehaviour
         StartCoroutine(_boss.BossHealth.MakeVulnerable());
         yield return _waitTime;
 
-        while (_player.Health.Value > 0 && _boss.BossHealth.Health.Value > 0)
+        while (_player.Health.IsDied == false && _player.Health.Value >= 0 && _boss.BossHealth.Health.Value > 0)
         {
             _player.Health.TakeDamage(_boss.Data.Damage);
             yield return _waitTime;

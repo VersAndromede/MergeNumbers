@@ -1,49 +1,37 @@
 using Agava.YandexGames;
-using System.Collections;
+using System;
 using UnityEngine;
 
-public class InterstitialAdsDisplay : MonoBehaviour
+public class InterstitialAdsDisplay : MonoBehaviour, IAd
 {
-    [SerializeField] private GameMoves _gameMoves;
-    [SerializeField] private int _waitTimeInSeconds;
+    private PauseController _pauseController;
 
-    private int _currentTimeInSeconds;
-    private Coroutine _startWaitTimerJob;
-    private WaitForSeconds _waiting;
+    public event Action<bool> AdRunning;
 
-    private void Start()
+    public void Init(PauseController pauseController)
     {
-        _waiting = new WaitForSeconds(_waitTimeInSeconds);
-        _startWaitTimerJob = StartCoroutine(StartWaitTimer());
+        _pauseController = pauseController;
     }
 
-    public void OnEnable()
+    public void TryShowAd(Action adOver)
     {
-        _gameMoves.Ended += OnMovesEnded;
-    }
-
-    public void OnDisable()
-    {
-        _gameMoves.Ended -= OnMovesEnded;
-    }
-
-    public void OnMovesEnded()
-    {
-        if (_currentTimeInSeconds >= _waitTimeInSeconds)
+        if (Application.isEditor)
         {
-            StopCoroutine(_startWaitTimerJob);
-            _currentTimeInSeconds = 0;
-            InterstitialAd.Show();
-            _startWaitTimerJob = StartCoroutine(StartWaitTimer());
+            adOver?.Invoke();
+            return;
         }
+
+        _pauseController.SetPause(true);
+        AdRunning?.Invoke(true);
+
+        InterstitialAd.Show(
+            onCloseCallback: value => Enable(adOver));
     }
 
-    private IEnumerator StartWaitTimer()
+    private void Enable(Action adOver)
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(1);
-            _currentTimeInSeconds++;
-        }
+        _pauseController.SetPause(false);
+        AdRunning?.Invoke(false);
+        adOver?.Invoke();
     }
 }

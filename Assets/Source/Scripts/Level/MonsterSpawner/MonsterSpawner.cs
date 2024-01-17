@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Threading;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,29 +19,29 @@ public class MonsterSpawner : MonoBehaviour
 
     [field: SerializeField] public bool HasPlayerAtStart { get; private set; }
 
+    private const float MinDaleyForNewSpawn = 0.3f;
+
     private Monster _currentMonster;
     private IMonsterNegativeCounter _monsterNegativeCounter;
+    private WaitForSeconds _waitForMinDaleyForNewSpawn;
+    private Coroutine _spawnJob;
+    private bool _canSpawn = true;
 
-    public event Action<MonsterType, int> Spawned;
+    public event Action<Monster, int> Spawned;
     public event Action CounterRestartRequired;
 
-    private void OnEnable()
+    private void OnDestroy()
     {
-        _gameMoves.Changed += TryRandomSpawn;
-        _gameMoves.Changed += TryIncreaseDifficulty;
-        _gameMoves.Ended += OnGameMovesEnded;
-    }
-
-    private void OnDisable()
-    {
-        _gameMoves.Changed -= TryRandomSpawn;
-        _gameMoves.Changed -= TryIncreaseDifficulty;
+        _gameMoves.Changed -= OnGameMovesChanged;
         _gameMoves.Ended -= OnGameMovesEnded;
     }
 
     public void Init(IMonsterNegativeCounter monsterNegativeCounter)
     {
         _monsterNegativeCounter = monsterNegativeCounter;
+        _waitForMinDaleyForNewSpawn = new WaitForSeconds(MinDaleyForNewSpawn);
+        _gameMoves.Changed += OnGameMovesChanged;
+        _gameMoves.Ended += OnGameMovesEnded;
     }
 
     public void SpawnOnlyPositive()
@@ -49,33 +51,45 @@ public class MonsterSpawner : MonoBehaviour
         InitCurrentMonster(MonsterType.Adding, power);
     }
 
-    private void TryRandomSpawn()
+    private void OnGameMovesChanged()
     {
-        if (_observer.Monster != null || _observer.Player != null)
-            return;
+        if (_spawnJob != null)
+            StopCoroutine(_spawnJob);
+
+        _spawnJob = StartCoroutine(TryRandomSpawn());
+        TryIncreaseDifficulty();
+    }
+
+    private IEnumerator TryRandomSpawn()
+    {
+        if (_canSpawn == false || _observer.Monster != null || _observer.Player != null)
+            yield break;
 
         if (IsNegativeMonsterCanBeSpawned())
-            return;
+            yield break;
 
         _currentMonster = Instantiate(_monsterPrefab, transform);
         int power = Random.Range(_startingMinPower, _startingMaxPower);
 
         if (TrySpawnAddingMonster(power))
-            return;
+            yield break;
 
         if (TrySpawnDividerMonster())
-            return;
+            yield break;
 
         InitCurrentMonster(MonsterType.Adding, -power);
+        _canSpawn = false;
+        yield return _waitForMinDaleyForNewSpawn;
+        _canSpawn = true;
     }
 
     private void InitCurrentMonster(MonsterType type, int power)
     {
         _currentMonster.Init(type, power);
-        Spawned?.Invoke(type, power);
+        Spawned?.Invoke(_currentMonster, power);
     }
 
-    private bool  TrySpawnAddingMonster(int power)
+    private bool TrySpawnAddingMonster(int power)
     {
         if (Randomizer.CheckProbability(_probabilityPositiveMonster))
         {
@@ -89,6 +103,9 @@ public class MonsterSpawner : MonoBehaviour
 
     private bool TrySpawnDividerMonster()
     {
+        if (_monsterNegativeCounter.DividersCount >= _monsterNegativeCounter.MaxDividersCount)
+            return false;
+
         if (Randomizer.CheckProbability(_probabilityDividerMonster))
         {
             InitCurrentMonster(MonsterType.Divider, _dividerPower);
@@ -100,7 +117,7 @@ public class MonsterSpawner : MonoBehaviour
 
     private bool IsNegativeMonsterCanBeSpawned()
     {
-        if (_monsterNegativeCounter.Count >= _monsterNegativeCounter.MaxCount)
+        if (_monsterNegativeCounter.AllCount >= _monsterNegativeCounter.MaxAllCount)
         {
             SpawnOnlyPositive();
             CounterRestartRequired?.Invoke();

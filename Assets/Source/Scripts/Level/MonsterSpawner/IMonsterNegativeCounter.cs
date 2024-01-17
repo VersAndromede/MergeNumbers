@@ -1,8 +1,10 @@
 ﻿public interface IMonsterNegativeCounter
 {
-    int Count { get; }
-    int MaxCount { get; }
+    int AllCount { get; }
+    int MaxAllCount { get; }
+    int DividersCount { get; }
+    int MaxDividersCount { get; }
 
-    void OnMonsterSpawned(MonsterType type, int power);
+    void OnMonsterSpawned(Monster monster, int power);
     void Restart();
 }

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TranslationName>k__BackingField: Chicken
   <Prefab>k__BackingField: {fileID: 6562928042177035489, guid: 49c58c707cda676408389f8a2fdf6a69, type: 3}
-  <Health>k__BackingField: 750
-  <Damage>k__BackingField: 225
-  <Award>k__BackingField: 100
+  <Health>k__BackingField: 1000
+  <Damage>k__BackingField: 2
+  <Award>k__BackingField: 200

@@ -2,11 +2,26 @@ using UnityEngine;
 
 public class PauseButton : MonoBehaviour
 {
+    private PauseController _pauseController;
+
+    public bool IsPaused { get; private set; }
+
+    public void Init(PauseController pauseController)
+    {
+        _pauseController = pauseController;
+    }
+
     public void SetPause(bool paused)
     {
         if (paused)
-            Time.timeScale = 0;
+        {
+            _pauseController.SetPause(true);
+            IsPaused = true;
+        }
         else
-            Time.timeScale = 1;
+        {
+            _pauseController.SetPause(false);
+            IsPaused = false;
+        }
     }
 }

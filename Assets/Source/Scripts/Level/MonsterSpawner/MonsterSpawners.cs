@@ -4,8 +4,10 @@ public class MonsterSpawners : MonoBehaviour, IMonsterNegativeCounter
 {
     private MonsterSpawner[] _monsterSpawners;
 
-    public int Count { get; private set; }
-    public int MaxCount => 4;
+    public int AllCount { get; private set; }
+    public int DividersCount { get; private set; }
+    public int MaxAllCount => 4;
+    public int MaxDividersCount => 2;
 
     private void Start()
     {
@@ -35,14 +37,26 @@ public class MonsterSpawners : MonoBehaviour, IMonsterNegativeCounter
                 monsterSpawner.SpawnOnlyPositive();
     }
 
-    public void OnMonsterSpawned(MonsterType type, int power)
+    public void OnMonsterSpawned(Monster monster, int power)
     {
-        if (power < 0 || type == MonsterType.Divider)
-            Count++;
+        if (power < 0 || monster.Type == MonsterType.Divider)
+            AllCount++;
+
+        if (monster.Type == MonsterType.Divider)
+        {
+            DividersCount++;
+            monster.Died += OnDied;
+        }
     }
 
     public void Restart()
     {
-        Count = 0;
+        AllCount = 0;
+    }
+
+    private void OnDied(Monster monster)
+    {
+        monster.Died -= OnDied;
+        DividersCount--;
     }
 }

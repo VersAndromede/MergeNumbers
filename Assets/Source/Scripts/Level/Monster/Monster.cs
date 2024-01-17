@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
-using System.Collections;
 
 public enum MonsterType
 {
@@ -15,6 +14,8 @@ public class Monster : MonoBehaviour
 
     [field: SerializeField] public Power Power { get; private set; }
     [field: SerializeField] public MonsterType Type { get; private set; }
+
+    public event Action<Monster> Died;
 
     private void OnValidate()
     {
@@ -31,6 +32,7 @@ public class Monster : MonoBehaviour
     public void Die()
     {
         _died?.Invoke();
+        Died?.Invoke(this);
         Destroy(gameObject);
     }
 }

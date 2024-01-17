@@ -1,21 +1,23 @@
-﻿using System;
+﻿using Plugins.Audio.Core;
+using Plugins.Audio.Utils;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
 public class BossAudioSystem
 {
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private List<AudioClip> _hitClips;
+    [SerializeField] private SourceAudio _audioSource;
+    [SerializeField] private List<AudioDataProperty> _hitClips;
 
     private const int MaxRepeatCount = 3;
 
-    private AudioClip _currentAudioClip;
+    private AudioDataProperty _currentAudioClip;
     private int _repeatCount;
 
     public void PlayHit()
     {
-        AudioClip clip = _hitClips[UnityEngine.Random.Range(0, _hitClips.Count)];
+        AudioDataProperty clip = _hitClips[UnityEngine.Random.Range(0, _hitClips.Count)];
 
         if (_currentAudioClip == clip)
         {

@@ -19,4 +19,6 @@ public class SaveData
     public bool TrainingIsViewed;
     [field: Preserve]
     public bool IsSoundButtonEnabled = true;
+    [field: Preserve]
+    public bool IsMusicButtonEnabled = true;
 }

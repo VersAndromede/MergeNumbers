@@ -13,6 +13,15 @@ public class SetSaveDataButton : MonoBehaviour
 
     public void SetSaveData()
     {
+        if (Application.isEditor)
+        {
+            SaveData saveData = JsonUtility.FromJson<SaveData>(_inputField.text);
+            string saveDataJson = JsonUtility.ToJson(saveData);
+            PlayerPrefs.SetString("SaveDataPrefsKey", saveDataJson);
+            PlayerPrefs.Save();
+            return;
+        }
+
         PlayerAccount.SetPlayerData(_inputField.text);
     }
 }

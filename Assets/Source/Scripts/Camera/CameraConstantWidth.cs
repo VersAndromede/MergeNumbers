@@ -17,6 +17,7 @@ public class CameraConstantWidth : MonoBehaviour
     public Vector2 Resolution { get; private set; }
     public float ScalerMatch { get; private set; }
     public bool IsPortraitOrientation => Screen.width / (float)Screen.height * AspectRatio.x <= AspectRatio.y;
+    public bool IsLandscapeOrientation => Screen.height / (float)Screen.width * AspectRatio.x <= AspectRatio.y;
 
     private void Start()
     {

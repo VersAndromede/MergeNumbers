@@ -1,4 +1,5 @@
 using Agava.YandexGames;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,15 +24,26 @@ public class Leaderboard : MonoBehaviour
         });
     }
 
+    public void GetScore(Action<int> onReceivedScore)
+    {
+        if (Application.isEditor || PlayerAccount.IsAuthorized == false)
+            return;
+
+        Agava.YandexGames.Leaderboard.GetPlayerEntry(LeaderboardName, response =>
+        {
+            onReceivedScore?.Invoke(response.score);
+        });
+    }
+
     public void Fill()
     {
-        _leaderboardPlayers.Clear();
-
         if (PlayerAccount.IsAuthorized == false)
             return;
 
         Agava.YandexGames.Leaderboard.GetEntries(LeaderboardName, result =>
         {
+            _leaderboardPlayers.Clear();
+
             for (int i = 0; i < result.entries.Length; i++)
             {
                 string name = result.entries[i].player.publicName;

@@ -13,7 +13,6 @@ public class LeaderboardOpenButton : MonoBehaviour
         if (PlayerAccount.IsAuthorized)
         {
             PlayerAccount.RequestPersonalProfileDataPermission();
-            Debug.Log("RequestPersonalProfileDataPermission");
             _authorized?.Invoke();
             return;
         }

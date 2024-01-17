@@ -1,5 +1,3 @@
-using Agava.YandexGames;
-using System;
 using UnityEngine;
 
 public class LeaderboardUpdater : MonoBehaviour
@@ -22,7 +20,11 @@ public class LeaderboardUpdater : MonoBehaviour
 
     public void UpdateLeaderboard()
     {
-        _leaderboard.SetPlayer(_wallet.Coins);
+        _leaderboard.GetScore(score =>
+        {
+            if (_wallet.Coins > score)
+                _leaderboard.SetPlayer(_wallet.Coins);
+        });
     }
 
     private void OnGameOver(Winner winner)

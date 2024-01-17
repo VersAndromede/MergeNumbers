@@ -1,3 +1,4 @@
+using Plugins.Audio.Core;
 using UnityEngine;
 
 public class PauseController 
@@ -7,11 +8,11 @@ public class PauseController
         if (paused)
         {
             Time.timeScale = 0;
-            AudioListener.pause = true;
+            AudioPauseHandler.Instance.PauseAudio();
             return;
         }
 
         Time.timeScale = 1;
-        AudioListener.pause = false;
+        AudioPauseHandler.Instance.UnpauseAudio();
     }
 }

@@ -24,10 +24,10 @@ public class SpawnerObserver : MonoBehaviour
     private void OnTriggerExit(Collider collision)
     {
         if (collision.TryGetComponent(out Player player))
+        {
             Player = null;
-
-        if (collision.TryGetComponent(out Monster monster))
             Monster = null;
+        }
     }
 
     private void OnDisable()

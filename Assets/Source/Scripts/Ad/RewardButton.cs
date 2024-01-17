@@ -17,6 +17,7 @@ public class RewardButton : MonoBehaviour, IAd
 
     private Wallet _wallet;
     private PauseController _pauseController;
+    private bool _isRewarded;
 
     public uint RewardCount { get; private set; }
 
@@ -49,11 +50,20 @@ public class RewardButton : MonoBehaviour, IAd
     {
         yield return new WaitForSecondsRealtime(RewardAdDisplayDalay);
 
-        VideoAd.Show(onCloseCallback: () =>
+        VideoAd.Show(
+        onRewardedCallback: () =>
         {
             _wallet.AddCoins(RewardCount);
-            RewardGetted?.Invoke();
-            _rewardGetted?.Invoke();
+            _isRewarded = true;
+        },
+        onCloseCallback: () =>
+        {
+            if (_isRewarded)
+            {
+                _rewardGetted?.Invoke();
+                RewardGetted?.Invoke();
+            }
+
             Enable();
         },
         onErrorCallback: error =>
@@ -75,6 +85,7 @@ public class RewardButton : MonoBehaviour, IAd
 
     private void Enable()
     {
+        _isRewarded = false;
         _pauseController.SetPause(false);
         _button.interactable = true;
         AdRunning?.Invoke(false);

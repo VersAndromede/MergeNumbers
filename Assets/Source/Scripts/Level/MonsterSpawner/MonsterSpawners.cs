@@ -39,13 +39,14 @@ public class MonsterSpawners : MonoBehaviour, IMonsterNegativeCounter
 
     public void OnMonsterSpawned(Monster monster, int power)
     {
-        if (power < 0 || monster.Type == MonsterType.Divider)
+        if (monster is MonsterSubtractive)
             AllCount++;
 
-        if (monster.Type == MonsterType.Divider)
+        if (monster is MonsterDivider)
         {
             DividersCount++;
-            monster.Died += OnDied;
+            AllCount++;
+            monster.Died += OnMonsterDividerDied;
         }
     }
 
@@ -54,9 +55,9 @@ public class MonsterSpawners : MonoBehaviour, IMonsterNegativeCounter
         AllCount = 0;
     }
 
-    private void OnDied(Monster monster)
+    private void OnMonsterDividerDied(Monster monster)
     {
-        monster.Died -= OnDied;
+        monster.Died -= OnMonsterDividerDied;
         DividersCount--;
     }
 }

@@ -3,36 +3,25 @@ using UnityEngine;
 
 public class PowerView : MonoBehaviour
 {
-    [SerializeField] protected Color PositiveColorPower;
-    [SerializeField] protected Color NegativeColorPower;
-    [SerializeField] protected Color NeutralColorPower;
-    [SerializeField] protected TextMeshPro Text;
-    [SerializeField] protected Power Power;
+    [SerializeField] private Color _positiveColorPower;
+    [SerializeField] private Color _negativeColorPower;
+    [SerializeField] private Color _neutralColorPower;
+    [SerializeField] private TextMeshPro _text;
 
     private void Start()
     {
-        OnChanged();
+        UpdateUI(0);
     }
 
-    private void OnEnable()
+    public void UpdateUI(int powerValue)
     {
-        Power.Changed += OnChanged;
-    }
-
-    private void OnDisable()
-    {
-        Power.Changed -= OnChanged;
-    }
-
-    protected virtual void OnChanged()
-    {
-        if (Power.Value > 0)
-            Text.color = PositiveColorPower;
-        else if (Power.Value < 0)
-            Text.color = NegativeColorPower;
+        if (powerValue > 0)
+            _text.color = _positiveColorPower;
+        else if (powerValue < 0)
+            _text.color = _negativeColorPower;
         else
-            Text.color = NeutralColorPower;
+            _text.color = _neutralColorPower;
 
-        Text.text = $"{Power.Value}";
+        _text.text = $"{powerValue}";
     }
 }

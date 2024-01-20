@@ -106,16 +106,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be109b8bf9a3b89409509930431fa2ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _monsterPrefab: {fileID: 6625377753054276253, guid: c99eda846593eda4e877cc4c6845a545, type: 3}
   _gameMoves: {fileID: 0}
   _observer: {fileID: 853074284180905463}
-  _numberMovesToComplicate: 5
-  _powerProgression: 5
-  _startingMinPower: 2
-  _startingMaxPower: 6
-  _dividerPower: 2
-  _probabilityPositiveMonster: 52
-  _probabilityDividerMonster: 23
+  _config: {fileID: 11400000, guid: b7e0fe33b61f17d48970c32086712330, type: 2}
+  _monsterFabric: {fileID: 0}
+  _monsterYPositionOffset: 0.35
   <HasPlayerAtStart>k__BackingField: 1
 --- !u!65 &9222462754603683896
 BoxCollider:

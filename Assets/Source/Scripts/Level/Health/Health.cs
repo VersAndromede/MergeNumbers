@@ -1,28 +1,18 @@
 using System;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class Health
 {
-    private readonly bool _initialized;
-
     public event Action Changed;
     public event Action Died;
 
     public int MaxValue { get; private set; }
     public int Value { get; private set; }
-    public bool IsDied { get; private set; }
+    public bool IsDied => Value <= 0;
 
-    public void Init(int maxHealthValue)
+    public Health(uint maxHealthValue)
     {
-        if (_initialized)
-            throw new InvalidOperationException("You cannot re-initialize.");
-
-        if (maxHealthValue < 0)
-            throw new ArgumentOutOfRangeException();
-
-        MaxValue = maxHealthValue;
-        Value = MaxValue;
-        Changed?.Invoke();
+        SetMax(maxHealthValue);
     }
     
     public void TakeDamage(int damage)
@@ -36,12 +26,16 @@ public class Health : MonoBehaviour
         TryDie();
     }
 
+    public void SetMax(uint count)
+    {
+        MaxValue = (int)count;
+        Value = MaxValue;
+        Changed?.Invoke();
+    }
+
     private void TryDie()
     {
-        if (Value <= 0)
-        {
-            IsDied = true;
+        if (IsDied)
             Died?.Invoke();
-        }
     }
 }

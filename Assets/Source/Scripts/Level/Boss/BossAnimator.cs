@@ -21,7 +21,7 @@ public class BossAnimator : MonoBehaviour
     {
         _gameMoves = gameMoves;
         _gameMoves.Ended += OnGameMovesEnded;
-        _boss.BossHealth.Health.Died += OnBossDied;
+        _boss.BossHealth.Died += OnBossDied;
         _boss.BossHealth.DamageReceived += OnDamageReceived;
         _punchPower = new Vector3(_punchDurationOnHit, _punchDurationOnHit, _punchDurationOnHit);
     }
@@ -29,7 +29,7 @@ public class BossAnimator : MonoBehaviour
     private void OnDestroy()
     {
         _gameMoves.Ended -= OnGameMovesEnded;
-        _boss.BossHealth.Health.Died -= OnBossDied;
+        _boss.BossHealth.Died -= OnBossDied;
         _boss.BossHealth.DamageReceived -= OnDamageReceived;
     }
 

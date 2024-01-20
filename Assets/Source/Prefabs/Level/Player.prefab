@@ -14,9 +14,7 @@ GameObject:
   - component: {fileID: 1305436681942913398}
   - component: {fileID: 1305436681942913385}
   - component: {fileID: 515593279004868692}
-  - component: {fileID: 6852137980672687212}
   - component: {fileID: 4675556095299732920}
-  - component: {fileID: 9134484537047143247}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -134,23 +132,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameMoves: {fileID: 0}
-  <Movement>k__BackingField: {fileID: 4675556095299732920}
-  <Power>k__BackingField: {fileID: 6852137980672687212}
-  <Observer>k__BackingField: {fileID: 4638442236640924361}
-  <Health>k__BackingField: {fileID: 9134484537047143247}
+  _movement: {fileID: 0}
+  _observer: {fileID: 0}
+  _healthSetup: {fileID: 0}
+  _died:
+    m_PersistentCalls:
+      m_Calls: []
   <Damage>k__BackingField: 25
---- !u!114 &6852137980672687212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1305436681942913386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2ecbff748e82e84dad112022f8f6c97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4675556095299732920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,18 +153,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 1305436681942913398}
   _travelTime: 0.5
---- !u!114 &9134484537047143247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1305436681942913386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eee844e99c2f6743b4c968ffe175f1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7974479991513828907
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +221,7 @@ PrefabInstance:
     - target: {fileID: 1682137925346037182, guid: 163337b5160be2a43b06c4cff223431a, type: 3}
       propertyPath: _health
       value: 
-      objectReference: {fileID: 9134484537047143247}
+      objectReference: {fileID: 0}
     - target: {fileID: 2789679332157965090, guid: 163337b5160be2a43b06c4cff223431a, type: 3}
       propertyPath: m_Name
       value: Canvas Health Bar
@@ -451,15 +427,48 @@ PrefabInstance:
     - target: {fileID: 7595728476251660027, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
       propertyPath: Power
       value: 
-      objectReference: {fileID: 6852137980672687212}
+      objectReference: {fileID: 0}
     - target: {fileID: 7595728476251660027, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
       propertyPath: <Power>k__BackingField
       value: 
-      objectReference: {fileID: 6852137980672687212}
-    m_RemovedComponents: []
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3363398879142885313, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
 --- !u!224 &1305436680719185148 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3505467481934742218, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
   m_PrefabInstance: {fileID: 2501815171776738870}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1305436680719185149 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3505467481934742219, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
+  m_PrefabInstance: {fileID: 2501815171776738870}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305436680719185151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1305436680719185151 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3505467481934742217, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
+  m_PrefabInstance: {fileID: 2501815171776738870}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4136124233057339266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305436680719185151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f0457ff935131745b4dae1418f0fc86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _positiveColorPower: {r: 0.16862746, g: 1, b: 0, a: 1}
+  _negativeColorPower: {r: 1, g: 0, b: 0, a: 1}
+  _neutralColorPower: {r: 1, g: 0.7490196, b: 0, a: 1}
+  _text: {fileID: 1305436680719185149}

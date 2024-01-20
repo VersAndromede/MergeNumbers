@@ -9,7 +9,9 @@ public class InputHandler : MonoBehaviour
     [SerializeField] private GameMoves _gameMoves;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private Camera _camera;
-    [SerializeField] private Player _player;
+    [SerializeField] private MonsterObserver _monsterObserver;
+    [SerializeField] private PlayerMovement _playerMovement;
+    [SerializeField] private PlayerRotation _playerRotation;
 
     private IInput _input;
     private Training _training;
@@ -59,12 +61,12 @@ public class InputHandler : MonoBehaviour
 
     private void TryMoveToMonster(Monster monster)
     {
-        if (CheckContentsMonster(_player, monster) == false)
+        if (CheckContentsMonster(monster) == false)
             return;
 
-        if (_player.gameObject.activeSelf)
+        if (_playerMovement.gameObject.activeSelf)
         {
-            _player.Movement.MoveToMonster(monster.transform.position);
+            _playerMovement.MoveToMonster(monster.transform.position);
             StartPlayerRotation(monster.transform.position);
         }
 
@@ -76,7 +78,7 @@ public class InputHandler : MonoBehaviour
         const float MaxDistance = 100;
 
         Vector3 offset = new Vector3(0, 0.25f, 0);
-        Ray ray = new Ray(_player.transform.position + offset, direction);
+        Ray ray = new Ray(_playerMovement.transform.position + offset, direction);
 
         if (Physics.Raycast(ray, out RaycastHit hit, MaxDistance, _layerMask))
         {
@@ -91,12 +93,12 @@ public class InputHandler : MonoBehaviour
         return false;
     }
 
-    private bool CheckContentsMonster(Player checker, Monster wanted)
+    private bool CheckContentsMonster(Monster wanted)
     {
-        if (checker == null || wanted == null)
+        if (_monsterObserver == null || wanted == null)
             return false;
 
-        foreach (Monster monster in checker.Observer.Monsters)
+        foreach (Monster monster in _monsterObserver.Monsters)
             if (monster == wanted)
                 return true;
 
@@ -105,8 +107,8 @@ public class InputHandler : MonoBehaviour
 
     private void StartPlayerRotation(Vector3 monsterPosition)
     {
-        Vector3 playerPosition = _player.transform.position;
+        Vector3 playerPosition = _playerMovement.transform.position;
         Vector3 rotation = new Vector3(monsterPosition.x - playerPosition.x, 0, monsterPosition.z - playerPosition.z);
-        _player.Rotation.StartRotationJob(rotation);
+        _playerRotation.StartRotationJob(rotation);
     }
 }

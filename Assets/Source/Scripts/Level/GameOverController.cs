@@ -11,7 +11,6 @@ public enum Winner
 
 public class GameOverController : MonoBehaviour
 {
-    [SerializeField] private Player _player;
     [SerializeField] private float _delayToResult;
     [SerializeField] private UnityEvent _gameOver;
     [SerializeField] private UnityEvent _winning;
@@ -19,24 +18,28 @@ public class GameOverController : MonoBehaviour
 
     private WaitForSeconds _waitTime;
     private Boss _boss;
+    private Power _power;
+    private Health _playerHealth;
 
     public event Action<Winner> GameOver;
 
-    public void Init(Boss boss)
-    {
-        _boss = boss;
-        _waitTime = new WaitForSeconds(_delayToResult);
-
-        _player.Health.Died += OnPlayerDied;
-        _player.Power.Over += OnPlayerDied;
-        _boss.BossHealth.Health.Died += OnBossDied;
-    }
-
     private void OnDestroy()
     {
-        _player.Health.Died -= OnPlayerDied;
-        _player.Power.Over -= OnPlayerDied;
-        _boss.BossHealth.Health.Died -= OnBossDied;
+        _playerHealth.Died -= OnPlayerDied;
+        _power.Over -= OnPlayerDied;
+        _boss.BossHealth.Died -= OnBossDied;
+    }
+
+    public void Init(Boss boss, Power power, Health playerHealth)
+    {
+        _boss = boss;
+        _power = power;
+        _playerHealth = playerHealth;
+        _waitTime = new WaitForSeconds(_delayToResult);
+
+        _playerHealth.Died += OnPlayerDied;
+        _power.Over += OnPlayerDied;
+        _boss.BossHealth.Died += OnBossDied;
     }
 
     private void OnBossDied()

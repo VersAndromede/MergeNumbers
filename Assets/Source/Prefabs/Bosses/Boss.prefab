@@ -13,11 +13,10 @@ GameObject:
   - component: {fileID: 898333502078557234}
   - component: {fileID: 3312846430743504994}
   - component: {fileID: 7039229292695026515}
+  - component: {fileID: 453625682051023666}
   - component: {fileID: 1042614577149968463}
   - component: {fileID: 7517377677513385260}
-  - component: {fileID: 6671517405472942594}
   - component: {fileID: 3422741379112706994}
-  - component: {fileID: 453625682051023666}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -139,6 +138,19 @@ MonoBehaviour:
   _volumeRolloff: 0
   _minDistance: 1
   _maxDistance: 500
+--- !u!135 &453625682051023666
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898333502078557236}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1042614577149968463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +164,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <BossHealth>k__BackingField: {fileID: 3422741379112706994}
-  <RechargeTime>k__BackingField: 0.75
 --- !u!114 &7517377677513385260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,18 +190,6 @@ MonoBehaviour:
   _particleSystem: {fileID: 2699734969359282945}
   _punchPowerOnHit: 0.1
   _punchDurationOnHit: 0.4
---- !u!114 &6671517405472942594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 898333502078557236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eee844e99c2f6743b4c968ffe175f1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3422741379112706994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,21 +202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1390dd9eedd21674683726045ebefaf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healthSetup: {fileID: 0}
   _invulnerabilityTime: 0.5
-  <Health>k__BackingField: {fileID: 6671517405472942594}
---- !u!135 &453625682051023666
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 898333502078557236}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1017820596299221361
 PrefabInstance:
   m_ObjectHideFlags: 0

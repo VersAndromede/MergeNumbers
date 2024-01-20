@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3505467481934742218}
   - component: {fileID: 3505467481934742220}
   - component: {fileID: 3505467481934742219}
-  - component: {fileID: 7595728476251660027}
+  - component: {fileID: 3363398879142885313}
   m_Layer: 0
   m_Name: Power
   m_TagString: Untagged
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 3505467481934742220}
   m_maskType: 0
---- !u!114 &7595728476251660027
+--- !u!114 &3363398879142885313
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,11 +182,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3505467481934742217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f0457ff935131745b4dae1418f0fc86, type: 3}
+  m_Script: {fileID: 11500000, guid: 467d0be5d9a87a04d98f832890a1fba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PositiveColorPower: {r: 0.16666675, g: 1, b: 0, a: 1}
-  NegativeColorPower: {r: 1, g: 0, b: 0, a: 1}
-  NeutralColorPower: {r: 1, g: 0.75, b: 0, a: 1}
-  Text: {fileID: 3505467481934742219}
-  Power: {fileID: 0}
+  _monster: {fileID: 0}
+  _text: {fileID: 3505467481934742219}
+  _negativeColorPower: {r: 1, g: 0, b: 0, a: 1}

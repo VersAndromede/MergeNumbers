@@ -13,7 +13,7 @@ public class BossLoader : MonoBehaviour
 
     private void OnDestroy()
     {
-        CurrentBoss.BossHealth.Health.Died -= OnBossDied;
+        CurrentBoss.BossHealth.Died -= OnBossDied;
     }
 
     public void Init(int bossDataIndex)
@@ -25,7 +25,7 @@ public class BossLoader : MonoBehaviour
 
         CurrentBoss = Instantiate(_bossDatas.Datas[BossDataIndex].Prefab, _container);
         CurrentBoss.Init(_bossDatas.Datas[BossDataIndex]);
-        CurrentBoss.BossHealth.Health.Died += OnBossDied;
+        CurrentBoss.BossHealth.Died += OnBossDied;
         Loaded?.Invoke(CurrentBoss);
     }
 

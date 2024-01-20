@@ -4,22 +4,15 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     [SerializeField] private GameMoves _gameMoves;
+    [SerializeField] private PlayerMovement _movement;
+    [SerializeField] private MonsterObserver _observer;
+    [SerializeField] private HealthSetup _healthSetup;
     [SerializeField] private UnityEvent _died;
 
-    [field: SerializeField] public PlayerMovement Movement { get; private set; }
-    [field: SerializeField] public PlayerRotation Rotation { get; private set; }
-    [field: SerializeField] public Power Power { get; private set; }
-    [field: SerializeField] public MonsterObserver Observer { get; private set; }
-    [field: SerializeField] public Health Health { get; private set; }
     [field: SerializeField] public int Damage { get; private set; }
 
-    private void OnEnable()
-    {
-        Movement.StartedMoving += OnStartedMoving;
-        Power.Over += Die;
-        Health.Died += Die;
-        _gameMoves.Ended += OnGameMovesEnded;
-    }
+    private Health _health;
+    private Power _power;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -27,12 +20,24 @@ public class Player : MonoBehaviour
             Merge(monster);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
-        Movement.StartedMoving -= OnStartedMoving;
-        Power.Over -= Die;
-        Health.Died -= Die;
+        _power.Over -= Die;
+        _movement.StartedMoving -= OnStartedMoving;
         _gameMoves.Ended -= OnGameMovesEnded;
+        
+        if (_health != null)
+            _health.Died -= Die;
+    }
+
+    public void Init(Health health, Power power)
+    {
+        _health = health;
+        _power = power;
+
+        _power.Over += Die;
+        _movement.StartedMoving += OnStartedMoving;
+        _gameMoves.Ended += OnGameMovesEnded;
     }
 
     public void UpgradeDamage(DamageUpgrade damageUpgrade)
@@ -43,16 +48,7 @@ public class Player : MonoBehaviour
     private void Merge(Monster monster)
     {
         monster.Die();
-
-        if (monster.Type == MonsterType.Adding)
-            Power.Add(monster.Power.Value);
-        else if (monster.Type == MonsterType.Divider)
-            Power.Divide(monster.Power.Value);
-    }
-
-    private void OnStartedMoving()
-    {
-        Observer.Clear();
+        monster.SetEffect(_power);
     }
 
     private void Die()
@@ -60,8 +56,15 @@ public class Player : MonoBehaviour
         _died?.Invoke();
     }
 
+    private void OnStartedMoving()
+    {
+        _observer.Clear();
+    }
+
     private void OnGameMovesEnded()
     {
-        Health.Init(Power.Value);
+        _health.SetMax((uint)_power.Value);
+        _healthSetup.Init(_health);
+        _health.Died += Die;
     }
 }

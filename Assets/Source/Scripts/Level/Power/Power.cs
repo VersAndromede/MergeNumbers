@@ -1,10 +1,14 @@
 using System;
-using UnityEngine;
 
-public class Power : MonoBehaviour
+public class Power 
 {
     public event Action Changed;
     public event Action Over;
+
+    public Power(int value)
+    {
+        Value = value;
+    }
 
     public int Value { get; private set; }
 

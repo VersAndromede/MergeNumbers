@@ -2,31 +2,21 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum MonsterType
-{
-    Adding,
-    Divider
-}
-
-public class Monster : MonoBehaviour
+public abstract class Monster : MonoBehaviour
 {
     [SerializeField] private UnityEvent _died;
 
-    [field: SerializeField] public Power Power { get; private set; }
-    [field: SerializeField] public MonsterType Type { get; private set; }
+    private Power _power;
 
     public event Action<Monster> Died;
 
-    private void OnValidate()
-    {
-        if (Type == MonsterType.Divider && Power.Value < 1)
-            throw new InvalidOperationException("The monster is 'Dividing', in which case the strength cannot be less than 1.");
-    }
+    public int PowerCount => _power.Value;
 
-    public void Init(MonsterType type, int power)
+    public abstract void SetEffect(Power target);
+
+    public void Init(int power)
     {
-        Type = type;
-        Power.Add(power);
+        _power = new Power(power);
     }
 
     public void Die()

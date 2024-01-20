@@ -6,24 +6,26 @@ public class Battlefield : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private GameMoves _gameMoves;
     [SerializeField] private DamageUpgrade _damageUpgrade;
+    [SerializeField] private HealthSetup _bossHealthSetup;
+    [SerializeField] public float _bossRechargeTime;
 
     private WaitForSeconds _waitTime;
     private Boss _boss;
+    private Health _playerHealth;
 
-    private void OnEnable()
-    {
-        _gameMoves.Ended += Fight;
-    }
+    private BossHealth _bossHealth => _boss.BossHealth;
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         _gameMoves.Ended -= Fight;
     }
 
-    public void Init(Boss boss)
+    public void Init(Boss boss, Health playerHealth)
     {
         _boss = boss;
-        _waitTime = new WaitForSeconds(_boss.RechargeTime);
+        _playerHealth = playerHealth;
+        _waitTime = new WaitForSeconds(_bossRechargeTime);
+        _gameMoves.Ended += Fight;
     }
 
     private void Fight()
@@ -34,13 +36,13 @@ public class Battlefield : MonoBehaviour
     private IEnumerator StartFight()
     {
         _player.UpgradeDamage(_damageUpgrade);
-        _boss.Init(_player.Damage);
-        StartCoroutine(_boss.BossHealth.MakeVulnerable());
+        _boss.Init(_bossHealthSetup, _player.Damage);
+        StartCoroutine(_bossHealth.MakeVulnerable());
         yield return _waitTime;
 
-        while (_player.Health.IsDied == false && _player.Health.Value >= 0 && _boss.BossHealth.Health.Value > 0)
+        while (_playerHealth.IsDied == false && _playerHealth.Value >= 0 && _bossHealth.HealthCount> 0)
         {
-            _player.Health.TakeDamage(_boss.Data.Damage);
+            _playerHealth.TakeDamage(_boss.Data.Damage);
             yield return _waitTime;
         }
     }

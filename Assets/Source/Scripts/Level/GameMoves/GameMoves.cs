@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameMoves : MonoBehaviour
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private GameStarter _gameStarter;
     [SerializeField] private MovesUpgrade _movesUpgrade; 
     [SerializeField] private Image _inputHandler;
@@ -18,13 +18,13 @@ public class GameMoves : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.Movement.FinishedMoving += FinishMove;
+        _playerMovement.FinishedMoving += FinishMove;
         _gameStarter.GameStarted += UpdateCount;
     }
 
     private void OnDisable()
     {
-        _player.Movement.FinishedMoving -= FinishMove;
+        _playerMovement.FinishedMoving -= FinishMove;
         _gameStarter.GameStarted -= UpdateCount;
     }
 

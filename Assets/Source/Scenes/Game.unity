@@ -509,7 +509,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358bb597a6a77164285b5249ec824c14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1832405562}
   _delayToResult: 0.75
   _gameOver:
     m_PersistentCalls:
@@ -670,6 +669,10 @@ PrefabInstance:
       propertyPath: _gameMoves
       value: 
       objectReference: {fileID: 860702837}
+    - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
+      propertyPath: _monsterFabric
+      value: 
+      objectReference: {fileID: 1736053729}
     - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
       propertyPath: <HasPlayerAtStart>k__BackingField
       value: 0
@@ -1826,7 +1829,7 @@ PrefabInstance:
     - target: {fileID: 1682137925346037182, guid: 163337b5160be2a43b06c4cff223431a, type: 3}
       propertyPath: _health
       value: 
-      objectReference: {fileID: 1832405557}
+      objectReference: {fileID: 0}
     - target: {fileID: 1962045134033550320, guid: 163337b5160be2a43b06c4cff223431a, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -2037,6 +2040,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 860702837}
     - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
+      propertyPath: _monsterFabric
+      value: 
+      objectReference: {fileID: 1736053729}
+    - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
       propertyPath: <HasPlayerAtStart>k__BackingField
       value: 0
       objectReference: {fileID: 0}
@@ -2186,6 +2193,10 @@ PrefabInstance:
       propertyPath: _gameMoves
       value: 
       objectReference: {fileID: 860702837}
+    - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
+      propertyPath: _monsterFabric
+      value: 
+      objectReference: {fileID: 1736053729}
     - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
       propertyPath: <HasPlayerAtStart>k__BackingField
       value: 0
@@ -2698,6 +2709,46 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3505467481934742218, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
   m_PrefabInstance: {fileID: 758100702}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &291443929 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3505467481934742219, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
+  m_PrefabInstance: {fileID: 758100702}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291443923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &291443931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291443923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85666c4268cf7844baf960ea8bf2d1b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _powerView: {fileID: 291443932}
+--- !u!114 &291443932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291443923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f0457ff935131745b4dae1418f0fc86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _positiveColorPower: {r: 0.16862746, g: 1, b: 0, a: 1}
+  _negativeColorPower: {r: 1, g: 0, b: 0, a: 1}
+  _neutralColorPower: {r: 1, g: 0.7490196, b: 0, a: 1}
+  _text: {fileID: 291443929}
 --- !u!1 &306451386
 GameObject:
   m_ObjectHideFlags: 0
@@ -2759,7 +2810,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _camera: {fileID: 963194227}
-  _player: {fileID: 1832405562}
+  _monsterObserver: {fileID: 1306194771}
+  _playerMovement: {fileID: 1832405561}
+  _playerRotation: {fileID: 17564389}
 --- !u!114 &306451389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7490,15 +7543,8 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 7595728476251660027, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
-      propertyPath: Power
-      value: 
-      objectReference: {fileID: 1832405558}
-    - target: {fileID: 7595728476251660027, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
-      propertyPath: <Power>k__BackingField
-      value: 
-      objectReference: {fileID: 6852137980672687212, guid: 5541f92d5f0f7f049babafa207f542fc, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3363398879142885313, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
 --- !u!1 &765130218
 GameObject:
@@ -8813,8 +8859,9 @@ GameObject:
   - component: {fileID: 858360837}
   - component: {fileID: 858360836}
   - component: {fileID: 858360835}
+  - component: {fileID: 858360839}
   m_Layer: 5
-  m_Name: Canvas Health Bar
+  m_Name: Canvas Boss Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8918,6 +8965,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 180
   m_TargetDisplay: 0
+--- !u!114 &858360839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 858360833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb239c840bcfa15438506bee9f19bbad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthBar: {fileID: 785097110548006822}
 --- !u!114 &860702837 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5908088581051044072, guid: 880654902a06a7546994a209f19fcccd, type: 3}
@@ -9759,9 +9819,6 @@ MonoBehaviour:
   _damageToCoinTranslator: {fileID: 946430447}
   _gameMoves: {fileID: 860702837}
   _battlefield: {fileID: 1750772144}
-  _playerHealthBar: {fileID: 551237260}
-  _bossHealthBar: {fileID: 785097110548006822}
-  _playerHealth: {fileID: 1832405557}
   _bossDamageView: {fileID: 281172487}
   _upgrades:
   - {fileID: 1438119913}
@@ -9796,6 +9853,8 @@ MonoBehaviour:
   _inputHandler: {fileID: 306451388}
   _hitDamageCountSpawner: {fileID: 2047549300}
   _attackReadinessIndicator: {fileID: 1923173745}
+  _player: {fileID: 1832405562}
+  _powerSetup: {fileID: 291443931}
 --- !u!114 &963194233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10536,6 +10595,10 @@ PrefabInstance:
       propertyPath: _gameMoves
       value: 
       objectReference: {fileID: 860702837}
+    - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
+      propertyPath: _monsterFabric
+      value: 
+      objectReference: {fileID: 1736053729}
     - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
       propertyPath: <HasPlayerAtStart>k__BackingField
       value: 0
@@ -12601,6 +12664,10 @@ PrefabInstance:
       propertyPath: _gameMoves
       value: 
       objectReference: {fileID: 860702837}
+    - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
+      propertyPath: _monsterFabric
+      value: 
+      objectReference: {fileID: 1736053729}
     - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
       propertyPath: <HasPlayerAtStart>k__BackingField
       value: 0
@@ -17136,6 +17203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1736053727}
   - component: {fileID: 1736053728}
+  - component: {fileID: 1736053729}
   m_Layer: 0
   m_Name: Monster Spawners
   m_TagString: Untagged
@@ -17179,6 +17247,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b0e0d6a282b5c4f93cbe63c0c8f642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1736053729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736053726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08b30e3bec454cf4c83181aedb5a6830, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _monsterAddingPrefab: {fileID: 5263795171829515703, guid: c99eda846593eda4e877cc4c6845a545, type: 3}
+  _monsterSubtractivePrefab: {fileID: 2201595879860415149, guid: addf6f05642aaed4aa8e603ce74caad0, type: 3}
+  _monsterDividerPrefab: {fileID: 7476709022605557509, guid: f98878ea0e3bfdc44aee7e9472f8eaa7, type: 3}
 --- !u!1 &1750772143
 GameObject:
   m_ObjectHideFlags: 0
@@ -17212,6 +17295,8 @@ MonoBehaviour:
   _player: {fileID: 1832405562}
   _gameMoves: {fileID: 860702837}
   _damageUpgrade: {fileID: 1438119913}
+  _bossHealthSetup: {fileID: 858360839}
+  _bossRechargeTime: 0.75
 --- !u!4 &1750772145
 Transform:
   m_ObjectHideFlags: 0
@@ -18209,6 +18294,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 860702837}
     - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
+      propertyPath: _monsterFabric
+      value: 
+      objectReference: {fileID: 1736053729}
+    - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
       propertyPath: <HasPlayerAtStart>k__BackingField
       value: 0
       objectReference: {fileID: 0}
@@ -18305,30 +18394,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1832405557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 873531701456837520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eee844e99c2f6743b4c968ffe175f1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1832405558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 873531701456837520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2ecbff748e82e84dad112022f8f6c97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1832405561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18356,6 +18421,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameMoves: {fileID: 860702837}
+  _movement: {fileID: 1832405561}
+  _observer: {fileID: 1306194771}
+  _healthSetup: {fileID: 8955322502694165247}
   _died:
     m_PersistentCalls:
       m_Calls:
@@ -18431,11 +18499,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  <Movement>k__BackingField: {fileID: 1832405561}
-  <Rotation>k__BackingField: {fileID: 17564389}
-  <Power>k__BackingField: {fileID: 1832405558}
-  <Observer>k__BackingField: {fileID: 1306194771}
-  <Health>k__BackingField: {fileID: 1832405557}
   <Damage>k__BackingField: 25
 --- !u!65 &1832405565
 BoxCollider:
@@ -20299,6 +20362,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 860702837}
     - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
+      propertyPath: _monsterFabric
+      value: 
+      objectReference: {fileID: 1736053729}
+    - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
       propertyPath: <HasPlayerAtStart>k__BackingField
       value: 0
       objectReference: {fileID: 0}
@@ -21383,6 +21450,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 860702837}
     - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
+      propertyPath: _monsterFabric
+      value: 
+      objectReference: {fileID: 1736053729}
+    - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
       propertyPath: <HasPlayerAtStart>k__BackingField
       value: 0
       objectReference: {fileID: 0}
@@ -21660,7 +21731,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 662a7ef04bfe4d64792675b8080f35c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 0}
   _slider: {fileID: 2241333205687142863}
   _text: {fileID: 2790625229487338045}
 --- !u!4 &787358116407209040
@@ -21691,11 +21761,10 @@ GameObject:
   - component: {fileID: 1832405566}
   - component: {fileID: 1832405565}
   - component: {fileID: 8955322502694165246}
-  - component: {fileID: 1832405557}
-  - component: {fileID: 1832405558}
   - component: {fileID: 1832405561}
   - component: {fileID: 1832405562}
   - component: {fileID: 8955322502694165245}
+  - component: {fileID: 8955322502694165247}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -23908,6 +23977,10 @@ PrefabInstance:
       propertyPath: _gameMoves
       value: 
       objectReference: {fileID: 860702837}
+    - target: {fileID: 4300994065296120038, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
+      propertyPath: _monsterFabric
+      value: 
+      objectReference: {fileID: 1736053729}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8093f35c1f58bc4eab578b6b82d97f2, type: 3}
 --- !u!1001 &5908088581273655453
@@ -23933,6 +24006,10 @@ PrefabInstance:
       propertyPath: _movesUpgrade
       value: 
       objectReference: {fileID: 1864263724}
+    - target: {fileID: 5908088581051044072, guid: 880654902a06a7546994a209f19fcccd, type: 3}
+      propertyPath: _playerMovement
+      value: 
+      objectReference: {fileID: 1832405561}
     - target: {fileID: 5908088581051044072, guid: 880654902a06a7546994a209f19fcccd, type: 3}
       propertyPath: Ended.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -24794,6 +24871,19 @@ MonoBehaviour:
   _volumeRolloff: 0
   _minDistance: 1
   _maxDistance: 500
+--- !u!114 &8955322502694165247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873531701456837520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb239c840bcfa15438506bee9f19bbad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthBar: {fileID: 551237260}
 --- !u!222 &9102655151499822719
 CanvasRenderer:
   m_ObjectHideFlags: 0

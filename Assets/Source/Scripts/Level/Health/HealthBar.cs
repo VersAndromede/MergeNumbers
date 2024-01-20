@@ -5,34 +5,22 @@ using DG.Tweening;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private Health _health;
     [SerializeField] private Slider _slider;
     [SerializeField] private TextMeshProUGUI _text;
 
-    private void Start()
+    public void UpdateUI(int count, int maxCount)
     {
-        _slider.value = (float)_health.Value / _health.MaxValue;
-        _text.text = $"{_health.Value}/{_health.MaxValue}";
+        _slider.value = (float)count / maxCount;
+        _text.text = $"{count}/{maxCount}";
     }
 
-    private void OnDestroy()
-    {
-        _health.Changed -= OnHealthChanged;
-    }
-
-    public void Init(Health health)
-    {
-        _health = health;
-        _health.Changed += OnHealthChanged;
-    }
-
-    private void OnHealthChanged()
+    public void UpdateSmoothUI(int count, int maxCount)
     {
         const float Duration = 0.25f;
 
-        float currentHealth = (float)_health.Value / _health.MaxValue;
+        float currentHealth = (float)count / maxCount;
 
         _slider.DOValue(currentHealth, Duration).SetEase(Ease.InOutCubic);
-        _text.text = $"{_health.Value}/{_health.MaxValue}";
+        _text.text = $"{count}/{maxCount}";
     }
 }

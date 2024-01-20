@@ -1,5 +1,4 @@
 using Agava.YandexGames;
-using Plugins.Audio.Core;
 using System.Collections.Generic;
 using TrainingSystem;
 using UnityEngine;
@@ -13,9 +12,6 @@ public class EntryPoint : MonoBehaviour
     [SerializeField] private DamageToCoinsTranslator _damageToCoinTranslator;
     [SerializeField] private GameMoves _gameMoves;
     [SerializeField] private Battlefield _battlefield;
-    [SerializeField] private HealthBar _playerHealthBar;
-    [SerializeField] private HealthBar _bossHealthBar;
-    [SerializeField] private Health _playerHealth;
     [SerializeField] private BossDamageView _bossDamageView;
     [SerializeField] private List<Upgrade> _upgrades;
     [SerializeField] private List<UpgradeButton> _upgradeButtons;
@@ -38,13 +34,10 @@ public class EntryPoint : MonoBehaviour
     [SerializeField] private InputHandler _inputHandler;
     [SerializeField] private HitDamageCountSpawner _hitDamageCountSpawner;
     [SerializeField] private AttackReadinessIndicator _attackReadinessIndicator;
+    [SerializeField] private Player _player;
+    [SerializeField] private PowerSetup _powerSetup;
 
     private GameSaver _saver;
-
-    private void Awake()
-    {
-        Init();
-    }
 
     private void OnDestroy()
     {
@@ -52,7 +45,7 @@ public class EntryPoint : MonoBehaviour
         _focusObserver.Disable();
     }
 
-    private void Init()
+    private void Awake()
     {
         SaveSystem.Load(saveData =>
         {
@@ -61,6 +54,8 @@ public class EntryPoint : MonoBehaviour
             InitWallet(saveData.Coins, out Wallet wallet);
             InitUpgrades(saveData.UpgradeDatas);
             InitUpgradeButtons(wallet);
+            Health playerHealth = new Health(0);
+            InitPower(playerHealth, out Power power);
             PauseController pauseController = new PauseController();
             InitReturnToMenuButtons();
             _pauseButton.Init(pauseController);
@@ -73,18 +68,16 @@ public class EntryPoint : MonoBehaviour
             _bossLoader.Init(saveData.BossDataIndex);
             _inputHandler.Init(training);
             _leaderboardUpdater.Init(wallet);
-            _gameOverController.Init(_bossLoader.CurrentBoss);
+            _gameOverController.Init(_bossLoader.CurrentBoss, power, playerHealth);
             _damageToCoinTranslator.Init(wallet, _bossLoader.CurrentBoss.BossHealth);
             _attackReadinessIndicator.Init(_bossLoader.CurrentBoss.BossHealth);
             _trainingCursor.Init(_bossLoader.CurrentBoss.BossHealth, saveData.BossDataIndex);
             BossAnimator bossAnimator = _bossLoader.CurrentBoss.GetComponent<BossAnimator>();
             bossAnimator.Init(_gameMoves);
-            _bossHealthBar.Init(_bossLoader.CurrentBoss.BossHealth.Health);
             _bossDamageView.Init(_bossLoader.CurrentBoss);
             _hitDamageCountSpawner.Init(_bossLoader.CurrentBoss.BossHealth);
 
-            _battlefield.Init(_bossLoader.CurrentBoss);
-            _playerHealthBar.Init(_playerHealth);
+            _battlefield.Init(_bossLoader.CurrentBoss, playerHealth);
             _focusObserver.Init(pauseController, _pauseButton, _rewardButton, _interstitialAdsDisplay);
 
             _saver = new GameSaver(_gameOverController, wallet, _bossLoader, _upgrades, saveData.BossAwards, _bossMapExitButton, _bossMapScroll, training, _rewardButton, _soundButton, _musicButton);
@@ -137,6 +130,12 @@ public class EntryPoint : MonoBehaviour
     {
         for (int i = 0; i < _returnToMenuButtons.Length; i++)
             _returnToMenuButtons[i].Init();
+    }
 
+    private void InitPower(Health health, out Power power)
+    {
+        power = new Power(0);
+        _powerSetup.Init(power);
+        _player.Init(health, power);
     }
 }

@@ -13,10 +13,9 @@ GameObject:
   - component: {fileID: 1782641542149131655}
   - component: {fileID: 3644685188573508752}
   - component: {fileID: 1511018601094955915}
-  - component: {fileID: 6625377753054276253}
-  - component: {fileID: 5282333317361112592}
+  - component: {fileID: 5263795171829515703}
   m_Layer: 7
-  m_Name: Monster
+  m_Name: Adding Monster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,7 +120,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 7113620311128232067, guid: a77fe3529ccfbc94dbd96fb0b60c34f3, type: 3}
---- !u!114 &6625377753054276253
+--- !u!114 &5263795171829515703
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,36 +129,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 269595275931741266}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd10b6ec6be3cf3469ac5429bfbdc901, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d712a3fa617cf34db30575648f8a514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _died:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1782641542149131655}
-        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7952546179754337006}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 889175022844582249}
         m_TargetAssemblyTypeName: MonsterParticle, Assembly-CSharp
         m_MethodName: Play
@@ -172,20 +147,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  <Power>k__BackingField: {fileID: 5282333317361112592}
-  <Type>k__BackingField: 0
---- !u!114 &5282333317361112592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 269595275931741266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2ecbff748e82e84dad112022f8f6c97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6843486297978495015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -193,6 +154,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 645734198312220392}
     m_Modifications:
+    - target: {fileID: 3363398879142885313, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 5263795171829515703}
+    - target: {fileID: 3363398879142885313, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
+      propertyPath: _positiveColorPower.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3363398879142885313, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
+      propertyPath: _positiveColorPower.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3363398879142885313, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
+      propertyPath: _positiveColorPower.r
+      value: 0.16862746
+      objectReference: {fileID: 0}
     - target: {fileID: 3505467481934742217, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
       propertyPath: m_Name
       value: Power
@@ -293,48 +270,13 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 20
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7595728476251660027, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
---- !u!114 &7952546179754337004 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3505467481934742219, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
-  m_PrefabInstance: {fileID: 6843486297978495015}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7952546179754337006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &7952546179754337005 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3505467481934742218, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
   m_PrefabInstance: {fileID: 6843486297978495015}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7952546179754337006 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3505467481934742217, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
-  m_PrefabInstance: {fileID: 6843486297978495015}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3808744097677431393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7952546179754337006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 467d0be5d9a87a04d98f832890a1fba8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PositiveColorPower: {r: 0.16666675, g: 1, b: 0, a: 1}
-  NegativeColorPower: {r: 1, g: 0, b: 0, a: 1}
-  NeutralColorPower: {r: 1, g: 0.75, b: 0, a: 1}
-  Text: {fileID: 7952546179754337004}
-  Power: {fileID: 5282333317361112592}
-  <Monster>k__BackingField: {fileID: 6625377753054276253}
 --- !u!1001 &8855245977853363873
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,4 +1,7 @@
-public interface IStorable
+namespace GameSaveSystem
 {
-    void Save();
+    public interface IStorable
+    {
+        void Save();
+    }
 }

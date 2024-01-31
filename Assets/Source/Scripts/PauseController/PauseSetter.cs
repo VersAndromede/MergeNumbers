@@ -1,17 +1,20 @@
 using Plugins.Audio.Core;
 using UnityEngine;
 
-public class PauseSetter 
+namespace Pause
 {
-    public void Enable()
+    public class PauseSetter
     {
-        Time.timeScale = 0;
-        AudioPauseHandler.Instance.PauseAudio();
-    }
+        public void Enable()
+        {
+            Time.timeScale = 0;
+            AudioPauseHandler.Instance.PauseAudio();
+        }
 
-    public void Disable() 
-    {
-        Time.timeScale = 1;
-        AudioPauseHandler.Instance.UnpauseAudio();
+        public void Disable()
+        {
+            Time.timeScale = 1;
+            AudioPauseHandler.Instance.UnpauseAudio();
+        }
     }
 }

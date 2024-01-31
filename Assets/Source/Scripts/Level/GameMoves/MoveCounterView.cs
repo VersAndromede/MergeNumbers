@@ -1,28 +1,31 @@
 using TMPro;
 using UnityEngine;
 
-public class MoveCounterView : MonoBehaviour
+namespace MoveCounterSystem
 {
-    [SerializeField] private TextMeshProUGUI _text;
-    [SerializeField] private MoveCounter _moveCounter;
-
-    private void Start()
+    public class MoveCounterView : MonoBehaviour
     {
-        OnChanged();
-    }
+        [SerializeField] private TextMeshProUGUI _text;
+        [SerializeField] private MoveCounter _moveCounter;
 
-    private void OnEnable()
-    {
-        _moveCounter.Changed += OnChanged;
-    }
+        private void Start()
+        {
+            OnChanged();
+        }
 
-    private void OnDisable()
-    {
-        _moveCounter.Changed -= OnChanged;
-    }
+        private void OnEnable()
+        {
+            _moveCounter.Changed += OnChanged;
+        }
 
-    private void OnChanged()
-    {
-        _text.text = _moveCounter.Count.ToString();
+        private void OnDisable()
+        {
+            _moveCounter.Changed -= OnChanged;
+        }
+
+        private void OnChanged()
+        {
+            _text.text = _moveCounter.Count.ToString();
+        }
     }
 }

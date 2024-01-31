@@ -1,24 +1,28 @@
-﻿using UnityEngine;
+﻿using MonsterSystem;
+using UnityEngine;
 
-public class MonsterFromRay
+namespace GameInput
 {
-    public bool TryGet(Vector3 origin, Vector3 direction, LayerMask layerMask, out Monster monster)
+    public class MonsterFromRay
     {
-        const float MaxDistance = 100;
-
-        Vector3 offset = new Vector3(0, 0.25f, 0);
-        Ray ray = new Ray(origin + offset, direction);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, MaxDistance, layerMask))
+        public bool TryGet(Vector3 origin, Vector3 direction, LayerMask layerMask, out Monster monster)
         {
-            if (hit.collider.TryGetComponent(out Monster monster2))
-            {
-                monster = monster2;
-                return true;
-            }
-        }
+            const float MaxDistance = 100;
 
-        monster = null;
-        return false;
+            Vector3 offset = new Vector3(0, 0.25f, 0);
+            Ray ray = new Ray(origin + offset, direction);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, MaxDistance, layerMask))
+            {
+                if (hit.collider.TryGetComponent(out Monster monster2))
+                {
+                    monster = monster2;
+                    return true;
+                }
+            }
+
+            monster = null;
+            return false;
+        }
     }
 }

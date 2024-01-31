@@ -1,20 +1,23 @@
-﻿public class PlayerPowerView : PowerView
+﻿namespace PowerSystem
 {
-    public void UpdateUI(int powerValue)
+    public class PlayerPowerView : PowerView
     {
-        switch (powerValue)
+        public void UpdateUI(int powerValue)
         {
-            case > 0:
-                SetColor(PowerColorsConfig.Positive);
-                break;
-            case < 0:
-                SetColor(PowerColorsConfig.Negative);
-                break;
-            default:
-                SetColor(PowerColorsConfig.Neutral);
-                break;
-        }
+            switch (powerValue)
+            {
+                case > 0:
+                    SetColor(PowerColorsConfig.Positive);
+                    break;
+                case < 0:
+                    SetColor(PowerColorsConfig.Negative);
+                    break;
+                default:
+                    SetColor(PowerColorsConfig.Neutral);
+                    break;
+            }
 
-        SetValue($"{powerValue}");
+            SetValue($"{powerValue}");
+        }
     }
 }

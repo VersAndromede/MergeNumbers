@@ -1,42 +1,48 @@
+using MonsterSystem;
+using MoveCounterSystem;
+using PlayerSystem;
 using UnityEngine;
 
-public class SpawnerObserver : MonoBehaviour
+namespace MonsterSpawnerSystem
 {
-    [SerializeField] private MoveCounter _moveCounter;
-
-    public Player Player { get; private set; }
-    public Monster Monster { get; private set; }
-
-    private void OnEnable()
+    public class SpawnerObserver : MonoBehaviour
     {
-        _moveCounter.Ended += OnGameMovesEnded;
-    }
+        [SerializeField] private MoveCounter _moveCounter;
 
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.TryGetComponent(out Player player))
-            Player = player;
+        public Player Player { get; private set; }
+        public Monster Monster { get; private set; }
 
-        if (collision.TryGetComponent(out Monster monster))
-            Monster = monster;
-    }
-
-    private void OnTriggerExit(Collider collision)
-    {
-        if (collision.TryGetComponent(out Player player))
+        private void OnEnable()
         {
-            Player = null;
-            Monster = null;
+            _moveCounter.Ended += OnGameMovesEnded;
         }
-    }
 
-    private void OnDisable()
-    {
-        _moveCounter.Ended -= OnGameMovesEnded;
-    }
+        private void OnTriggerEnter(Collider collision)
+        {
+            if (collision.TryGetComponent(out Player player))
+                Player = player;
 
-    private void OnGameMovesEnded()
-    {
-        gameObject.SetActive(false);
+            if (collision.TryGetComponent(out Monster monster))
+                Monster = monster;
+        }
+
+        private void OnTriggerExit(Collider collision)
+        {
+            if (collision.TryGetComponent(out Player player))
+            {
+                Player = null;
+                Monster = null;
+            }
+        }
+
+        private void OnDisable()
+        {
+            _moveCounter.Ended -= OnGameMovesEnded;
+        }
+
+        private void OnGameMovesEnded()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

@@ -1,32 +1,36 @@
+using BossSystem;
 using UnityEngine;
 
-public class HitDamageCountSpawner : MonoBehaviour
+namespace HitDamage
 {
-    [SerializeField] private HitDamageCountText _hitDamageCountTextPrefab;
-    [SerializeField] private Vector3 _downBoard;
-    [SerializeField] private Vector3 _upBoard;
-
-    private BossHealth _bossHealth;
-
-    private void OnDestroy()
+    public class HitDamageCountSpawner : MonoBehaviour
     {
-        _bossHealth.DamageReceived -= OnBossDamageReceived;
-    }
+        [SerializeField] private HitDamageCountText _hitDamageCountTextPrefab;
+        [SerializeField] private Vector3 _downBoard;
+        [SerializeField] private Vector3 _upBoard;
 
-    public void Init(BossHealth bossHealth)
-    {
-        _bossHealth = bossHealth;
-        _bossHealth.DamageReceived += OnBossDamageReceived;
-    }
+        private BossHealth _bossHealth;
 
-    private void OnBossDamageReceived(int damage)
-    {
-        HitDamageCountText hitDamageCountText = Instantiate(_hitDamageCountTextPrefab, transform);
-        float xPosition = Random.Range(_downBoard.x, _upBoard.x);
-        float yPosition = Random.Range(_downBoard.y, _upBoard.y);
-        float zPosition = Random.Range(_downBoard.z, _upBoard.z);
+        private void OnDestroy()
+        {
+            _bossHealth.DamageReceived -= OnBossDamageReceived;
+        }
 
-        hitDamageCountText.transform.position = new Vector3(xPosition, yPosition, zPosition);
-        hitDamageCountText.Init(damage);
+        public void Init(BossHealth bossHealth)
+        {
+            _bossHealth = bossHealth;
+            _bossHealth.DamageReceived += OnBossDamageReceived;
+        }
+
+        private void OnBossDamageReceived(int damage)
+        {
+            HitDamageCountText hitDamageCountText = Instantiate(_hitDamageCountTextPrefab, transform);
+            float xPosition = Random.Range(_downBoard.x, _upBoard.x);
+            float yPosition = Random.Range(_downBoard.y, _upBoard.y);
+            float zPosition = Random.Range(_downBoard.z, _upBoard.z);
+
+            hitDamageCountText.transform.position = new Vector3(xPosition, yPosition, zPosition);
+            hitDamageCountText.Init(damage);
+        }
     }
 }

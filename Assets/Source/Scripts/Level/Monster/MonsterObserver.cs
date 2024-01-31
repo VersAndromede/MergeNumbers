@@ -1,32 +1,36 @@
+using PlayerSystem;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterObserver : MonoBehaviour
+namespace MonsterSystem
 {
-    [SerializeField] private PlayerMovement _movement;
-
-    private List<Monster> _monsters = new List<Monster>();
-
-    public IReadOnlyList<Monster> Monsters => _monsters;
-
-    private void OnEnable()
+    public class MonsterObserver : MonoBehaviour
     {
-        _movement.StartedMoving += OnStartedMoving;
-    }
+        [SerializeField] private PlayerMovement _movement;
 
-    private void OnDisable()
-    {
-        _movement.StartedMoving -= OnStartedMoving;
-    }
+        private List<Monster> _monsters = new List<Monster>();
 
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.TryGetComponent(out Monster monster))
-            _monsters.Add(monster);
-    }
+        public IReadOnlyList<Monster> Monsters => _monsters;
 
-    private void OnStartedMoving()
-    {
-        _monsters = new List<Monster>();
+        private void OnEnable()
+        {
+            _movement.StartedMoving += OnStartedMoving;
+        }
+
+        private void OnDisable()
+        {
+            _movement.StartedMoving -= OnStartedMoving;
+        }
+
+        private void OnTriggerEnter(Collider collision)
+        {
+            if (collision.TryGetComponent(out Monster monster))
+                _monsters.Add(monster);
+        }
+
+        private void OnStartedMoving()
+        {
+            _monsters = new List<Monster>();
+        }
     }
 }

@@ -1,34 +1,39 @@
+using GameOver;
 using UnityEngine;
+using WalletSystem;
 
-public class LeaderboardUpdater : MonoBehaviour
+namespace MainLeaderboard
 {
-    [SerializeField] private Leaderboard _leaderboard;
-    [SerializeField] private GameOverHandler _gameOverHandler;
-
-    private Wallet _wallet;
-
-    private void OnDestroy()
+    public class LeaderboardUpdater : MonoBehaviour
     {
-        _gameOverHandler.GameOver -= OnGameOver;
-    }
+        [SerializeField] private Leaderboard _leaderboard;
+        [SerializeField] private GameOverHandler _gameOverHandler;
 
-    public void Init(Wallet wallet)
-    {
-        _wallet = wallet;
-        _gameOverHandler.GameOver += OnGameOver;
-    }
+        private Wallet _wallet;
 
-    public void UpdateLeaderboard()
-    {
-        _leaderboard.FetchScore(score =>
+        private void OnDestroy()
         {
-            if (_wallet.Coins > score)
-                _leaderboard.SetPlayer(_wallet.Coins);
-        });
-    }
+            _gameOverHandler.GameOver -= OnGameOver;
+        }
 
-    private void OnGameOver(Winner winner)
-    {
-        UpdateLeaderboard();
+        public void Init(Wallet wallet)
+        {
+            _wallet = wallet;
+            _gameOverHandler.GameOver += OnGameOver;
+        }
+
+        public void UpdateLeaderboard()
+        {
+            _leaderboard.FetchScore(score =>
+            {
+                if (_wallet.Coins > score)
+                    _leaderboard.SetPlayer(_wallet.Coins);
+            });
+        }
+
+        private void OnGameOver(Winner winner)
+        {
+            UpdateLeaderboard();
+        }
     }
 }

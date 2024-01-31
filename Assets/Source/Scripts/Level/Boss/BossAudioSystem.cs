@@ -4,33 +4,36 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class BossAudioSystem
+namespace BossSystem
 {
-    [SerializeField] private SourceAudio _audioSource;
-    [SerializeField] private List<AudioDataProperty> _hitClips;
-
-    private const int MaxRepeatCount = 3;
-
-    private AudioDataProperty _currentAudioClip;
-    private int _repeatCount;
-
-    public void PlayHit()
+    [Serializable]
+    public class BossAudioSystem
     {
-        AudioDataProperty clip = _hitClips[UnityEngine.Random.Range(0, _hitClips.Count)];
+        [SerializeField] private SourceAudio _audioSource;
+        [SerializeField] private List<AudioDataProperty> _hitClips;
 
-        if (_currentAudioClip == clip)
+        private const int MaxRepeatCount = 3;
+
+        private AudioDataProperty _currentAudioClip;
+        private int _repeatCount;
+
+        public void PlayHit()
         {
-            _repeatCount++;
+            AudioDataProperty clip = _hitClips[UnityEngine.Random.Range(0, _hitClips.Count)];
 
-            if (_repeatCount == MaxRepeatCount)
+            if (_currentAudioClip == clip)
             {
-                PlayHit();
-                return;
-            }
-        }
+                _repeatCount++;
 
-        _currentAudioClip = clip;
-        _audioSource.PlayOneShot(clip);
+                if (_repeatCount == MaxRepeatCount)
+                {
+                    PlayHit();
+                    return;
+                }
+            }
+
+            _currentAudioClip = clip;
+            _audioSource.PlayOneShot(clip);
+        }
     }
 }

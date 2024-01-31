@@ -1,7 +1,12 @@
-﻿public class MonsterSubtractive : Monster
+﻿using PowerSystem;
+
+namespace MonsterSystem
 {
-    public override void SetEffect(Power target)
+    public class MonsterSubtractive : Monster
     {
-        target.Add(-PowerCount);
+        public override void SetEffect(Power target)
+        {
+            target.Add(-PowerCount);
+        }
     }
 }

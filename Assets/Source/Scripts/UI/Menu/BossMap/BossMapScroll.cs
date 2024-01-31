@@ -1,17 +1,20 @@
 using UnityEngine;
 
-public class BossMapScroll : MonoBehaviour
+namespace BossAchievements
 {
-    [SerializeField] private Transform _contentTransform;
-
-    public float YPosition => _contentTransform.position.y;
-
-    public void Init(float yPosition)
+    public class BossMapScroll : MonoBehaviour
     {
-        float startYPosition = _contentTransform.position.y;
-        _contentTransform.position = new Vector2(_contentTransform.position.x, yPosition);
+        [SerializeField] private Transform _contentTransform;
 
-        if (_contentTransform.position.y == 0)
-            _contentTransform.position = new Vector2(_contentTransform.position.x, startYPosition);
+        public float YPosition => _contentTransform.position.y;
+
+        public void Init(float yPosition)
+        {
+            float startYPosition = _contentTransform.position.y;
+            _contentTransform.position = new Vector2(_contentTransform.position.x, yPosition);
+
+            if (_contentTransform.position.y == 0)
+                _contentTransform.position = new Vector2(_contentTransform.position.x, startYPosition);
+        }
     }
 }

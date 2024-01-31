@@ -1,19 +1,22 @@
 ﻿using UnityEngine;
 
-public class HealthSetup : MonoBehaviour
+namespace HealthSystem
 {
-    [SerializeField] private HealthBar _healthBar;
-
-    private HealthPresenter _healthPresenter;
-
-    private void OnDestroy()
+    public class HealthSetup : MonoBehaviour
     {
-        _healthPresenter?.Disable();
-    }
+        [SerializeField] private HealthBar _healthBar;
 
-    public void Init(Health health)
-    {
-        _healthPresenter = new HealthPresenter(health, _healthBar);
-        _healthPresenter.Enable();
+        private HealthPresenter _healthPresenter;
+
+        private void OnDestroy()
+        {
+            _healthPresenter?.Disable();
+        }
+
+        public void Init(Health health)
+        {
+            _healthPresenter = new HealthPresenter(health, _healthBar);
+            _healthPresenter.Enable();
+        }
     }
 }

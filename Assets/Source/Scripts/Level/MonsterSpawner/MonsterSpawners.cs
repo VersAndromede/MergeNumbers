@@ -1,63 +1,67 @@
+using MonsterSystem;
 using UnityEngine;
 
-public class MonsterSpawners : MonoBehaviour, IMonsterNegativeCounter
+namespace MonsterSpawnerSystem
 {
-    private MonsterSpawner[] _monsterSpawners;
-
-    public int AllCount { get; private set; }
-    public int DividersCount { get; private set; }
-    public int MaxAllCount => 4;
-    public int MaxDividersCount => 2;
-
-    private void Start()
+    public class MonsterSpawners : MonoBehaviour, IMonsterNegativeCounter
     {
-        _monsterSpawners = GetComponentsInChildren<MonsterSpawner>();
+        private MonsterSpawner[] _monsterSpawners;
 
-        foreach (MonsterSpawner monsterSpawner in _monsterSpawners)
+        public int AllCount { get; private set; }
+        public int DividersCount { get; private set; }
+        public int MaxAllCount => 4;
+        public int MaxDividersCount => 2;
+
+        private void Start()
         {
-            monsterSpawner.Init(this);
-            monsterSpawner.Spawned += OnMonsterSpawned;
-            monsterSpawner.CounterRestartRequired += OnCounterRestartRequired;
-        }
-    }
+            _monsterSpawners = GetComponentsInChildren<MonsterSpawner>();
 
-    private void OnDestroy()
-    {
-        foreach (MonsterSpawner monsterSpawner in _monsterSpawners)
+            foreach (MonsterSpawner monsterSpawner in _monsterSpawners)
+            {
+                monsterSpawner.Init(this);
+                monsterSpawner.Spawned += OnMonsterSpawned;
+                monsterSpawner.CounterRestartRequired += OnCounterRestartRequired;
+            }
+        }
+
+        private void OnDestroy()
         {
-            monsterSpawner.Spawned -= OnMonsterSpawned;
-            monsterSpawner.CounterRestartRequired -= OnCounterRestartRequired;
+            foreach (MonsterSpawner monsterSpawner in _monsterSpawners)
+            {
+                monsterSpawner.Spawned -= OnMonsterSpawned;
+                monsterSpawner.CounterRestartRequired -= OnCounterRestartRequired;
+            }
         }
-    }
 
-    public void FillFieldWithMonstersAdding()
-    {
-        foreach (MonsterSpawner monsterSpawner in _monsterSpawners)
-            if (monsterSpawner.HasPlayerAtStart == false)
-                monsterSpawner.InstantiateMonsterAdding();
-    }
-
-    public void OnMonsterSpawned(Monster monster, int power)
-    {
-        if (monster is MonsterSubtractive)
-            AllCount++;
-
-        if (monster is MonsterDivider)
+        public void FillFieldWithMonstersAdding()
         {
-            DividersCount++;
-            AllCount++;
-            monster.Died += OnMonsterDividerDied;
+            foreach (MonsterSpawner monsterSpawner in _monsterSpawners)
+                if (monsterSpawner.HasPlayerAtStart == false)
+                    monsterSpawner.InstantiateMonsterAdding();
         }
-    }
 
-    public void OnCounterRestartRequired()
-    {
-        AllCount = 0;
-    }
+        public void OnMonsterSpawned(Monster monster, int power)
+        {
+            if (monster is MonsterSubtractive)
+                AllCount++;
 
-    private void OnMonsterDividerDied(Monster monster)
-    {
-        monster.Died -= OnMonsterDividerDied;
-        DividersCount--;
+            if (monster is MonsterDivider)
+            {
+                DividersCount++;
+                AllCount++;
+                monster.Died += OnMonsterDividerDied;
+            }
+        }
+
+        public void OnCounterRestartRequired()
+        {
+            AllCount = 0;
+        }
+
+        private void OnMonsterDividerDied(Monster monster)
+        {
+            monster.Died -= OnMonsterDividerDied;
+            DividersCount--;
+        }
     }
 }

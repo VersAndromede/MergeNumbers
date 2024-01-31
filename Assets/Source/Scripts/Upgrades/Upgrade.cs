@@ -33,10 +33,11 @@ namespace Upgrades
 
         public void Init(int level, int price, int bonusValue)
         {
-            Debug.Log($"{level} / {price} / {bonusValue}");
-
             if (level < MinLevel)
-                level = MinLevel;
+            {
+                OnInit();
+                return;
+            }
 
             Level = level;
             Price = price;

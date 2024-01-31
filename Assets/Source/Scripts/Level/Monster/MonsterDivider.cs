@@ -1,7 +1,12 @@
-﻿public class MonsterDivider : Monster
+﻿using PowerSystem;
+
+namespace MonsterSystem
 {
-    public override void SetEffect(Power target)
+    public class MonsterDivider : Monster
     {
-        target.Divide(PowerCount);
+        public override void SetEffect(Power target)
+        {
+            target.Divide(PowerCount);
+        }
     }
 }

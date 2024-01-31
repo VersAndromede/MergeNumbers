@@ -1,6 +1,9 @@
 ﻿using System;
 
-public interface IInput
+namespace GameInput
 {
-    public event Action<Direction> Received;
+    public interface IInput
+    {
+        public event Action<Direction> Received;
+    }
 }

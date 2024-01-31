@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 
-public class InputGetter : MonoBehaviour
+namespace GameInput
 {
-    [SerializeField] private MobileInput _mobileInput;
-    [SerializeField] private DesktopInput _desktopInput;
-
-    public IInput Get()
+    public class InputGetter : MonoBehaviour
     {
-        if (Application.isMobilePlatform)
-            return _mobileInput;
-        else
-            return _desktopInput;
+        [SerializeField] private MobileInput _mobileInput;
+        [SerializeField] private DesktopInput _desktopInput;
+
+        public IInput Get()
+        {
+            if (Application.isMobilePlatform)
+                return _mobileInput;
+            else
+                return _desktopInput;
+        }
     }
 }

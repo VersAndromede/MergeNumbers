@@ -1,6 +1,9 @@
 ﻿using System;
 
-public interface IAd
+namespace Ad
 {
-    public event Action<bool> AdRunning;
+    public interface IAd
+    {
+        public event Action<bool> AdRunning;
+    }
 }

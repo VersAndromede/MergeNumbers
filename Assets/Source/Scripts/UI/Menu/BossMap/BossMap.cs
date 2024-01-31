@@ -1,33 +1,38 @@
+using BossSystem;
 using System.Collections.Generic;
 using UnityEngine;
+using WalletSystem;
 
-public class BossMap : MonoBehaviour
+namespace BossAchievements
 {
-    [SerializeField] private BossListData _bossDatas;
-    [SerializeField] private BossMapItem _bossMapItemPrefab;
-    [SerializeField] private Transform _container;
-
-    public void Fill(List<BossAward> bossAwards, int bossDataIndex, Wallet wallet)
+    public class BossMap : MonoBehaviour
     {
-        if (bossAwards.Count == 0)
-            InitBossAwards(bossAwards);
+        [SerializeField] private BossListData _bossDatas;
+        [SerializeField] private BossMapItem _bossMapItemPrefab;
+        [SerializeField] private Transform _container;
 
-        for (int i = 0; i < _bossDatas.Datas.Count; i++)
+        public void Fill(List<BossAward> bossAwards, int bossDataIndex, Wallet wallet)
         {
-            BossMapItem bossMapItem = Instantiate(_bossMapItemPrefab, _container);
-            bossMapItem.Init(_bossDatas.Datas[i], wallet, bossAwards[i]);
+            if (bossAwards.Count == 0)
+                InitBossAwards(bossAwards);
 
-            if (bossDataIndex < i)
-                bossMapItem.Lock();
+            for (int i = 0; i < _bossDatas.Datas.Count; i++)
+            {
+                BossMapItem bossMapItem = Instantiate(_bossMapItemPrefab, _container);
+                bossMapItem.Init(_bossDatas.Datas[i], wallet, bossAwards[i]);
+
+                if (bossDataIndex < i)
+                    bossMapItem.Lock();
+            }
         }
-    }
 
-    private void InitBossAwards(List<BossAward> bossAwards)
-    {
-        for (int i = 0; i < _bossDatas.Datas.Count; i++)
+        private void InitBossAwards(List<BossAward> bossAwards)
         {
-            BossAward bossAward = new BossAward(_bossDatas.Datas[i].Award, i);
-            bossAwards.Add(bossAward);
+            for (int i = 0; i < _bossDatas.Datas.Count; i++)
+            {
+                BossAward bossAward = new BossAward(_bossDatas.Datas[i].Award, i);
+                bossAwards.Add(bossAward);
+            }
         }
     }
 }

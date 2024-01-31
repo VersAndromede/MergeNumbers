@@ -1,155 +1,172 @@
+using Ad;
+using Audio;
+using BossAchievements;
+using BossSystem;
+using GameOver;
 using System.Collections.Generic;
 using TrainingSystem;
 using UnityEngine.UI;
 using Upgrades;
+using WalletSystem;
 
-public class GameSaver
+namespace GameSaveSystem
 {
-    private readonly SaveSystem _saveSystem = new SaveSystem();
-
-    private readonly GameOverHandler _gameOverHandler;
-    private readonly Wallet _wallet;
-    private readonly BossLoader _bossLoader;
-    private readonly IReadOnlyList<Upgrade> _upgrades;
-    private readonly List<BossAward> _bossAwards;
-    private readonly Button _bossMapExitButton;
-    private readonly BossMapScroll _bossMapScroll;
-    private readonly Training _training;
-    private readonly RewardButton _rewardButton;
-    private readonly AudioButton _soundButton;
-    private readonly AudioButton _musicButton;
-
-    public GameSaver(GameOverHandler gameOverHandler, Wallet wallet, BossLoader bossLoader,
-        IReadOnlyList<Upgrade> upgrades, List<BossAward> bossAwards, Button bossMapExitButton,
-        BossMapScroll bossMapScroll, Training training, RewardButton rewardButton, 
-        AudioButton soundButton, AudioButton musicButton)
+    public class GameSaver
     {
-        _gameOverHandler = gameOverHandler;
-        _wallet = wallet;
-        _bossLoader = bossLoader;
-        _upgrades = upgrades;
-        _bossAwards = bossAwards;
-        _bossMapExitButton = bossMapExitButton;
-        _bossMapScroll = bossMapScroll;
-        _training = training;
-        _rewardButton = rewardButton;
-        _soundButton = soundButton;
-        _musicButton = musicButton;
-    }
+        private readonly SaveSystem _saveSystem = new SaveSystem();
 
-    public void Enable()
-    {
-        _gameOverHandler.GameOver += OnGameOver;
-        _training.Viewed += OnTrainingViewed;
-        _rewardButton.RewardReceived += OnRewardGetted;
-        _soundButton.EnabledChanged += OnSoundButtonEnabledChanged;
-        _musicButton.EnabledChanged += OnMusicButtonEnabledChanged;
-        _bossMapExitButton.onClick.AddListener(OnBossMapExitButton);
+        private readonly GameOverHandler _gameOverHandler;
+        private readonly Wallet _wallet;
+        private readonly BossLoader _bossLoader;
+        private readonly IReadOnlyList<Upgrade> _upgrades;
+        private readonly List<BossAward> _bossAwards;
+        private readonly Button _bossMapExitButton;
+        private readonly BossMapScroll _bossMapScroll;
+        private readonly Training _training;
+        private readonly RewardButton _rewardButton;
+        private readonly AudioButton _soundButton;
+        private readonly AudioButton _musicButton;
 
-        foreach (Upgrade upgrade in _upgrades)
-            upgrade.LevelChanged += OnUpgradeLevelChanged;
-
-        foreach (BossAward bossAward in _bossAwards)
-            bossAward.Taken += OnBossAwardTaken;
-    }
-
-    public void Disable()
-    {
-        _gameOverHandler.GameOver -= OnGameOver;
-        _training.Viewed -= OnTrainingViewed;
-        _rewardButton.RewardReceived -= OnRewardGetted;
-        _soundButton.EnabledChanged -= OnSoundButtonEnabledChanged;
-        _musicButton.EnabledChanged -= OnMusicButtonEnabledChanged;
-        _bossMapExitButton.onClick.RemoveListener(OnBossMapExitButton);
-
-        foreach (Upgrade upgrade in _upgrades)
-            upgrade.LevelChanged -= OnUpgradeLevelChanged;
-
-        foreach (BossAward bossAward in _bossAwards)
-            bossAward.Taken -= OnBossAwardTaken;
-    }
-
-    private void OnGameOver(Winner winner)
-    {
-        _saveSystem.Save(data =>
+        public GameSaver(
+            GameOverHandler gameOverHandler,
+            Wallet wallet,
+            BossLoader bossLoader,
+            IReadOnlyList<Upgrade> upgrades,
+            List<BossAward> bossAwards,
+            Button bossMapExitButton,
+            BossMapScroll bossMapScroll,
+            Training training,
+            RewardButton rewardButton,
+            AudioButton soundButton,
+            AudioButton musicButton)
         {
-            data.Coins = _wallet.Coins;
-            data.BossDataIndex = _bossLoader.BossDataIndex;
+            _gameOverHandler = gameOverHandler;
+            _wallet = wallet;
+            _bossLoader = bossLoader;
+            _upgrades = upgrades;
+            _bossAwards = bossAwards;
+            _bossMapExitButton = bossMapExitButton;
+            _bossMapScroll = bossMapScroll;
+            _training = training;
+            _rewardButton = rewardButton;
+            _soundButton = soundButton;
+            _musicButton = musicButton;
+        }
 
-            if (data.BossAwards.Count == 0)
-                data.BossAwards = _bossAwards;
-
-            if (data.BossDataIndex - 1 >= data.BossAwards.Count || winner != Winner.Player)
-                return;
-
-            data.BossAwards[data.BossDataIndex - 1].LetTake();
-        });
-    }
-
-    private void OnUpgradeLevelChanged()
-    {
-        _saveSystem.Save(data =>
+        public void Enable()
         {
-            for (int i = 0; i < _upgrades.Count; i++)
+            _gameOverHandler.GameOver += OnGameOver;
+            _training.Viewed += OnTrainingViewed;
+            _rewardButton.RewardReceived += OnRewardGetted;
+            _soundButton.EnabledChanged += OnSoundButtonEnabledChanged;
+            _musicButton.EnabledChanged += OnMusicButtonEnabledChanged;
+            _bossMapExitButton.onClick.AddListener(OnBossMapExitButton);
+
+            foreach (Upgrade upgrade in _upgrades)
+                upgrade.LevelChanged += OnUpgradeLevelChanged;
+
+            foreach (BossAward bossAward in _bossAwards)
+                bossAward.Taken += OnBossAwardTaken;
+        }
+
+        public void Disable()
+        {
+            _gameOverHandler.GameOver -= OnGameOver;
+            _training.Viewed -= OnTrainingViewed;
+            _rewardButton.RewardReceived -= OnRewardGetted;
+            _soundButton.EnabledChanged -= OnSoundButtonEnabledChanged;
+            _musicButton.EnabledChanged -= OnMusicButtonEnabledChanged;
+            _bossMapExitButton.onClick.RemoveListener(OnBossMapExitButton);
+
+            foreach (Upgrade upgrade in _upgrades)
+                upgrade.LevelChanged -= OnUpgradeLevelChanged;
+
+            foreach (BossAward bossAward in _bossAwards)
+                bossAward.Taken -= OnBossAwardTaken;
+        }
+
+        private void OnGameOver(Winner winner)
+        {
+            _saveSystem.Save(data =>
             {
-                data.UpgradeDatas[i] = new()
+                data.Coins = _wallet.Coins;
+                data.BossDataIndex = _bossLoader.BossDataIndex;
+
+                if (data.BossAwards.Count == 0)
+                    data.BossAwards = _bossAwards;
+
+                if (data.BossDataIndex - 1 >= data.BossAwards.Count || winner != Winner.Player)
+                    return;
+
+                data.BossAwards[data.BossDataIndex - 1].LetTake();
+            });
+        }
+
+        private void OnUpgradeLevelChanged()
+        {
+            _saveSystem.Save(data =>
+            {
+                for (int i = 0; i < _upgrades.Count; i++)
                 {
-                    Level = _upgrades[i].Level,
-                    Price = _upgrades[i].Price,
-                    BonusValue = _upgrades[i].BonusValue
-                };
-            }
+                    data.UpgradeDatas[i] = new()
+                    {
+                        Level = _upgrades[i].Level,
+                        Price = _upgrades[i].Price,
+                        BonusValue = _upgrades[i].BonusValue,
+                    };
+                }
 
-            data.Coins = _wallet.Coins;
-        });
-    }
+                data.Coins = _wallet.Coins;
+            });
+        }
 
-    private void OnBossAwardTaken(BossAward bossAward)
-    {
-        _saveSystem.Save(data =>
+        private void OnBossAwardTaken(BossAward bossAward)
         {
-            data.BossAwards[bossAward.Id] = bossAward;
-            data.Coins = _wallet.Coins;
-        });
-    }
+            _saveSystem.Save(data =>
+            {
+                data.BossAwards[bossAward.Id] = bossAward;
+                data.Coins = _wallet.Coins;
+            });
+        }
 
-    private void OnBossMapExitButton()
-    {
-        _saveSystem.Save(data =>
+        private void OnBossMapExitButton()
         {
-            data.BossMapContentYPosition = _bossMapScroll.YPosition;
-        });
-    }
+            _saveSystem.Save(data =>
+            {
+                data.BossMapContentYPosition = _bossMapScroll.YPosition;
+            });
+        }
 
-    private void OnTrainingViewed()
-    {
-        _saveSystem.Save(data =>
+        private void OnTrainingViewed()
         {
-            data.TrainingIsViewed = true;
-        });
-    }
+            _saveSystem.Save(data =>
+            {
+                data.TrainingIsViewed = true;
+            });
+        }
 
-    private void OnRewardGetted()
-    {
-        _saveSystem.Save(data =>
+        private void OnRewardGetted()
         {
-            data.Coins = _wallet.Coins;
-        });
-    }
+            _saveSystem.Save(data =>
+            {
+                data.Coins = _wallet.Coins;
+            });
+        }
 
-    private void OnSoundButtonEnabledChanged()
-    {
-        _saveSystem.Save(data =>
+        private void OnSoundButtonEnabledChanged()
         {
-            data.IsSoundButtonEnabled = _soundButton.Enabled;
-        });
-    }
+            _saveSystem.Save(data =>
+            {
+                data.IsSoundButtonEnabled = _soundButton.Enabled;
+            });
+        }
 
-    private void OnMusicButtonEnabledChanged()
-    {
-        _saveSystem.Save(data =>
+        private void OnMusicButtonEnabledChanged()
         {
-            data.IsMusicButtonEnabled = _musicButton.Enabled;
-        });
+            _saveSystem.Save(data =>
+            {
+                data.IsMusicButtonEnabled = _musicButton.Enabled;
+            });
+        }
     }
 }

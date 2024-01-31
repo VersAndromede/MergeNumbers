@@ -1,19 +1,22 @@
 ﻿using UnityEngine;
 
-public class PowerSetup : MonoBehaviour
+namespace PowerSystem
 {
-    [SerializeField] private PlayerPowerView _powerView;
-
-    private PlayerPowerPresenter _powerPresenter;
-
-    private void OnDestroy()
+    public class PowerSetup : MonoBehaviour
     {
-        _powerPresenter.Disable();
-    }
+        [SerializeField] private PlayerPowerView _powerView;
 
-    public void Init(Power power)
-    {
-        _powerPresenter = new PlayerPowerPresenter(power, _powerView);
-        _powerPresenter.Enable();
+        private PlayerPowerPresenter _powerPresenter;
+
+        private void OnDestroy()
+        {
+            _powerPresenter.Disable();
+        }
+
+        public void Init(Power power)
+        {
+            _powerPresenter = new PlayerPowerPresenter(power, _powerView);
+            _powerPresenter.Enable();
+        }
     }
 }

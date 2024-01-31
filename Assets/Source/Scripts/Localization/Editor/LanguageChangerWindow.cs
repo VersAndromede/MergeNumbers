@@ -1,31 +1,35 @@
+using GameLocalizationSetter;
 using UnityEditor;
 using UnityEngine;
 
-public class LanguageChangerWindow : EditorWindow
+namespace EditorWindows
 {
-    private LocalizationSetter _localizationSetter;
-
-    [MenuItem("Window/Language Changer")]
-    public static void ShowLanguageChangerWindow()
+    public class LanguageChangerWindow : EditorWindow
     {
-        LanguageChangerWindow languageChangerWindow = GetWindow<LanguageChangerWindow>();
-        languageChangerWindow.titleContent = new GUIContent("Language Changer");
-    }
+        private LocalizationSetter _localizationSetter;
 
-    private void OnEnable()
-    {
-        _localizationSetter = new LocalizationSetter();
-    }
+        [MenuItem("Window/Language Changer")]
+        public static void ShowLanguageChangerWindow()
+        {
+            LanguageChangerWindow languageChangerWindow = GetWindow<LanguageChangerWindow>();
+            languageChangerWindow.titleContent = new GUIContent("Language Changer");
+        }
 
-    private void OnGUI()
-    {
-        if (GUILayout.Button(LocalizationSetter.EnLanguage))
-            _localizationSetter.Set(LocalizationSetter.EnLocale);
+        private void OnEnable()
+        {
+            _localizationSetter = new LocalizationSetter();
+        }
 
-        if (GUILayout.Button(LocalizationSetter.RuLanguage))
-            _localizationSetter.Set(LocalizationSetter.RuLocale);
+        private void OnGUI()
+        {
+            if (GUILayout.Button(LocalizationSetter.EnLanguage))
+                _localizationSetter.Set(LocalizationSetter.EnLocale);
 
-        if (GUILayout.Button(LocalizationSetter.TrLanguage))
-            _localizationSetter.Set(LocalizationSetter.TrLocale);
+            if (GUILayout.Button(LocalizationSetter.RuLanguage))
+                _localizationSetter.Set(LocalizationSetter.RuLocale);
+
+            if (GUILayout.Button(LocalizationSetter.TrLanguage))
+                _localizationSetter.Set(LocalizationSetter.TrLocale);
+        }
     }
 }

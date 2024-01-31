@@ -2,20 +2,23 @@ using Plugins.Audio.Core;
 using Plugins.Audio.Utils;
 using UnityEngine;
 
-public class AudioPlayer : MonoBehaviour
+namespace Audio
 {
-    [SerializeField] private SourceAudio _audioSource;
-    [SerializeField] private AudioDataProperty _audioClip;
-    [SerializeField] private bool _playOnStart;
-
-    private void Start()
+    public class AudioPlayer : MonoBehaviour
     {
-        if (_playOnStart)
-            Play();
-    }
+        [SerializeField] private SourceAudio _audioSource;
+        [SerializeField] private AudioDataProperty _audioClip;
+        [SerializeField] private bool _playOnStart;
 
-    public void Play()
-    {
-        _audioSource.Play(_audioClip);
+        private void Start()
+        {
+            if (_playOnStart)
+                Play();
+        }
+
+        public void Play()
+        {
+            _audioSource.Play(_audioClip);
+        }
     }
 }

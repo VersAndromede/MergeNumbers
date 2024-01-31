@@ -1,24 +1,27 @@
 ﻿using UnityEngine;
 
-public class WalletSetup : MonoBehaviour
+namespace WalletSystem
 {
-    [SerializeField] private WalletView _menuWallet;
-    [SerializeField] private WalletView _gameWallet;
-
-    private WalletPresenter _menuWalletPresenter;
-    private WalletPresenter _gameWalletPresenter;
-
-    private void OnDestroy()
+    public class WalletSetup : MonoBehaviour
     {
-        _menuWalletPresenter.Diasble();
-        _gameWalletPresenter.Diasble();
-    }
+        [SerializeField] private WalletView _menuWallet;
+        [SerializeField] private WalletView _gameWallet;
 
-    public void Init(Wallet wallet)
-    {
-        _menuWalletPresenter = new WalletPresenter(wallet, _menuWallet);
-        _gameWalletPresenter = new WalletPresenter(wallet, _gameWallet);
-        _menuWalletPresenter.Enable();
-        _gameWalletPresenter.Enable();
+        private WalletPresenter _menuWalletPresenter;
+        private WalletPresenter _gameWalletPresenter;
+
+        private void OnDestroy()
+        {
+            _menuWalletPresenter.Diasble();
+            _gameWalletPresenter.Diasble();
+        }
+
+        public void Init(Wallet wallet)
+        {
+            _menuWalletPresenter = new WalletPresenter(wallet, _menuWallet);
+            _gameWalletPresenter = new WalletPresenter(wallet, _gameWallet);
+            _menuWalletPresenter.Enable();
+            _gameWalletPresenter.Enable();
+        }
     }
 }

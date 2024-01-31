@@ -1,27 +1,31 @@
+using Ad;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class ReturnToMenuButton : MonoBehaviour
+namespace GameButtons
 {
-    [SerializeField] private Button _button;
-    [SerializeField] private InterstitialAdsDisplay _interstitialAdsDisplay;
-
-    private void OnDestroy()
+    public class ReturnToMenuButton : MonoBehaviour
     {
-        _button.onClick.RemoveListener(OnReturnToMenu);
-    }
+        [SerializeField] private Button _button;
+        [SerializeField] private InterstitialAdsDisplay _interstitialAdsDisplay;
 
-    public void Init()
-    {
-        _button.onClick.AddListener(OnReturnToMenu);
-    }
-
-    private void OnReturnToMenu()
-    {
-        _interstitialAdsDisplay.ShowAd(() =>
+        private void OnDestroy()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        });
+            _button.onClick.RemoveListener(OnReturnToMenu);
+        }
+
+        public void Init()
+        {
+            _button.onClick.AddListener(OnReturnToMenu);
+        }
+
+        private void OnReturnToMenu()
+        {
+            _interstitialAdsDisplay.ShowAd(() =>
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            });
+        }
     }
 }

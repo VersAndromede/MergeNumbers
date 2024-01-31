@@ -1,41 +1,44 @@
 using System;
 using UnityEngine;
 
-public class Health
+namespace HealthSystem
 {
-    public event Action Changed;
-    public event Action Died;
-
-    public int MaxValue { get; private set; }
-    public int Value { get; private set; }
-    public bool IsDied => Value <= 0;
-
-    public Health(uint maxHealthValue)
+    public class Health
     {
-        SetMax(maxHealthValue);
-    }
-    
-    public void TakeDamage(int damage)
-    {
-        if (damage < 0)
-            throw new ArgumentOutOfRangeException();
+        public event Action Changed;
+        public event Action Died;
 
-        Value -= damage;
-        Value = Mathf.Clamp(Value, 0, MaxValue);
-        Changed?.Invoke();
-        TryDie();
-    }
+        public int MaxValue { get; private set; }
+        public int Value { get; private set; }
+        public bool IsDied => Value <= 0;
 
-    public void SetMax(uint count)
-    {
-        MaxValue = (int)count;
-        Value = MaxValue;
-        Changed?.Invoke();
-    }
+        public Health(uint maxHealthValue)
+        {
+            SetMax(maxHealthValue);
+        }
 
-    private void TryDie()
-    {
-        if (IsDied)
-            Died?.Invoke();
+        public void TakeDamage(int damage)
+        {
+            if (damage < 0)
+                throw new ArgumentOutOfRangeException();
+
+            Value -= damage;
+            Value = Mathf.Clamp(Value, 0, MaxValue);
+            Changed?.Invoke();
+            TryDie();
+        }
+
+        public void SetMax(uint count)
+        {
+            MaxValue = (int)count;
+            Value = MaxValue;
+            Changed?.Invoke();
+        }
+
+        private void TryDie()
+        {
+            if (IsDied)
+                Died?.Invoke();
+        }
     }
 }

@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class FPS : MonoBehaviour
+namespace FPS
 {
-    [SerializeField] private int _value;
-
-    private void Awake()
+    public class FPS : MonoBehaviour
     {
-        Application.targetFrameRate = _value;
+        [SerializeField] private int _value;
+
+        private void Awake()
+        {
+            Application.targetFrameRate = _value;
+        }
     }
 }

@@ -1,28 +1,31 @@
-﻿public class WalletPresenter
+﻿namespace WalletSystem
 {
-    private readonly Wallet _wallet;
-    private readonly WalletView _walletView;
-
-    public WalletPresenter(Wallet wallet, WalletView walletView)
+    public class WalletPresenter
     {
-        _wallet = wallet;
-        _walletView = walletView;
-    }
+        private readonly Wallet _wallet;
+        private readonly WalletView _walletView;
 
-    public void Enable()
-    {
-        _wallet.Loaded += OnWalletChanged;
-        _wallet.CoinsChanged += OnWalletChanged;
-    }
+        public WalletPresenter(Wallet wallet, WalletView walletView)
+        {
+            _wallet = wallet;
+            _walletView = walletView;
+        }
 
-    public void Diasble()
-    {
-        _wallet.Loaded -= OnWalletChanged;
-        _wallet.CoinsChanged -= OnWalletChanged;
-    }
+        public void Enable()
+        {
+            _wallet.Loaded += OnWalletChanged;
+            _wallet.CoinsChanged += OnWalletChanged;
+        }
 
-    private void OnWalletChanged()
-    {
-        _walletView.UpdateUI(_wallet.Coins);
+        public void Diasble()
+        {
+            _wallet.Loaded -= OnWalletChanged;
+            _wallet.CoinsChanged -= OnWalletChanged;
+        }
+
+        private void OnWalletChanged()
+        {
+            _walletView.UpdateUI(_wallet.Coins);
+        }
     }
 }

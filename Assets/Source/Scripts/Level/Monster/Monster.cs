@@ -1,28 +1,32 @@
+using PowerSystem;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class Monster : MonoBehaviour
+namespace MonsterSystem
 {
-    [SerializeField] private UnityEvent _died;
-
-    private Power _power;
-
-    public event Action<Monster> Died;
-
-    public int PowerCount => _power.Value;
-
-    public abstract void SetEffect(Power target);
-
-    public void Init(int power)
+    public abstract class Monster : MonoBehaviour
     {
-        _power = new Power(power);
-    }
+        [SerializeField] private UnityEvent _died;
 
-    public void Die()
-    {
-        _died?.Invoke();
-        Died?.Invoke(this);
-        Destroy(gameObject);
+        private Power _power;
+
+        public event Action<Monster> Died;
+
+        public int PowerCount => _power.Value;
+
+        public abstract void SetEffect(Power target);
+
+        public void Init(int power)
+        {
+            _power = new Power(power);
+        }
+
+        public void Die()
+        {
+            _died?.Invoke();
+            Died?.Invoke(this);
+            Destroy(gameObject);
+        }
     }
 }

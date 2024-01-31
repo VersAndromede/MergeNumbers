@@ -3,60 +3,63 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Leaderboard : MonoBehaviour
+namespace MainLeaderboard
 {
-    [SerializeField] private LeaderboardView _leaderboardView;
-
-    public const string AnonymousName = "AnonymousName";
-
-    private const string LeaderboardName = "LeaderboardName";
-
-    private readonly List<LeaderboardPlayerData> _leaderboardPlayers = new List<LeaderboardPlayerData>();
-
-    public void SetPlayer(int score)
+    public class Leaderboard : MonoBehaviour
     {
-        if (Application.isEditor || PlayerAccount.IsAuthorized == false)
-            return;
+        [SerializeField] private LeaderboardView _leaderboardView;
 
-        Agava.YandexGames.Leaderboard.GetPlayerEntry(LeaderboardName, _ =>
+        public const string AnonymousName = "AnonymousName";
+
+        private const string LeaderboardName = "LeaderboardName";
+
+        private readonly List<LeaderboardPlayerData> _leaderboardPlayers = new List<LeaderboardPlayerData>();
+
+        public void SetPlayer(int score)
         {
-            Agava.YandexGames.Leaderboard.SetScore(LeaderboardName, score);
-        });
-    }
+            if (Application.isEditor || PlayerAccount.IsAuthorized == false)
+                return;
 
-    public void FetchScore(Action<int> onReceivedScore)
-    {
-        if (Application.isEditor || PlayerAccount.IsAuthorized == false)
-            return;
-
-        Agava.YandexGames.Leaderboard.GetPlayerEntry(LeaderboardName, response =>
-        {
-            onReceivedScore?.Invoke(response.score);
-        });
-    }
-
-    public void Fill()
-    {
-        if (PlayerAccount.IsAuthorized == false)
-            return;
-
-        Agava.YandexGames.Leaderboard.GetEntries(LeaderboardName, result =>
-        {
-            _leaderboardPlayers.Clear();
-
-            for (int i = 0; i < result.entries.Length; i++)
+            Agava.YandexGames.Leaderboard.GetPlayerEntry(LeaderboardName, _ =>
             {
-                string name = result.entries[i].player.publicName;
-                int rank = result.entries[i].rank;
-                int coins = result.entries[i].score;
+                Agava.YandexGames.Leaderboard.SetScore(LeaderboardName, score);
+            });
+        }
 
-                if (string.IsNullOrEmpty(name))
-                    name = AnonymousName;
+        public void FetchScore(Action<int> onReceivedScore)
+        {
+            if (Application.isEditor || PlayerAccount.IsAuthorized == false)
+                return;
 
-                _leaderboardPlayers.Add(new LeaderboardPlayerData(name, rank, coins));
-            }
+            Agava.YandexGames.Leaderboard.GetPlayerEntry(LeaderboardName, response =>
+            {
+                onReceivedScore?.Invoke(response.score);
+            });
+        }
 
-            _leaderboardView.CreateLeaderboard(_leaderboardPlayers);
-        });
+        public void Fill()
+        {
+            if (PlayerAccount.IsAuthorized == false)
+                return;
+
+            Agava.YandexGames.Leaderboard.GetEntries(LeaderboardName, result =>
+            {
+                _leaderboardPlayers.Clear();
+
+                for (int i = 0; i < result.entries.Length; i++)
+                {
+                    string name = result.entries[i].player.publicName;
+                    int rank = result.entries[i].rank;
+                    int coins = result.entries[i].score;
+
+                    if (string.IsNullOrEmpty(name))
+                        name = AnonymousName;
+
+                    _leaderboardPlayers.Add(new LeaderboardPlayerData(name, rank, coins));
+                }
+
+                _leaderboardView.CreateLeaderboard(_leaderboardPlayers);
+            });
+        }
     }
 }

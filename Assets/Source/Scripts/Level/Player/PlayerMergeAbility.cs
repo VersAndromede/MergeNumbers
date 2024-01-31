@@ -1,23 +1,28 @@
-﻿using UnityEngine;
+﻿using MonsterSystem;
+using PowerSystem;
+using UnityEngine;
 
-public class PlayerMergeAbility : MonoBehaviour
+namespace PlayerSystem
 {
-    private Power _power;
-
-    private void OnCollisionEnter(Collision collision)
+    public class PlayerMergeAbility : MonoBehaviour
     {
-        if (collision.collider.TryGetComponent(out Monster monster))
-            Merge(monster);
-    }
+        private Power _power;
 
-    public void Init(Power power)
-    {
-        _power = power;
-    }
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.collider.TryGetComponent(out Monster monster))
+                Merge(monster);
+        }
 
-    private void Merge(Monster monster)
-    {
-        monster.Die();
-        monster.SetEffect(_power);
+        public void Init(Power power)
+        {
+            _power = power;
+        }
+
+        private void Merge(Monster monster)
+        {
+            monster.Die();
+            monster.SetEffect(_power);
+        }
     }
 }

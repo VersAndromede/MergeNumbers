@@ -1,12 +1,15 @@
 using TMPro;
 using UnityEngine;
 
-public class BossDamageView : MonoBehaviour
+namespace BossSystem
 {
-    [SerializeField] private TextMeshProUGUI _text;
-
-    public void Init(Boss boss)
+    public class BossDamageView : MonoBehaviour
     {
-        _text.text = boss.Data.Damage.ToString();
+        [SerializeField] private TextMeshProUGUI _text;
+
+        public void Init(Boss boss)
+        {
+            _text.text = boss.Data.Damage.ToString();
+        }
     }
 }

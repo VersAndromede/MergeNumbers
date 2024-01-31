@@ -2,24 +2,27 @@ using Plugins.Audio.Core;
 using Plugins.Audio.Utils;
 using UnityEngine;
 
-public class PlayerAudio : MonoBehaviour
+namespace PlayerSystem
 {
-    [SerializeField] private SourceAudio _audioSource;
-    [SerializeField] private AudioDataProperty _audioClip;
-    [SerializeField] private PlayerMovement _playerMovement;
-
-    private void OnEnable()
+    public class PlayerAudio : MonoBehaviour
     {
-        _playerMovement.StartedMoving += OnStartedMoving;
-    }
+        [SerializeField] private SourceAudio _audioSource;
+        [SerializeField] private AudioDataProperty _audioClip;
+        [SerializeField] private PlayerMovement _playerMovement;
 
-    private void OnDisable()
-    {
-        _playerMovement.StartedMoving -= OnStartedMoving;
-    }
+        private void OnEnable()
+        {
+            _playerMovement.StartedMoving += OnStartedMoving;
+        }
 
-    private void OnStartedMoving()
-    {
-        _audioSource.Play(_audioClip);
+        private void OnDisable()
+        {
+            _playerMovement.StartedMoving -= OnStartedMoving;
+        }
+
+        private void OnStartedMoving()
+        {
+            _audioSource.Play(_audioClip);
+        }
     }
 }

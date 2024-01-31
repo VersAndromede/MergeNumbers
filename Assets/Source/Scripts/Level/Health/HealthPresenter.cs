@@ -1,27 +1,30 @@
-﻿public class HealthPresenter
+﻿namespace HealthSystem
 {
-    private readonly Health _health;
-    private readonly HealthBar _healthBar;
-
-    public HealthPresenter(Health health, HealthBar healthBar)
+    public class HealthPresenter
     {
-        _health = health;
-        _healthBar = healthBar;
-        _healthBar.UpdateUIWithInstantTransition(_health.Value, _health.MaxValue);
-    }
+        private readonly Health _health;
+        private readonly HealthBar _healthBar;
 
-    public void Enable()
-    {
-        _health.Changed += OnChanged;
-    }
+        public HealthPresenter(Health health, HealthBar healthBar)
+        {
+            _health = health;
+            _healthBar = healthBar;
+            _healthBar.UpdateUIWithInstantTransition(_health.Value, _health.MaxValue);
+        }
 
-    public void Disable()
-    {
-        _health.Changed -= OnChanged;
-    }
+        public void Enable()
+        {
+            _health.Changed += OnChanged;
+        }
 
-    private void OnChanged()
-    {
-        _healthBar.UpdateUIWithSmoothTransition(_health.Value, _health.MaxValue);
+        public void Disable()
+        {
+            _health.Changed -= OnChanged;
+        }
+
+        private void OnChanged()
+        {
+            _healthBar.UpdateUIWithSmoothTransition(_health.Value, _health.MaxValue);
+        }
     }
 }

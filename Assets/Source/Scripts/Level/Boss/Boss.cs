@@ -1,22 +1,26 @@
+using HealthSystem;
 using System;
 using UnityEngine;
 
-public class Boss : MonoBehaviour
+namespace BossSystem
 {
-    [field: SerializeField] public BossHealth BossHealth { get; private set; }
-
-    public BossData Data { get; private set; }
-
-    public void Init(BossData bossData)
+    public class Boss : MonoBehaviour
     {
-        Data = bossData;
-    }
+        [field: SerializeField] public BossHealth BossHealth { get; private set; }
 
-    public void Init(HealthSetup healthSetup, int damageTaken)
-    {
-        if (damageTaken < 0)
-            throw new ArgumentOutOfRangeException();
+        public BossData Data { get; private set; }
 
-        BossHealth.Init(healthSetup, Data.Health, damageTaken);
+        public void InitData(BossData bossData)
+        {
+            Data = bossData;
+        }
+
+        public void InitHealth(HealthSetup healthSetup, int damageTaken)
+        {
+            if (damageTaken < 0)
+                throw new ArgumentOutOfRangeException();
+
+            BossHealth.Init(healthSetup, Data.Health, damageTaken);
+        }
     }
 }

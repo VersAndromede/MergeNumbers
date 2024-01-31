@@ -1,49 +1,53 @@
+using PlayerSystem;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Upgrades;
 
-public class MoveCounter : MonoBehaviour
+namespace MoveCounterSystem
 {
-    [SerializeField] private PlayerMovement _playerMovement;
-    [SerializeField] private GameStarter _gameStarter;
-    [SerializeField] private UpgradeWithAddedValuePolicy _movesUpgrade; 
-    [SerializeField] private Image _inputHandler;
-    [SerializeField] private UnityEvent _ended;
-
-    [field: SerializeField] public int Count { get; private set; }
-
-    public event Action Changed;
-    public event Action Ended;
-
-    private void OnEnable()
+    public class MoveCounter : MonoBehaviour
     {
-        _playerMovement.FinishedMoving += OnFinishMove;
-        _gameStarter.GameStarted += OnGameStarted;
-    }
+        [SerializeField] private PlayerMovement _playerMovement;
+        [SerializeField] private GameStarter _gameStarter;
+        [SerializeField] private UpgradeWithAddedValuePolicy _movesUpgrade;
+        [SerializeField] private Image _inputHandler;
+        [SerializeField] private UnityEvent _ended;
 
-    private void OnDisable()
-    {
-        _playerMovement.FinishedMoving -= OnFinishMove;
-        _gameStarter.GameStarted -= OnGameStarted;
-    }
+        [field: SerializeField] public int Count { get; private set; }
 
-    public void OnGameStarted()
-    {
-        Count += _movesUpgrade.BonusValue;
-    }
+        public event Action Changed;
+        public event Action Ended;
 
-    private void OnFinishMove()
-    {
-        Count--;
-        Changed?.Invoke();
-        _inputHandler.raycastTarget = true;
-
-        if (Count == 0)
+        private void OnEnable()
         {
-            Ended?.Invoke();
-            _ended?.Invoke();
+            _playerMovement.FinishedMoving += OnFinishMove;
+            _gameStarter.GameStarted += OnGameStarted;
+        }
+
+        private void OnDisable()
+        {
+            _playerMovement.FinishedMoving -= OnFinishMove;
+            _gameStarter.GameStarted -= OnGameStarted;
+        }
+
+        public void OnGameStarted()
+        {
+            Count += _movesUpgrade.BonusValue;
+        }
+
+        private void OnFinishMove()
+        {
+            Count--;
+            Changed?.Invoke();
+            _inputHandler.raycastTarget = true;
+
+            if (Count == 0)
+            {
+                Ended?.Invoke();
+                _ended?.Invoke();
+            }
         }
     }
 }

@@ -2,27 +2,30 @@
 using TMPro;
 using UnityEngine;
 
-public class LeaderboardElement : MonoBehaviour
+namespace MainLeaderboard
 {
-    [SerializeField] private TextMeshProUGUI _name;
-    [SerializeField] private TextMeshProUGUI _rank;
-    [SerializeField] private TextMeshProUGUI _score;
-    [SerializeField] private LeanLocalizedTextMeshProUGUI _localizedAnonymousName;
-
-    [Header("Translation Anonymous")]
-    [SerializeField, LeanTranslationName] private string _translationAnonymous;
-
-    public void Init(int rank, string name, int score)
+    public class LeaderboardElement : MonoBehaviour
     {
-        _rank.text = rank.ToString();
-        _score.text = score.ToString();
+        [SerializeField] private TextMeshProUGUI _name;
+        [SerializeField] private TextMeshProUGUI _rank;
+        [SerializeField] private TextMeshProUGUI _score;
+        [SerializeField] private LeanLocalizedTextMeshProUGUI _localizedAnonymousName;
 
-        if (name == Leaderboard.AnonymousName)
+        [Header("Translation Anonymous")]
+        [SerializeField, LeanTranslationName] private string _translationAnonymous;
+
+        public void Init(int rank, string name, int score)
         {
-            _localizedAnonymousName.TranslationName = LeanLocalization.GetTranslation(_translationAnonymous).Name;
-            return;
-        }
+            _rank.text = rank.ToString();
+            _score.text = score.ToString();
 
-        _name.text = name;
+            if (name == Leaderboard.AnonymousName)
+            {
+                _localizedAnonymousName.TranslationName = LeanLocalization.GetTranslation(_translationAnonymous).Name;
+                return;
+            }
+
+            _name.text = name;
+        }
     }
 }

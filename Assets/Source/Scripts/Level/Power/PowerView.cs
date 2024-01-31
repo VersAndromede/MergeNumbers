@@ -1,19 +1,23 @@
 using TMPro;
 using UnityEngine;
 
-public abstract class PowerView : MonoBehaviour
+namespace PowerSystem
 {
-    [SerializeField] protected PowerColorsConfig PowerColorsConfig;
-
-    [SerializeField] private TextMeshPro _text;
-
-    protected void SetValue(string value)
+    public abstract class PowerView : MonoBehaviour
     {
-        _text.text = value;
+        [SerializeField] protected PowerColorsConfig PowerColorsConfig;
+
+        [SerializeField] private TextMeshPro _text;
+
+        protected void SetValue(string value)
+        {
+            _text.text = value;
+        }
+
+        protected void SetColor(Color color)
+        {
+            _text.color = color;
+        }
     }
 
-    protected void SetColor(Color color)
-    {
-        _text.color = color;
-    }
 }

@@ -1,46 +1,51 @@
+using Ad;
 using Agava.WebUtility;
+using Pause;
 using UnityEngine;
 
-public class FocusObserver : MonoBehaviour
+namespace GameFocusObserver
 {
-    private PauseSetter _pauseSetter;
-    private PauseButton _pauseButton;
-    private IAd[] _ads;
-    private bool _isAdRunning;
-
-    public void Init(PauseSetter pauseSetter, PauseButton pauseButton, params IAd[] ads)
+    public class FocusObserver : MonoBehaviour
     {
-        _pauseButton = pauseButton;
-        _pauseSetter = pauseSetter;
-        _ads = ads;
-    }
+        private PauseSetter _pauseSetter;
+        private PauseButton _pauseButton;
+        private IAd[] _ads;
+        private bool _isAdRunning;
 
-    public void Enable()
-    {
-        WebApplication.InBackgroundChangeEvent += OnBackgroundChangeEvent;
+        public void Init(PauseSetter pauseSetter, PauseButton pauseButton, params IAd[] ads)
+        {
+            _pauseButton = pauseButton;
+            _pauseSetter = pauseSetter;
+            _ads = ads;
+        }
 
-        foreach (IAd ad in _ads)
-            ad.AdRunning += OnAdRunning;
-    }
+        public void Enable()
+        {
+            WebApplication.InBackgroundChangeEvent += OnBackgroundChangeEvent;
 
-    public void Disable()
-    {
-        WebApplication.InBackgroundChangeEvent -= OnBackgroundChangeEvent;
+            foreach (IAd ad in _ads)
+                ad.AdRunning += OnAdRunning;
+        }
 
-        foreach (IAd ad in _ads)
-            ad.AdRunning -= OnAdRunning;
-    }
+        public void Disable()
+        {
+            WebApplication.InBackgroundChangeEvent -= OnBackgroundChangeEvent;
 
-    private void OnAdRunning(bool isRunning)
-    {
-        _isAdRunning = isRunning;
-    }
+            foreach (IAd ad in _ads)
+                ad.AdRunning -= OnAdRunning;
+        }
 
-    private void OnBackgroundChangeEvent(bool inBackground)
-    {
-        if (inBackground == false && _isAdRunning == false && _pauseButton.IsPaused == false)
-            _pauseSetter.Disable();
-        else
-            _pauseSetter.Enable();
+        private void OnAdRunning(bool isRunning)
+        {
+            _isAdRunning = isRunning;
+        }
+
+        private void OnBackgroundChangeEvent(bool inBackground)
+        {
+            if (inBackground == false && _isAdRunning == false && _pauseButton.IsPaused == false)
+                _pauseSetter.Disable();
+            else
+                _pauseSetter.Enable();
+        }
     }
 }

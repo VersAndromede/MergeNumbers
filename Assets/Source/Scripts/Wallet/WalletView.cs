@@ -1,12 +1,15 @@
 using TMPro;
 using UnityEngine;
 
-public class WalletView : MonoBehaviour
+namespace WalletSystem
 {
-    [SerializeField] private TextMeshProUGUI _text;
-
-    public void UpdateUI(int coins)
+    public class WalletView : MonoBehaviour
     {
-        _text.text = coins.ToString();
+        [SerializeField] private TextMeshProUGUI _text;
+
+        public void UpdateUI(int coins)
+        {
+            _text.text = coins.ToString();
+        }
     }
 }

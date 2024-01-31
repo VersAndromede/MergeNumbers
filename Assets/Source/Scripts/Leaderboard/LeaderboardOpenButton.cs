@@ -2,26 +2,29 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class LeaderboardOpenButton : MonoBehaviour
+namespace MainLeaderboard
 {
-    [SerializeField] private UnityEvent _authorized;
-    [SerializeField] private UnityEvent _authorizationRequested;
-    [SerializeField] private UnityEvent _authorizationPerformed;
-
-    public void OpenLeaderboard()
+    public class LeaderboardOpenButton : MonoBehaviour
     {
-        if (PlayerAccount.IsAuthorized)
+        [SerializeField] private UnityEvent _authorized;
+        [SerializeField] private UnityEvent _authorizationRequested;
+        [SerializeField] private UnityEvent _authorizationPerformed;
+
+        public void OpenLeaderboard()
         {
-            PlayerAccount.RequestPersonalProfileDataPermission();
-            _authorized?.Invoke();
-            return;
+            if (PlayerAccount.IsAuthorized)
+            {
+                PlayerAccount.RequestPersonalProfileDataPermission();
+                _authorized?.Invoke();
+                return;
+            }
+
+            _authorizationRequested?.Invoke();
         }
 
-        _authorizationRequested?.Invoke();
-    }
-
-    public void Authorize()
-    {
-        PlayerAccount.Authorize(() => _authorizationPerformed?.Invoke());
+        public void Authorize()
+        {
+            PlayerAccount.Authorize(() => _authorizationPerformed?.Invoke());
+        }
     }
 }

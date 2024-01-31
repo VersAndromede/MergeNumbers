@@ -1,7 +1,10 @@
-﻿public enum Direction
+﻿namespace GameInput
 {
-    Left,
-    Up,
-    Right,
-    Down
+    public enum Direction
+    {
+        Left,
+        Up,
+        Right,
+        Down,
+    }
 }

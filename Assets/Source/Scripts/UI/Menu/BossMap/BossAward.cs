@@ -1,35 +1,39 @@
 ﻿using System;
 using UnityEngine;
+using WalletSystem;
 
-[Serializable]
-public class BossAward
+namespace BossAchievements 
 {
-    [field: SerializeField] public uint Count { get; private set; }
-    [field: SerializeField] public bool IsTaken { get; private set; }
-    [field: SerializeField] public bool CanBeTaken { get; private set; }
-    [field: SerializeField] public int Id { get; private set; }
-
-    public event Action<BossAward> Taken;
-
-    public BossAward(uint count, int id)
+    [Serializable]
+    public class BossAward
     {
-        Count = count;
-        Id = id;
-    }
+        [field: SerializeField] public uint Count { get; private set; }
+        [field: SerializeField] public bool IsTaken { get; private set; }
+        [field: SerializeField] public bool CanBeTaken { get; private set; }
+        [field: SerializeField] public int Id { get; private set; }
 
-    public void LetTake()
-    {
-        CanBeTaken = true;
-    }
+        public event Action<BossAward> Taken;
 
-    public bool TryTake(Wallet wallet)
-    {
-        if (CanBeTaken == false || IsTaken)
-            return false;
+        public BossAward(uint count, int id)
+        {
+            Count = count;
+            Id = id;
+        }
 
-        wallet.AddCoins(Count);
-        IsTaken = true;
-        Taken?.Invoke(this);
-        return true;
+        public void LetTake()
+        {
+            CanBeTaken = true;
+        }
+
+        public bool TryTake(Wallet wallet)
+        {
+            if (CanBeTaken == false || IsTaken)
+                return false;
+
+            wallet.AddCoins(Count);
+            IsTaken = true;
+            Taken?.Invoke(this);
+            return true;
+        }
     }
 }

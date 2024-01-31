@@ -3,16 +3,19 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InitialEntryPoint : MonoBehaviour
+namespace EntryPoints
 {
-    private const string GameSceneName = "Game";
-
-    private IEnumerator Start()
+    public class InitialEntryPoint : MonoBehaviour
     {
-        if (Application.isEditor == false)
+        private const string GameSceneName = "Game";
+
+        private IEnumerator Start()
         {
-            yield return YandexGamesSdk.Initialize();
-            SceneManager.LoadScene(GameSceneName);
+            if (Application.isEditor == false)
+            {
+                yield return YandexGamesSdk.Initialize();
+                SceneManager.LoadScene(GameSceneName);
+            }
         }
     }
 }

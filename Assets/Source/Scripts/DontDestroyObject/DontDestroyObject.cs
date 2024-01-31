@@ -1,18 +1,21 @@
 using UnityEngine;
 
-public class DontDestroyObject : MonoBehaviour
+namespace DontDestroyObjects
 {
-    private static DontDestroyObject _instance;
-
-    private void Awake()
+    public class DontDestroyObject : MonoBehaviour
     {
-        if (_instance == null)
-        {
-            DontDestroyOnLoad(gameObject);
-            _instance = this;
-            return;
-        }
+        private static DontDestroyObject _instance;
 
-        Destroy(gameObject);
+        private void Awake()
+        {
+            if (_instance == null)
+            {
+                DontDestroyOnLoad(gameObject);
+                _instance = this;
+                return;
+            }
+
+            Destroy(gameObject);
+        }
     }
 }

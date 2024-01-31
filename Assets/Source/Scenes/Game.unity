@@ -2646,6 +2646,7 @@ GameObject:
   - component: {fileID: 306451393}
   - component: {fileID: 306451392}
   - component: {fileID: 306451391}
+  - component: {fileID: 306451394}
   m_Layer: 5
   m_Name: Input Handler
   m_TagString: Untagged
@@ -2686,12 +2687,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputGetter: {fileID: 306451393}
-  _playerMoverToMonster: {fileID: 0}
+  _playerMoverToMonster: {fileID: 306451394}
   _moveCounter: {fileID: 5908088581273655455}
   _layerMask:
     serializedVersion: 2
     m_Bits: 128
-  _player: {fileID: 0}
+  _player: {fileID: 8955322502694165244}
 --- !u!114 &306451389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2706,7 +2707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2769,6 +2770,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mobileInput: {fileID: 306451391}
   _desktopInput: {fileID: 306451392}
+--- !u!114 &306451394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306451386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247836b7d0574344fa20de26390508f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _monsterObserver: {fileID: 1306194771}
+  _playerMovement: {fileID: 1832405561}
+  _playerRotation: {fileID: 17564389}
 --- !u!1001 &314144779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4322,7 +4338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806f0696300aeac44a0e17efee222854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLanguage: English
+  currentLanguage: Russian
   detectLanguage: 0
   defaultLanguage: 
   saveLoad: 1
@@ -8917,7 +8933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d393c1a361e78da4caa7975494ce25d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _incomeUpgrade: {fileID: 0}
+  _incomeUpgrade: {fileID: 1768760226}
 --- !u!114 &946430448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10217,7 +10233,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: START
+  m_text: "\u041D\u0410\u0427\u0410\u0422\u042C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a110820f8b2c7e8459347acc5d644a9e, type: 2}
   m_sharedMaterial: {fileID: 7992794302233040175, guid: a110820f8b2c7e8459347acc5d644a9e, type: 2}
@@ -16409,7 +16425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerDamage: {fileID: 8955322502694165249}
   _moveCounter: {fileID: 5908088581273655455}
-  _damageUpgrade: {fileID: 0}
+  _damageUpgrade: {fileID: 1438119914}
   _bossHealthSetup: {fileID: 858360839}
   _bossRechargeTime: 0.75
 --- !u!4 &1750772145

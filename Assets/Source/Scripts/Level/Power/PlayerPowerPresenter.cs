@@ -1,27 +1,30 @@
-﻿public class PlayerPowerPresenter
+﻿namespace PowerSystem
 {
-    private readonly Power _power;
-    private readonly PlayerPowerView _powerView;
-
-    public PlayerPowerPresenter(Power power, PlayerPowerView powerView)
+    public class PlayerPowerPresenter
     {
-        _power = power;
-        _powerView = powerView;
-    }
+        private readonly Power _power;
+        private readonly PlayerPowerView _powerView;
 
-    public void Enable()
-    {
-        _power.Changed += OnPowerChanged;
-        _powerView.UpdateUI(_power.Value);
-    }
+        public PlayerPowerPresenter(Power power, PlayerPowerView powerView)
+        {
+            _power = power;
+            _powerView = powerView;
+        }
 
-    public void Disable()
-    {
-        _power.Changed -= OnPowerChanged;
-    }
+        public void Enable()
+        {
+            _power.Changed += OnPowerChanged;
+            _powerView.UpdateUI(_power.Value);
+        }
 
-    private void OnPowerChanged()
-    {
-        _powerView.UpdateUI(_power.Value);
+        public void Disable()
+        {
+            _power.Changed -= OnPowerChanged;
+        }
+
+        private void OnPowerChanged()
+        {
+            _powerView.UpdateUI(_power.Value);
+        }
     }
 }

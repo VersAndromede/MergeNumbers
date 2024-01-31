@@ -1,30 +1,33 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class LeaderboardView : MonoBehaviour
+namespace MainLeaderboard
 {
-    [SerializeField] private Transform _container;
-    [SerializeField] private LeaderboardElement _leaderboardElementPrefab;
-
-    private List<LeaderboardElement> _spawnedElements = new List<LeaderboardElement>();
-
-    public void CreateLeaderboard(List<LeaderboardPlayerData> leaderboardPlayers)
+    public class LeaderboardView : MonoBehaviour
     {
-        ClearLeaderboard();
+        [SerializeField] private Transform _container;
+        [SerializeField] private LeaderboardElement _leaderboardElementPrefab;
 
-        foreach (LeaderboardPlayerData leaderboardPlayer in leaderboardPlayers) 
+        private List<LeaderboardElement> _spawnedElements = new List<LeaderboardElement>();
+
+        public void CreateLeaderboard(List<LeaderboardPlayerData> leaderboardPlayers)
         {
-            LeaderboardElement leaderboardElement = Instantiate(_leaderboardElementPrefab, _container);
-            leaderboardElement.Init(leaderboardPlayer.Rank, leaderboardPlayer.Name, leaderboardPlayer.Score);
-            _spawnedElements.Add(leaderboardElement);
+            ClearLeaderboard();
+
+            foreach (LeaderboardPlayerData leaderboardPlayer in leaderboardPlayers)
+            {
+                LeaderboardElement leaderboardElement = Instantiate(_leaderboardElementPrefab, _container);
+                leaderboardElement.Init(leaderboardPlayer.Rank, leaderboardPlayer.Name, leaderboardPlayer.Score);
+                _spawnedElements.Add(leaderboardElement);
+            }
         }
-    }
 
-    public void ClearLeaderboard()
-    {
-        foreach (LeaderboardElement spawnedElement in _spawnedElements) 
-            Destroy(spawnedElement.gameObject);
+        public void ClearLeaderboard()
+        {
+            foreach (LeaderboardElement spawnedElement in _spawnedElements)
+                Destroy(spawnedElement.gameObject);
 
-        _spawnedElements = new List<LeaderboardElement>();
+            _spawnedElements = new List<LeaderboardElement>();
+        }
     }
 }

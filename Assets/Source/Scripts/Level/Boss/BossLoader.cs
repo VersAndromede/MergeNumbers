@@ -1,36 +1,39 @@
 using System;
 using UnityEngine;
 
-public class BossLoader : MonoBehaviour
+namespace BossSystem
 {
-    [SerializeField] private BossListData _bossDatas;
-    [SerializeField] private Transform _container;
-
-    public event Action<Boss> Loaded;
-
-    public int BossDataIndex { get; private set; }
-    public Boss CurrentBoss { get; private set; }
-
-    private void OnDestroy()
+    public class BossLoader : MonoBehaviour
     {
-        CurrentBoss.BossHealth.Died -= OnBossDied;
-    }
+        [SerializeField] private BossListData _bossDatas;
+        [SerializeField] private Transform _container;
 
-    public void Init(int bossDataIndex)
-    {
-        BossDataIndex = bossDataIndex;
+        public event Action<Boss> Loaded;
 
-        if (BossDataIndex >= _bossDatas.Datas.Count)
-            BossDataIndex = _bossDatas.Datas.Count - 1;
+        public int BossDataIndex { get; private set; }
+        public Boss CurrentBoss { get; private set; }
 
-        CurrentBoss = Instantiate(_bossDatas.Datas[BossDataIndex].Prefab, _container);
-        CurrentBoss.Init(_bossDatas.Datas[BossDataIndex]);
-        CurrentBoss.BossHealth.Died += OnBossDied;
-        Loaded?.Invoke(CurrentBoss);
-    }
+        private void OnDestroy()
+        {
+            CurrentBoss.BossHealth.Died -= OnBossDied;
+        }
 
-    private void OnBossDied()
-    {
-        BossDataIndex++;
+        public void Init(int bossDataIndex)
+        {
+            BossDataIndex = bossDataIndex;
+
+            if (BossDataIndex >= _bossDatas.Datas.Count)
+                BossDataIndex = _bossDatas.Datas.Count - 1;
+
+            CurrentBoss = Instantiate(_bossDatas.Datas[BossDataIndex].Prefab, _container);
+            CurrentBoss.InitData(_bossDatas.Datas[BossDataIndex]);
+            CurrentBoss.BossHealth.Died += OnBossDied;
+            Loaded?.Invoke(CurrentBoss);
+        }
+
+        private void OnBossDied()
+        {
+            BossDataIndex++;
+        }
     }
 }

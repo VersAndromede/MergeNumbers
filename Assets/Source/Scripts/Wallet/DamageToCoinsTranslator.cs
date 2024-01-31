@@ -1,32 +1,36 @@
+using BossSystem;
 using UnityEngine;
 using Upgrades;
 
-public class DamageToCoinsTranslator : MonoBehaviour
+namespace WalletSystem
 {
-    [SerializeField] private UpgradeWithMultiplicationValuePolicy _incomeUpgrade;
-
-    private Wallet _wallet;
-    private BossHealth _bossHealth;
-
-    public void Init(Wallet wallet, BossHealth bossHealth)
+    public class DamageToCoinsTranslator : MonoBehaviour
     {
-        _wallet = wallet;
-        _bossHealth = bossHealth;
-        _bossHealth.DamageReceived += OnDamageReceived;
-    }
+        [SerializeField] private UpgradeWithMultiplicationValuePolicy _incomeUpgrade;
 
-    private void OnDestroy()
-    {
-        _bossHealth.DamageReceived -= OnDamageReceived;
-    }
+        private Wallet _wallet;
+        private BossHealth _bossHealth;
 
-    private void OnDamageReceived(int damageTaken)
-    {
-        uint bonusValue = (uint)_incomeUpgrade.BonusValue;
+        public void Init(Wallet wallet, BossHealth bossHealth)
+        {
+            _wallet = wallet;
+            _bossHealth = bossHealth;
+            _bossHealth.DamageReceived += OnDamageReceived;
+        }
 
-        if (bonusValue >= _incomeUpgrade.MinBonusValue)
-            _wallet.AddCoins(bonusValue + _incomeUpgrade.MinBonusValue);
-        else
-            _wallet.AddCoins(_incomeUpgrade.MinBonusValue);
+        private void OnDestroy()
+        {
+            _bossHealth.DamageReceived -= OnDamageReceived;
+        }
+
+        private void OnDamageReceived(int damageTaken)
+        {
+            uint bonusValue = (uint)_incomeUpgrade.BonusValue;
+
+            if (bonusValue >= _incomeUpgrade.MinBonusValue)
+                _wallet.AddCoins(bonusValue + _incomeUpgrade.MinBonusValue);
+            else
+                _wallet.AddCoins(_incomeUpgrade.MinBonusValue);
+        }
     }
 }

@@ -1,37 +1,41 @@
 using Agava.YandexGames;
+using Pause;
 using System;
 using UnityEngine;
 
-public class InterstitialAdsDisplay : MonoBehaviour, IAd
+namespace Ad
 {
-    private PauseSetter _pauseSetter;
-
-    public event Action<bool> AdRunning;
-
-    public void Init(PauseSetter pauseSetter)
+    public class InterstitialAdsDisplay : MonoBehaviour, IAd
     {
-        _pauseSetter = pauseSetter;
-    }
+        private PauseSetter _pauseSetter;
 
-    public void ShowAd(Action adOver)
-    {
-        if (Application.isEditor)
+        public event Action<bool> AdRunning;
+
+        public void Init(PauseSetter pauseSetter)
         {
-            adOver?.Invoke();
-            return;
+            _pauseSetter = pauseSetter;
         }
 
-        _pauseSetter.Enable();
-        AdRunning?.Invoke(true);
+        public void ShowAd(Action adOver)
+        {
+            if (Application.isEditor)
+            {
+                adOver?.Invoke();
+                return;
+            }
 
-        InterstitialAd.Show(
-            onCloseCallback: value => Enable(adOver));
-    }
+            _pauseSetter.Enable();
+            AdRunning?.Invoke(true);
 
-    private void Enable(Action adOver)
-    {
-        _pauseSetter.Disable();
-        AdRunning?.Invoke(false);
-        adOver?.Invoke();
+            InterstitialAd.Show(
+                onCloseCallback: value => Enable(adOver));
+        }
+
+        private void Enable(Action adOver)
+        {
+            _pauseSetter.Disable();
+            AdRunning?.Invoke(false);
+            adOver?.Invoke();
+        }
     }
 }

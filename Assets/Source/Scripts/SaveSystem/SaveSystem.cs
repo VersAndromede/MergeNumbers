@@ -2,58 +2,61 @@ using Agava.YandexGames;
 using System;
 using UnityEngine;
 
-public class SaveSystem
+namespace GameSaveSystem
 {
-    private const string SaveDataPrefsKey = "SaveDataPrefsKey";
-
-    public void Save(Action<SaveData> callback)
+    public class SaveSystem
     {
-        if (Application.isEditor || PlayerAccount.IsAuthorized == false)
+        private const string SaveDataPrefsKey = "SaveDataPrefsKey";
+
+        public void Save(Action<SaveData> callback)
         {
-            SaveToPrefs(callback);
-            return;
+            if (Application.isEditor || PlayerAccount.IsAuthorized == false)
+            {
+                SaveToPrefs(callback);
+                return;
+            }
+
+            PlayerAccount.GetPlayerData(data =>
+            {
+                SaveData saveData = JsonUtility.FromJson<SaveData>(data);
+                callback?.Invoke(saveData);
+                PlayerAccount.SetPlayerData(JsonUtility.ToJson(saveData));
+            });
         }
 
-        PlayerAccount.GetPlayerData(data =>
+        public void Load(Action<SaveData> callback)
         {
-            SaveData saveData = JsonUtility.FromJson<SaveData>(data);
+            if (Application.isEditor || PlayerAccount.IsAuthorized == false)
+            {
+                callback?.Invoke(LoadFromPrefs());
+                return;
+            }
+
+            PlayerAccount.GetPlayerData(data =>
+            {
+                SaveData saveData = JsonUtility.FromJson<SaveData>(data);
+                callback?.Invoke(saveData);
+            });
+        }
+
+        private void SaveToPrefs(Action<SaveData> callback)
+        {
+            SaveData saveData = LoadFromPrefs();
             callback?.Invoke(saveData);
-            PlayerAccount.SetPlayerData(JsonUtility.ToJson(saveData));
-        });
-    }
-
-    public void Load(Action<SaveData> callback)
-    {
-        if (Application.isEditor || PlayerAccount.IsAuthorized == false)
-        {
-            callback?.Invoke(LoadFromPrefs());
-            return;
+            string saveDataJson = JsonUtility.ToJson(saveData);
+            PlayerPrefs.SetString(SaveDataPrefsKey, saveDataJson);
+            PlayerPrefs.Save();
         }
 
-        PlayerAccount.GetPlayerData(data =>
+        private SaveData LoadFromPrefs()
         {
-            SaveData saveData = JsonUtility.FromJson<SaveData>(data);
-            callback?.Invoke(saveData);
-        });
-    }
+            if (PlayerPrefs.HasKey(SaveDataPrefsKey))
+            {
+                string saveDataJson = PlayerPrefs.GetString(SaveDataPrefsKey);
+                return JsonUtility.FromJson<SaveData>(saveDataJson);
+            }
 
-    private void SaveToPrefs(Action<SaveData> callback)
-    {
-        SaveData saveData = LoadFromPrefs();
-        callback?.Invoke(saveData);
-        string saveDataJson = JsonUtility.ToJson(saveData);
-        PlayerPrefs.SetString(SaveDataPrefsKey, saveDataJson);
-        PlayerPrefs.Save();
-    }
-
-    private SaveData LoadFromPrefs()
-    {
-        if (PlayerPrefs.HasKey(SaveDataPrefsKey))
-        {
-            string saveDataJson = PlayerPrefs.GetString(SaveDataPrefsKey);
-            return JsonUtility.FromJson<SaveData>(saveDataJson);
+            return new SaveData();
         }
-
-        return new SaveData();
     }
 }

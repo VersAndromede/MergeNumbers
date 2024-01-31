@@ -2,17 +2,20 @@
 using TMPro;
 using UnityEngine;
 
-public class HitDamageCountText : MonoBehaviour
+namespace HitDamage
 {
-    [SerializeField] private TextMeshPro _text;
-    [SerializeField] private float _destroyDaley;
-
-    public void Init(int damage)
+    public class HitDamageCountText : MonoBehaviour
     {
-        _text.text = $"-{damage}";
-        transform.DOScale(0, _destroyDaley).OnComplete(() =>
+        [SerializeField] private TextMeshPro _text;
+        [SerializeField] private float _destroyDaley;
+
+        public void Init(int damage)
         {
-            Destroy(gameObject);
-        });
+            _text.text = $"-{damage}";
+            transform.DOScale(0, _destroyDaley).OnComplete(() =>
+            {
+                Destroy(gameObject);
+            });
+        }
     }
 }

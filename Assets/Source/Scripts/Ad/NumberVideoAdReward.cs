@@ -1,23 +1,26 @@
 using TMPro;
 using UnityEngine;
 
-public class NumberVideoAdReward : MonoBehaviour
+namespace Ad
 {
-    [SerializeField] private TextMeshProUGUI _text;
-    [SerializeField] private RewardButton _rewardButton;
-
-    private void OnEnable()
+    public class NumberVideoAdReward : MonoBehaviour
     {
-        _rewardButton.RewardChanged += OnRewardChanged;
-    }
+        [SerializeField] private TextMeshProUGUI _text;
+        [SerializeField] private RewardButton _rewardButton;
 
-    private void OnDisable()
-    {
-        _rewardButton.RewardChanged -= OnRewardChanged;
-    }
+        private void OnEnable()
+        {
+            _rewardButton.RewardChanged += OnRewardChanged;
+        }
 
-    private void OnRewardChanged()
-    {
-        _text.text = $"+{_rewardButton.RewardCount}";
+        private void OnDisable()
+        {
+            _rewardButton.RewardChanged -= OnRewardChanged;
+        }
+
+        private void OnRewardChanged()
+        {
+            _text.text = $"+{_rewardButton.RewardCount}";
+        }
     }
 }

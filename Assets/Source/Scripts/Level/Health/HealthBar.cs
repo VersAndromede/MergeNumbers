@@ -3,28 +3,31 @@ using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class HealthBar : MonoBehaviour
+namespace HealthSystem
 {
-    [SerializeField] private Slider _slider;
-    [SerializeField] private TextMeshProUGUI _text;
-
-    public void UpdateUIWithInstantTransition(int count, int maxCount)
+    public class HealthBar : MonoBehaviour
     {
-        _slider.value = GetHealthUpdate(count, maxCount);
-    }
+        [SerializeField] private Slider _slider;
+        [SerializeField] private TextMeshProUGUI _text;
 
-    public void UpdateUIWithSmoothTransition(int count, int maxCount)
-    {
-        const float Duration = 0.25f;
+        public void UpdateUIWithInstantTransition(int count, int maxCount)
+        {
+            _slider.value = GetHealthUpdate(count, maxCount);
+        }
 
-        float currentHealth = GetHealthUpdate(count, maxCount);
-        _slider.DOValue(currentHealth, Duration).SetEase(Ease.InOutCubic);
-    }
+        public void UpdateUIWithSmoothTransition(int count, int maxCount)
+        {
+            const float Duration = 0.25f;
 
-    private float GetHealthUpdate(int count, int maxCount)
-    {
-        float currentHealth = (float)count / maxCount;
-        _text.text = $"{count}/{maxCount}";
-        return currentHealth;
+            float currentHealth = GetHealthUpdate(count, maxCount);
+            _slider.DOValue(currentHealth, Duration).SetEase(Ease.InOutCubic);
+        }
+
+        private float GetHealthUpdate(int count, int maxCount)
+        {
+            float currentHealth = (float)count / maxCount;
+            _text.text = $"{count}/{maxCount}";
+            return currentHealth;
+        }
     }
 }

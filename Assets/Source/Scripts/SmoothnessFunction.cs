@@ -17,7 +17,7 @@ namespace SmoothnessFunctions
             if (x < HalfAnimationProgress)
                 return CubicCoefficient * x * x * x;
             else
-                return FullAnimationProgress - Mathf.Pow(cubicBase, CubicPower) / Divider;
+                return FullAnimationProgress - (Mathf.Pow(cubicBase, CubicPower) / Divider);
         }
     }
 }

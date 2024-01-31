@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using TrainingSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using Upgrades;
 
 public class EntryPoint : MonoBehaviour
 {
     [SerializeField] private WalletSetup _walletSetup;
     [SerializeField] private BossLoader _bossLoader;
-    [SerializeField] private GameOverController _gameOverController;
+    [SerializeField] private GameOverHandler _gameOverHandler;
     [SerializeField] private DamageToCoinsTranslator _damageToCoinTranslator;
-    [SerializeField] private GameMoves _gameMoves;
+    [SerializeField] private MoveCounter _moveCounter;
     [SerializeField] private Battlefield _battlefield;
     [SerializeField] private BossDamageView _bossDamageView;
-    [SerializeField] private List<Upgrade> _upgrades;
+    [SerializeField] private UpgradesInitializer _upgradesInitializer;
     [SerializeField] private List<UpgradeButton> _upgradeButtons;
     [SerializeField] private BossMap _bossMap;
     [SerializeField] private Button _bossMapExitButton;
@@ -36,6 +37,7 @@ public class EntryPoint : MonoBehaviour
     [SerializeField] private AttackReadinessIndicator _attackReadinessIndicator;
     [SerializeField] private Player _player;
     [SerializeField] private PowerSetup _powerSetup;
+    [SerializeField] private PlayerMergeAbility _playerMergeAbility;
 
     private GameSaver _saver;
 
@@ -47,41 +49,41 @@ public class EntryPoint : MonoBehaviour
 
     private void Awake()
     {
-        SaveSystem.Load(saveData =>
+        SaveSystem saveSystem = new SaveSystem();
+
+        saveSystem.Load(saveData =>
         {
             InitLocalization();
-            InitTraining(saveData.TrainingIsViewed, out Training training);
-            InitWallet(saveData.Coins, out Wallet wallet);
-            InitUpgrades(saveData.UpgradeDatas);
+            Training training = InitTraining(saveData.TrainingIsViewed);
+            Wallet wallet = InitWallet(saveData.Coins);
+            _upgradesInitializer.Init(saveData.UpgradeDatas);
             InitUpgradeButtons(wallet);
             Health playerHealth = new Health(0);
-            InitPower(playerHealth, out Power power);
-            PauseController pauseController = new PauseController();
+            Power power = InitPower(playerHealth);
+            _playerMergeAbility.Init(power);
+            PauseSetter pauseSetter = new PauseSetter();
             InitReturnToMenuButtons();
-            _pauseButton.Init(pauseController);
-            _interstitialAdsDisplay.Init(pauseController);
-            _rewardButton.Init(pauseController, wallet);
+            _pauseButton.Init(pauseSetter);
+            _interstitialAdsDisplay.Init(pauseSetter);
+            _rewardButton.Init(pauseSetter, wallet);
             _soundButton.Init(saveData.IsSoundButtonEnabled);
             _musicButton.Init(saveData.IsMusicButtonEnabled);
-            _bossMap.Init(saveData.BossAwards, saveData.BossDataIndex, wallet);
+            _bossMap.Fill(saveData.BossAwards, saveData.BossDataIndex, wallet);
             _bossMapScroll.Init(saveData.BossMapContentYPosition);
             _bossLoader.Init(saveData.BossDataIndex);
             _inputHandler.Init(training);
             _leaderboardUpdater.Init(wallet);
-            _gameOverController.Init(_bossLoader.CurrentBoss, power, playerHealth);
+            _gameOverHandler.Init(_bossLoader.CurrentBoss, power, playerHealth);
             _damageToCoinTranslator.Init(wallet, _bossLoader.CurrentBoss.BossHealth);
             _attackReadinessIndicator.Init(_bossLoader.CurrentBoss.BossHealth);
             _trainingCursor.Init(_bossLoader.CurrentBoss.BossHealth, saveData.BossDataIndex);
             BossAnimator bossAnimator = _bossLoader.CurrentBoss.GetComponent<BossAnimator>();
-            bossAnimator.Init(_gameMoves);
+            bossAnimator.Init(_moveCounter);
             _bossDamageView.Init(_bossLoader.CurrentBoss);
             _hitDamageCountSpawner.Init(_bossLoader.CurrentBoss.BossHealth);
-
             _battlefield.Init(_bossLoader.CurrentBoss, playerHealth);
-            _focusObserver.Init(pauseController, _pauseButton, _rewardButton, _interstitialAdsDisplay);
-
-            _saver = new GameSaver(_gameOverController, wallet, _bossLoader, _upgrades, saveData.BossAwards, _bossMapExitButton, _bossMapScroll, training, _rewardButton, _soundButton, _musicButton);
-            _saver.Enable();
+            _focusObserver.Init(pauseSetter, _pauseButton, _rewardButton, _interstitialAdsDisplay);
+            InitSaver(wallet, saveData.BossAwards, training);
             _focusObserver.Enable();
             _lockPanel.raycastTarget = false;
         });
@@ -96,28 +98,20 @@ public class EntryPoint : MonoBehaviour
         localizationSetter.Set(YandexGamesSdk.Environment.i18n.lang);
     }
 
-    private void InitTraining(bool trainingIsViewed, out Training training)
+    private Training InitTraining(bool trainingIsViewed)
     {
-        training = new Training(trainingIsViewed, _pageContent);
+        Training training = new Training(trainingIsViewed, _pageContent);
         _trainingSetup.Init(training);
         _currentTrainingPageView.Init(training);
+        return training;
     }
 
-    private void InitWallet(int coins, out Wallet wallet)
+    private Wallet InitWallet(int coins)
     {
-        wallet = new Wallet();
+        Wallet wallet = new Wallet();
         _walletSetup.Init(wallet);
         wallet.Init(coins);
-    }
-
-    private void InitUpgrades(UpgradeData[] upgradesData)
-    {
-        if (upgradesData[0] == null)
-            for (int i = 0; i < upgradesData.Length; i++)
-                upgradesData[i] = new UpgradeData();
-
-        for (int i = 0; i < _upgrades.Count; i++)
-            _upgrades[i].Init(upgradesData[i].Level, upgradesData[i].Price, upgradesData[i].BonusValue);
+        return wallet;
     }
 
     private void InitUpgradeButtons(Wallet wallet)
@@ -132,10 +126,23 @@ public class EntryPoint : MonoBehaviour
             _returnToMenuButtons[i].Init();
     }
 
-    private void InitPower(Health health, out Power power)
+    private Power InitPower(Health health)
     {
-        power = new Power(0);
+        Power power = new Power(0);
         _powerSetup.Init(power);
         _player.Init(health, power);
+        return power;
+    }
+
+    private void InitSaver(Wallet wallet, List<BossAward> bossAwards, Training training)
+    {
+        _saver = new GameSaver(_gameOverHandler, wallet, 
+            _bossLoader, _upgradesInitializer.Upgrades,
+            bossAwards, _bossMapExitButton, 
+            _bossMapScroll, training, 
+            _rewardButton, _soundButton, 
+            _musicButton);
+
+        _saver.Enable();
     }
 }

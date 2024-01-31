@@ -32,7 +32,7 @@ public class TrainingCursor : MonoBehaviour
         _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g, _spriteRenderer.color.b, 0);
     }
 
-    public void TryEnable()
+    public void Enable()
     {
         if (_currentBossIndex > 0)
         {

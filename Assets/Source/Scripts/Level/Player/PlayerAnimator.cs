@@ -3,20 +3,22 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-    [SerializeField] private GameMoves _gameMoves;
-    [SerializeField] private GameOverController _gameOverController;
+    [SerializeField] private MoveCounter _moveCounter;
+    [SerializeField] private GameOverHandler _gameOverHandler;
     [SerializeField] private PlayerRotation _playerRotation;
+
+    private const string JumpAnimationTrigger = "Jump";
 
     private void OnEnable()
     {
-        _gameMoves.Ended += OnGameMovesEnded;
-        _gameOverController.GameOver += OnGameOver;
+        _moveCounter.Ended += OnGameMovesEnded;
+        _gameOverHandler.GameOver += OnGameOver;
     }
 
     private void OnDisable()
     {
-        _gameMoves.Ended -= OnGameMovesEnded;
-        _gameOverController.GameOver -= OnGameOver;
+        _moveCounter.Ended -= OnGameMovesEnded;
+        _gameOverHandler.GameOver -= OnGameOver;
     }
 
     private void OnGameMovesEnded()
@@ -27,6 +29,6 @@ public class PlayerAnimator : MonoBehaviour
     private void OnGameOver(Winner winner)
     {
         if (winner == Winner.Player)
-            _animator.SetTrigger("Jump");
+            _animator.SetTrigger(JumpAnimationTrigger);
     }
 }

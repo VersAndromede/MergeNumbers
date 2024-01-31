@@ -7,20 +7,19 @@ public class BossAnimator : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private BossAudioSystem _bossAudioSystem;
     [SerializeField] private ParticleSystem _particleSystem;
-    [SerializeField] private float _punchPowerOnHit;
     [SerializeField] private float _punchDurationOnHit;
 
     private readonly int _wakesUpAnimation = Animator.StringToHash("Boss Wakes Up");
     private readonly int _dieAnimation = Animator.StringToHash("Boss Die");
 
-    private GameMoves _gameMoves;
+    private MoveCounter _moveCounter;
     private Vector3 _punchPower;
     private Tween _doPunchScaleTween;
 
-    public void Init(GameMoves gameMoves)
+    public void Init(MoveCounter moveCounter)
     {
-        _gameMoves = gameMoves;
-        _gameMoves.Ended += OnGameMovesEnded;
+        _moveCounter = moveCounter;
+        _moveCounter.Ended += OnGameMovesEnded;
         _boss.BossHealth.Died += OnBossDied;
         _boss.BossHealth.DamageReceived += OnDamageReceived;
         _punchPower = new Vector3(_punchDurationOnHit, _punchDurationOnHit, _punchDurationOnHit);
@@ -28,7 +27,7 @@ public class BossAnimator : MonoBehaviour
 
     private void OnDestroy()
     {
-        _gameMoves.Ended -= OnGameMovesEnded;
+        _moveCounter.Ended -= OnGameMovesEnded;
         _boss.BossHealth.Died -= OnBossDied;
         _boss.BossHealth.DamageReceived -= OnDamageReceived;
     }

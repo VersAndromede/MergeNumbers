@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class FocusObserver : MonoBehaviour
 {
-    private PauseController _pauseController;
+    private PauseSetter _pauseSetter;
     private PauseButton _pauseButton;
     private IAd[] _ads;
     private bool _isAdRunning;
 
-    public void Init(PauseController pauseController, PauseButton pauseButton, params IAd[] ads)
+    public void Init(PauseSetter pauseSetter, PauseButton pauseButton, params IAd[] ads)
     {
         _pauseButton = pauseButton;
-        _pauseController = pauseController;
+        _pauseSetter = pauseSetter;
         _ads = ads;
     }
 
@@ -39,8 +39,8 @@ public class FocusObserver : MonoBehaviour
     private void OnBackgroundChangeEvent(bool inBackground)
     {
         if (inBackground == false && _isAdRunning == false && _pauseButton.IsPaused == false)
-            _pauseController.SetPause(false);
+            _pauseSetter.Disable();
         else
-            _pauseController.SetPause(true);
+            _pauseSetter.Enable();
     }
 }

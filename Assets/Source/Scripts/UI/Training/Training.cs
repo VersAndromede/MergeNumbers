@@ -33,7 +33,9 @@ namespace TrainingSystem
             if (CurrentPageIndex == LastPageIndex)
                 return;
 
-            SwitchPage(true);
+            _pageContent[CurrentPageIndex].SetActive(false);
+            CurrentPageIndex++;
+            EnableCurrentPage();
         }
 
         public void SwitchBackPage()
@@ -41,18 +43,13 @@ namespace TrainingSystem
             if (CurrentPageIndex == 0)
                 return;
 
-            SwitchPage(false);
+            _pageContent[CurrentPageIndex].SetActive(false);
+            CurrentPageIndex--;
+            EnableCurrentPage();
         }
 
-        private void SwitchPage(bool next)
+        private void EnableCurrentPage()
         {
-            _pageContent[CurrentPageIndex].SetActive(false);
-
-            if (next)
-                CurrentPageIndex++;
-            else
-                CurrentPageIndex--;
-
             _pageContent[CurrentPageIndex].SetActive(true);
             PageSwitched?.Invoke();
         }

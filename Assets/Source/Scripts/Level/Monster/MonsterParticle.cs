@@ -6,6 +6,13 @@ public class MonsterParticle : MonoBehaviour
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private float _destroyedTime;
 
+    private WaitForSeconds _waitDestroyedTime;
+
+    private void Start()
+    {
+        _waitDestroyedTime = new WaitForSeconds(_destroyedTime);
+    }
+
     public void Play()
     {
         transform.SetParent(null);
@@ -15,7 +22,7 @@ public class MonsterParticle : MonoBehaviour
 
     private IEnumerator Destroy()
     {
-        yield return new WaitForSeconds(_destroyedTime);
+        yield return _waitDestroyedTime;
         Destroy(gameObject);
     }
 }

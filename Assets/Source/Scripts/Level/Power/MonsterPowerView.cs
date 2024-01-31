@@ -1,30 +1,31 @@
-using TMPro;
 using UnityEngine;
 
-public class MonsterPowerView : MonoBehaviour
+public class MonsterPowerView : PowerView
 {
     [SerializeField] private Monster _monster;
-    [SerializeField] private TextMeshPro _text;
-    [SerializeField] private Color _negativeColorPower;
-    [SerializeField] private Color _positiveColorPower;
+
+    private const string FirstSymbolForDivider = "/";
 
     private void Start()
     {
-        if (_monster is MonsterSubtractive)
+        switch (_monster)
         {
-            _text.color = _negativeColorPower;
-            _text.text = $"{_monster.PowerCount}";
+            case MonsterAdding:
+                UpdateView(PowerColorsConfig.Positive);
+                break;
+            case MonsterSubtractive:
+                UpdateView(PowerColorsConfig.Negative);
+                break;
+            case MonsterDivider:
+                UpdateView(PowerColorsConfig.Negative, FirstSymbolForDivider);
+                break;
         }
-        else if (_monster is MonsterDivider)
-        {
-            _text.color = _negativeColorPower;
-            _text.text = $"/{_monster.PowerCount}";
-        }
-        else
-        {
-            _text.color = _positiveColorPower;
-            _text.text = $"{_monster.PowerCount}";
-        }
+    }
+
+    private void UpdateView(Color textColor, string firstSymbol = "")
+    {
+        SetColor(textColor);
+        SetValue($"{firstSymbol}{_monster.PowerCount}");
     }
 }
 

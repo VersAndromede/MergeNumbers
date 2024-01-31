@@ -33,7 +33,7 @@ public class BossAwardButton : MonoBehaviour
             _button.interactable = false;
     }
 
-    public void TryGetAward()
+    public void GetAward()
     {
         if (_bossAward.TryTake(_wallet))
         {

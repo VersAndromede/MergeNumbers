@@ -1,9 +1,9 @@
-﻿public class PowerPresenter
+﻿public class PlayerPowerPresenter
 {
     private readonly Power _power;
-    private readonly PowerView _powerView;
+    private readonly PlayerPowerView _powerView;
 
-    public PowerPresenter(Power power, PowerView powerView)
+    public PlayerPowerPresenter(Power power, PlayerPowerView powerView)
     {
         _power = power;
         _powerView = powerView;
@@ -12,6 +12,7 @@
     public void Enable()
     {
         _power.Changed += OnPowerChanged;
+        _powerView.UpdateUI(_power.Value);
     }
 
     public void Disable()

@@ -9,7 +9,8 @@ namespace TrainingSystem
         [SerializeField] private GameObject _contentPanel;
         [SerializeField] private Button _completeButton;
 
-        public event Action<bool> RequestedPageSwitching;
+        public event Action RequestedNextPageSwitching;
+        public event Action RequestedBackPageSwitching;
         public event Action RequestedTrainingCompletion;
 
         private void OnEnable()
@@ -27,14 +28,24 @@ namespace TrainingSystem
             _contentPanel.SetActive(value);
         }
 
-        public void SetInteractableCompleteButton(bool value)
+        public void EnableInteractableCompleteButton()
         {
-            _completeButton.interactable = value;
+            _completeButton.interactable = true;
         }
 
-        public void SwitchPage(bool next)
+        public void DisableInteractableCompleteButton()
         {
-            RequestedPageSwitching.Invoke(next);
+            _completeButton.interactable = false;
+        }
+
+        public void SwitchNextPage()
+        {
+            RequestedNextPageSwitching.Invoke();
+        }
+
+        public void SwitchBackPage()
+        {
+            RequestedBackPageSwitching.Invoke();
         }
 
         private void OnCompleteButtonClicked()

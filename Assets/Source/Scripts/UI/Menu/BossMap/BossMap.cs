@@ -7,7 +7,7 @@ public class BossMap : MonoBehaviour
     [SerializeField] private BossMapItem _bossMapItemPrefab;
     [SerializeField] private Transform _container;
 
-    public void Init(List<BossAward> bossAwards, int bossDataIndex, Wallet wallet)
+    public void Fill(List<BossAward> bossAwards, int bossDataIndex, Wallet wallet)
     {
         if (bossAwards.Count == 0)
             InitBossAwards(bossAwards);
@@ -18,7 +18,7 @@ public class BossMap : MonoBehaviour
             bossMapItem.Init(_bossDatas.Datas[i], wallet, bossAwards[i]);
 
             if (bossDataIndex < i)
-                bossMapItem.SetLocked(true);
+                bossMapItem.Lock();
         }
     }
 

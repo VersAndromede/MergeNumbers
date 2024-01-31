@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EndGameScreenView : MonoBehaviour
 {
-    [SerializeField] private GameOverController _victoryController;
+    [SerializeField] private GameOverHandler _gameOverHandler;
     [SerializeField] private LeanLocalizedTextMeshProUGUI _localizedTextMeshPro;
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private ParticleSystem _particle;
@@ -16,12 +16,12 @@ public class EndGameScreenView : MonoBehaviour
 
     private void OnEnable()
     {
-        _victoryController.GameOver += OnGameOver;
+        _gameOverHandler.GameOver += OnGameOver;
     }
 
     private void OnDisable()
     {
-        _victoryController.GameOver -= OnGameOver;
+        _gameOverHandler.GameOver -= OnGameOver;
     }
     
     private void OnGameOver(Winner winner)

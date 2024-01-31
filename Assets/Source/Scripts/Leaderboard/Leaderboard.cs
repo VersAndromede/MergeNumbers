@@ -24,7 +24,7 @@ public class Leaderboard : MonoBehaviour
         });
     }
 
-    public void GetScore(Action<int> onReceivedScore)
+    public void FetchScore(Action<int> onReceivedScore)
     {
         if (Application.isEditor || PlayerAccount.IsAuthorized == false)
             return;

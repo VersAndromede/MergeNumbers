@@ -2,12 +2,13 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Upgrades;
 
-public class GameMoves : MonoBehaviour
+public class MoveCounter : MonoBehaviour
 {
     [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private GameStarter _gameStarter;
-    [SerializeField] private MovesUpgrade _movesUpgrade; 
+    [SerializeField] private UpgradeWithAddedValuePolicy _movesUpgrade; 
     [SerializeField] private Image _inputHandler;
     [SerializeField] private UnityEvent _ended;
 
@@ -18,22 +19,22 @@ public class GameMoves : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerMovement.FinishedMoving += FinishMove;
-        _gameStarter.GameStarted += UpdateCount;
+        _playerMovement.FinishedMoving += OnFinishMove;
+        _gameStarter.GameStarted += OnGameStarted;
     }
 
     private void OnDisable()
     {
-        _playerMovement.FinishedMoving -= FinishMove;
-        _gameStarter.GameStarted -= UpdateCount;
+        _playerMovement.FinishedMoving -= OnFinishMove;
+        _gameStarter.GameStarted -= OnGameStarted;
     }
 
-    public void UpdateCount()
+    public void OnGameStarted()
     {
         Count += _movesUpgrade.BonusValue;
     }
 
-    private void FinishMove()
+    private void OnFinishMove()
     {
         Count--;
         Changed?.Invoke();

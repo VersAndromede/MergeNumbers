@@ -23,7 +23,10 @@ namespace TrainingSystem
 
         private void OnPageSwitched()
         {
-            _text.text = $"{_training.CurrentPageIndex + 1}/{_training.LastPageIndex + 1}";
+            int currentPage = _training.CurrentPageIndex + 1;
+            int lastPage = _training.LastPageIndex + 1;
+
+            _text.text = $"{currentPage}/{lastPage}";
         }
     }
 }

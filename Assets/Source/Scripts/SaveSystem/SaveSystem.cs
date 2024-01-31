@@ -2,11 +2,11 @@ using Agava.YandexGames;
 using System;
 using UnityEngine;
 
-public static class SaveSystem
+public class SaveSystem
 {
     private const string SaveDataPrefsKey = "SaveDataPrefsKey";
 
-    public static void Save(Action<SaveData> callback)
+    public void Save(Action<SaveData> callback)
     {
         if (Application.isEditor || PlayerAccount.IsAuthorized == false)
         {
@@ -22,7 +22,7 @@ public static class SaveSystem
         });
     }
 
-    public static void Load(Action<SaveData> callback)
+    public void Load(Action<SaveData> callback)
     {
         if (Application.isEditor || PlayerAccount.IsAuthorized == false)
         {
@@ -37,7 +37,7 @@ public static class SaveSystem
         });
     }
 
-    private static void SaveToPrefs(Action<SaveData> callback)
+    private void SaveToPrefs(Action<SaveData> callback)
     {
         SaveData saveData = LoadFromPrefs();
         callback?.Invoke(saveData);
@@ -46,7 +46,7 @@ public static class SaveSystem
         PlayerPrefs.Save();
     }
 
-    private static SaveData LoadFromPrefs()
+    private SaveData LoadFromPrefs()
     {
         if (PlayerPrefs.HasKey(SaveDataPrefsKey))
         {

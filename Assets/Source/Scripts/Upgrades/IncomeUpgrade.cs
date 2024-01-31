@@ -1,22 +1,7 @@
-using UnityEngine;
-
-public class IncomeUpgrade : Upgrade
+﻿/*namespace Upgrades
 {
-    [SerializeField] private float _multiplierPrice;
-    [SerializeField] private float _multiplierValue;
-
-    public const int MinBonusValue = 25;
-
-    public override int AffectValue()
+    public class IncomeUpgrade : UpgradeWithMultiplicationValuePolicy
     {
-        if (BonusValue <= 0)
-            return MinBonusValue;
-
-        return Mathf.CeilToInt(BonusValue * _multiplierValue);
+        public 
     }
-
-    public override int AffectPrice()
-    {
-        return (int)Mathf.Round(Price * _multiplierPrice);
-    }
-}
+}*/

@@ -3,24 +3,24 @@ using UnityEngine;
 public class LeaderboardUpdater : MonoBehaviour
 {
     [SerializeField] private Leaderboard _leaderboard;
-    [SerializeField] private GameOverController _gameOverController;
+    [SerializeField] private GameOverHandler _gameOverHandler;
 
     private Wallet _wallet;
 
     private void OnDestroy()
     {
-        _gameOverController.GameOver -= OnGameOver;
+        _gameOverHandler.GameOver -= OnGameOver;
     }
 
     public void Init(Wallet wallet)
     {
         _wallet = wallet;
-        _gameOverController.GameOver += OnGameOver;
+        _gameOverHandler.GameOver += OnGameOver;
     }
 
     public void UpdateLeaderboard()
     {
-        _leaderboard.GetScore(score =>
+        _leaderboard.FetchScore(score =>
         {
             if (_wallet.Coins > score)
                 _leaderboard.SetPlayer(_wallet.Coins);

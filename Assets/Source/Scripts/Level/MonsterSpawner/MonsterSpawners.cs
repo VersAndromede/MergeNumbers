@@ -17,7 +17,7 @@ public class MonsterSpawners : MonoBehaviour, IMonsterNegativeCounter
         {
             monsterSpawner.Init(this);
             monsterSpawner.Spawned += OnMonsterSpawned;
-            monsterSpawner.CounterRestartRequired += Restart;
+            monsterSpawner.CounterRestartRequired += OnCounterRestartRequired;
         }
     }
 
@@ -26,15 +26,15 @@ public class MonsterSpawners : MonoBehaviour, IMonsterNegativeCounter
         foreach (MonsterSpawner monsterSpawner in _monsterSpawners)
         {
             monsterSpawner.Spawned -= OnMonsterSpawned;
-            monsterSpawner.CounterRestartRequired -= Restart;
+            monsterSpawner.CounterRestartRequired -= OnCounterRestartRequired;
         }
     }
 
-    public void TrySpawnOnlyPositiveMonsters()
+    public void FillFieldWithMonstersAdding()
     {
         foreach (MonsterSpawner monsterSpawner in _monsterSpawners)
             if (monsterSpawner.HasPlayerAtStart == false)
-                monsterSpawner.SpawnOnlyPositive();
+                monsterSpawner.InstantiateMonsterAdding();
     }
 
     public void OnMonsterSpawned(Monster monster, int power)
@@ -50,7 +50,7 @@ public class MonsterSpawners : MonoBehaviour, IMonsterNegativeCounter
         }
     }
 
-    public void Restart()
+    public void OnCounterRestartRequired()
     {
         AllCount = 0;
     }

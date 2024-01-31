@@ -1,8 +1,9 @@
 using UnityEngine;
+using Upgrades;
 
 public class DamageToCoinsTranslator : MonoBehaviour
 {
-    [SerializeField] private IncomeUpgrade _incomeUpgrade;
+    [SerializeField] private UpgradeWithMultiplicationValuePolicy _incomeUpgrade;
 
     private Wallet _wallet;
     private BossHealth _bossHealth;
@@ -23,9 +24,9 @@ public class DamageToCoinsTranslator : MonoBehaviour
     {
         uint bonusValue = (uint)_incomeUpgrade.BonusValue;
 
-        if (bonusValue >= IncomeUpgrade.MinBonusValue)
-            _wallet.AddCoins(bonusValue + IncomeUpgrade.MinBonusValue);
+        if (bonusValue >= _incomeUpgrade.MinBonusValue)
+            _wallet.AddCoins(bonusValue + _incomeUpgrade.MinBonusValue);
         else
-            _wallet.AddCoins(IncomeUpgrade.MinBonusValue);
+            _wallet.AddCoins(_incomeUpgrade.MinBonusValue);
     }
 }

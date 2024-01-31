@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class InterstitialAdsDisplay : MonoBehaviour, IAd
 {
-    private PauseController _pauseController;
+    private PauseSetter _pauseSetter;
 
     public event Action<bool> AdRunning;
 
-    public void Init(PauseController pauseController)
+    public void Init(PauseSetter pauseSetter)
     {
-        _pauseController = pauseController;
+        _pauseSetter = pauseSetter;
     }
 
-    public void TryShowAd(Action adOver)
+    public void ShowAd(Action adOver)
     {
         if (Application.isEditor)
         {
@@ -21,7 +21,7 @@ public class InterstitialAdsDisplay : MonoBehaviour, IAd
             return;
         }
 
-        _pauseController.SetPause(true);
+        _pauseSetter.Enable();
         AdRunning?.Invoke(true);
 
         InterstitialAd.Show(
@@ -30,7 +30,7 @@ public class InterstitialAdsDisplay : MonoBehaviour, IAd
 
     private void Enable(Action adOver)
     {
-        _pauseController.SetPause(false);
+        _pauseSetter.Disable();
         AdRunning?.Invoke(false);
         adOver?.Invoke();
     }

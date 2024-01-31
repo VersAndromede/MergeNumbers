@@ -159,6 +159,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5263795171829515703}
     - target: {fileID: 3363398879142885313, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
+      propertyPath: PowerColorsConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: e818135aba6172b4e83d4bde06718bdd, type: 2}
+    - target: {fileID: 3363398879142885313, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
+      propertyPath: _powerColorsConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: e818135aba6172b4e83d4bde06718bdd, type: 2}
+    - target: {fileID: 3363398879142885313, guid: fa9cf7b1161c24f40b34457d9e0a4a0a, type: 3}
       propertyPath: _positiveColorPower.a
       value: 1
       objectReference: {fileID: 0}

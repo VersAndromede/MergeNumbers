@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 public class MonsterSpawner : MonoBehaviour
 {
-    [SerializeField] private GameMoves _gameMoves;
+    [SerializeField] private MoveCounter _moveCounter;
     [SerializeField] private SpawnerObserver _observer;
     [SerializeField] private MonsterSpawnerConfig _config;
     [SerializeField] private MonsterFabric _monsterFabric;
@@ -20,13 +20,13 @@ public class MonsterSpawner : MonoBehaviour
     public event Action<Monster, int> Spawned;
     public event Action CounterRestartRequired;
 
-    private Vector3 _monsterPosition => _observer.transform.position + new Vector3(0, _monsterYPositionOffset, 0);
-    private int _monsterPower => Random.Range(_currentMinPower, _currentMaxPower);
+    private Vector3 MonsterPosition => _observer.transform.position + new Vector3(0, _monsterYPositionOffset, 0);
+    private int MonsterPower => Random.Range(_currentMinPower, _currentMaxPower);
 
     private void OnDestroy()
     {
-        _gameMoves.Changed -= OnGameMovesChanged;
-        _gameMoves.Ended -= OnGameMovesEnded;
+        _moveCounter.Changed -= OnGameMovesChanged;
+        _moveCounter.Ended -= OnGameMovesEnded;
     }
 
     public void Init(IMonsterNegativeCounter monsterNegativeCounter)
@@ -35,18 +35,18 @@ public class MonsterSpawner : MonoBehaviour
         _currentMaxPower = _config.StartingMaxPower;
         _monsterNegativeCounter = monsterNegativeCounter;
 
-        _gameMoves.Changed += OnGameMovesChanged;
-        _gameMoves.Ended += OnGameMovesEnded;
+        _moveCounter.Changed += OnGameMovesChanged;
+        _moveCounter.Ended += OnGameMovesEnded;
     }
 
-    public Monster SpawnOnlyPositive()
+    public Monster InstantiateMonsterAdding()
     {
-        Monster monster = _monsterFabric.GetAdding(_monsterPower, _monsterPosition);
+        Monster monster = _monsterFabric.GetAdding(MonsterPower, MonsterPosition);
         _currentMonster = monster;
         return monster;
     }
 
-    private void TryRandomSpawn()
+    private void RandomSpawn()
     {
         if (_observer.Monster != null || _observer.Player != null)
             return;
@@ -54,14 +54,14 @@ public class MonsterSpawner : MonoBehaviour
         if (IsNegativeMonsterCanBeSpawned() || TrySpawnAddingMonster() || TrySpawnDividerMonster())
             Spawned?.Invoke(_currentMonster, _currentMonster.PowerCount);
         else
-            _currentMonster = _monsterFabric.GetSubtractive(_monsterPower, _monsterPosition);
+            _currentMonster = _monsterFabric.GetSubtractive(MonsterPower, MonsterPosition);
     }
 
     private bool TrySpawnAddingMonster()
     {
-        if (Randomizer.CheckProbability(_config.ProbabilityPositiveMonster))
+        if (Randomizer.TryProbability(_config.ProbabilityPositiveMonster))
         {
-            _currentMonster = SpawnOnlyPositive();
+            _currentMonster = InstantiateMonsterAdding();
             CounterRestartRequired?.Invoke();
             return true;
         }
@@ -74,9 +74,9 @@ public class MonsterSpawner : MonoBehaviour
         if (_monsterNegativeCounter.DividersCount >= _monsterNegativeCounter.MaxDividersCount)
             return false;
 
-        if (Randomizer.CheckProbability(_config.ProbabilityDividerMonster))
+        if (Randomizer.TryProbability(_config.ProbabilityDividerMonster))
         {
-            _currentMonster = _monsterFabric.GetDivider(_config.DividerPower, _monsterPosition);
+            _currentMonster = _monsterFabric.GetDivider(_config.DividerPower, MonsterPosition);
             return true;
         }
 
@@ -87,7 +87,7 @@ public class MonsterSpawner : MonoBehaviour
     {
         if (_monsterNegativeCounter.AllCount >= _monsterNegativeCounter.MaxAllCount)
         {
-            SpawnOnlyPositive();
+            InstantiateMonsterAdding();
             CounterRestartRequired?.Invoke();
             return true;
         }
@@ -95,9 +95,9 @@ public class MonsterSpawner : MonoBehaviour
         return false;
     }
 
-    private void TryIncreaseDifficulty()
+    private void IncreaseDifficulty()
     {
-        if (_gameMoves.Count % _config.NumberMovesToComplicate == 0)
+        if (_moveCounter.Count % _config.NumberMovesToComplicate == 0)
         {
             _currentMinPower += _config.PowerProgression;
             _currentMaxPower += _config.PowerProgression;
@@ -106,8 +106,8 @@ public class MonsterSpawner : MonoBehaviour
 
     private void OnGameMovesChanged()
     {
-        TryRandomSpawn();
-        TryIncreaseDifficulty();
+        RandomSpawn();
+        IncreaseDifficulty();
     }
 
     private void OnGameMovesEnded()

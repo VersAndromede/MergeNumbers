@@ -15,20 +15,24 @@
 
         public void Enable()
         {
-            _gameStarter.GameStarted += OnGameStarted;
-            _trainingView.RequestedPageSwitching += OnRequestedPageSwitching;
+            _trainingView.RequestedNextPageSwitching += OnRequestedNextPageSwitching;
+            _trainingView.RequestedBackPageSwitching += OnRequestedBackPageSwitching;
             _trainingView.RequestedTrainingCompletion += OnRequestedTrainingCompletion;
+
             _training.PageSwitched += OnPageSwitched;
             _training.Viewed += OnViewed;
+            _gameStarter.GameStarted += OnGameStarted;
         }
 
         public void Disable()
         {
-            _gameStarter.GameStarted -= OnGameStarted;
-            _trainingView.RequestedPageSwitching -= OnRequestedPageSwitching;
+            _trainingView.RequestedNextPageSwitching -= OnRequestedNextPageSwitching;
+            _trainingView.RequestedBackPageSwitching -= OnRequestedBackPageSwitching;
             _trainingView.RequestedTrainingCompletion -= OnRequestedTrainingCompletion;
+
             _training.PageSwitched -= OnPageSwitched;
             _training.Viewed -= OnViewed;
+            _gameStarter.GameStarted -= OnGameStarted;
         }
 
         private void OnGameStarted()
@@ -37,12 +41,14 @@
                 _trainingView.SetActiveContentPanel(true);
         }
 
-        private void OnRequestedPageSwitching(bool next)
+        private void OnRequestedNextPageSwitching()
         {
-            if (next)
-                _training.SwitchNextPage();
-            else
-                _training.SwitchBackPage();
+            _training.SwitchNextPage();
+        }
+
+        private void OnRequestedBackPageSwitching()
+        {
+            _training.SwitchBackPage();
         }
 
         private void OnRequestedTrainingCompletion()
@@ -53,7 +59,7 @@
         private void OnPageSwitched()
         {
             if (_training.CurrentPageIndex == _training.LastPageIndex)
-                _trainingView.SetInteractableCompleteButton(true);
+                _trainingView.EnableInteractableCompleteButton();
         }
 
         private void OnViewed()

@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using TrainingSystem;
 using UnityEngine.UI;
+using Upgrades;
 
 public class GameSaver
 {
-    private readonly GameOverController _gameOverController;
+    private readonly SaveSystem _saveSystem = new SaveSystem();
+
+    private readonly GameOverHandler _gameOverHandler;
     private readonly Wallet _wallet;
     private readonly BossLoader _bossLoader;
-    private readonly List<Upgrade> _upgrades;
+    private readonly IReadOnlyList<Upgrade> _upgrades;
     private readonly List<BossAward> _bossAwards;
     private readonly Button _bossMapExitButton;
     private readonly BossMapScroll _bossMapScroll;
@@ -16,11 +19,12 @@ public class GameSaver
     private readonly AudioButton _soundButton;
     private readonly AudioButton _musicButton;
 
-    public GameSaver(GameOverController gameOverController, Wallet wallet, BossLoader bossLoader, 
-        List<Upgrade> upgrades, List<BossAward> bossAwards, Button bossMapExitButton,
-        BossMapScroll bossMapScroll, Training training, RewardButton rewardButton, AudioButton soundButton, AudioButton musicButton)
+    public GameSaver(GameOverHandler gameOverHandler, Wallet wallet, BossLoader bossLoader,
+        IReadOnlyList<Upgrade> upgrades, List<BossAward> bossAwards, Button bossMapExitButton,
+        BossMapScroll bossMapScroll, Training training, RewardButton rewardButton, 
+        AudioButton soundButton, AudioButton musicButton)
     {
-        _gameOverController = gameOverController;
+        _gameOverHandler = gameOverHandler;
         _wallet = wallet;
         _bossLoader = bossLoader;
         _upgrades = upgrades;
@@ -35,9 +39,9 @@ public class GameSaver
 
     public void Enable()
     {
-        _gameOverController.GameOver += OnGameOver;
+        _gameOverHandler.GameOver += OnGameOver;
         _training.Viewed += OnTrainingViewed;
-        _rewardButton.RewardGetted += OnRewardGetted;
+        _rewardButton.RewardReceived += OnRewardGetted;
         _soundButton.EnabledChanged += OnSoundButtonEnabledChanged;
         _musicButton.EnabledChanged += OnMusicButtonEnabledChanged;
         _bossMapExitButton.onClick.AddListener(OnBossMapExitButton);
@@ -51,9 +55,9 @@ public class GameSaver
 
     public void Disable()
     {
-        _gameOverController.GameOver -= OnGameOver;
+        _gameOverHandler.GameOver -= OnGameOver;
         _training.Viewed -= OnTrainingViewed;
-        _rewardButton.RewardGetted -= OnRewardGetted;
+        _rewardButton.RewardReceived -= OnRewardGetted;
         _soundButton.EnabledChanged -= OnSoundButtonEnabledChanged;
         _musicButton.EnabledChanged -= OnMusicButtonEnabledChanged;
         _bossMapExitButton.onClick.RemoveListener(OnBossMapExitButton);
@@ -67,7 +71,7 @@ public class GameSaver
 
     private void OnGameOver(Winner winner)
     {
-        SaveSystem.Save(data =>
+        _saveSystem.Save(data =>
         {
             data.Coins = _wallet.Coins;
             data.BossDataIndex = _bossLoader.BossDataIndex;
@@ -84,7 +88,7 @@ public class GameSaver
 
     private void OnUpgradeLevelChanged()
     {
-        SaveSystem.Save(data =>
+        _saveSystem.Save(data =>
         {
             for (int i = 0; i < _upgrades.Count; i++)
             {
@@ -102,7 +106,7 @@ public class GameSaver
 
     private void OnBossAwardTaken(BossAward bossAward)
     {
-        SaveSystem.Save(data =>
+        _saveSystem.Save(data =>
         {
             data.BossAwards[bossAward.Id] = bossAward;
             data.Coins = _wallet.Coins;
@@ -111,7 +115,7 @@ public class GameSaver
 
     private void OnBossMapExitButton()
     {
-        SaveSystem.Save(data =>
+        _saveSystem.Save(data =>
         {
             data.BossMapContentYPosition = _bossMapScroll.YPosition;
         });
@@ -119,7 +123,7 @@ public class GameSaver
 
     private void OnTrainingViewed()
     {
-        SaveSystem.Save(data =>
+        _saveSystem.Save(data =>
         {
             data.TrainingIsViewed = true;
         });
@@ -127,7 +131,7 @@ public class GameSaver
 
     private void OnRewardGetted()
     {
-        SaveSystem.Save(data =>
+        _saveSystem.Save(data =>
         {
             data.Coins = _wallet.Coins;
         });
@@ -135,7 +139,7 @@ public class GameSaver
 
     private void OnSoundButtonEnabledChanged()
     {
-        SaveSystem.Save(data =>
+        _saveSystem.Save(data =>
         {
             data.IsSoundButtonEnabled = _soundButton.Enabled;
         });
@@ -143,7 +147,7 @@ public class GameSaver
 
     private void OnMusicButtonEnabledChanged()
     {
-        SaveSystem.Save(data =>
+        _saveSystem.Save(data =>
         {
             data.IsMusicButtonEnabled = _musicButton.Enabled;
         });

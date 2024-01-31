@@ -2,9 +2,9 @@
 
 public class PowerSetup : MonoBehaviour
 {
-    [SerializeField] private PowerView _powerView;
+    [SerializeField] private PlayerPowerView _powerView;
 
-    private PowerPresenter _powerPresenter;
+    private PlayerPowerPresenter _powerPresenter;
 
     private void OnDestroy()
     {
@@ -13,7 +13,7 @@ public class PowerSetup : MonoBehaviour
 
     public void Init(Power power)
     {
-        _powerPresenter = new PowerPresenter(power, _powerView);
+        _powerPresenter = new PlayerPowerPresenter(power, _powerView);
         _powerPresenter.Enable();
     }
 }

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class AddedRewardView : MonoBehaviour
+public class NumberVideoAdReward : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private RewardButton _rewardButton;

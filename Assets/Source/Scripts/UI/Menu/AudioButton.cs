@@ -30,11 +30,6 @@ public class AudioButton : MonoBehaviour
     {
         Enabled = enabled;
         _image.color = enabled ? _enableColor : _disableColor;
-
-        if (Enabled)
-            _audioMixerGroup.audioMixer.SetFloat(_mixerName, MaxMixerVolume);
-        else
-            _audioMixerGroup.audioMixer.SetFloat(_mixerName, MinMixerVolume);
     }
 
     public void Switch()

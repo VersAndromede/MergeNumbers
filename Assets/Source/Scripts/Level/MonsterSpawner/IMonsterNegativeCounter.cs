@@ -6,5 +6,5 @@
     int MaxDividersCount { get; }
 
     void OnMonsterSpawned(Monster monster, int power);
-    void Restart();
+    void OnCounterRestartRequired();
 }

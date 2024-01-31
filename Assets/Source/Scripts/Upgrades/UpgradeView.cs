@@ -2,6 +2,7 @@ using Lean.Localization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Upgrades;
 
 public class UpgradeView : MonoBehaviour
 {

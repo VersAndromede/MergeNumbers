@@ -3,13 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum Winner
-{
-    Player,
-    Boss
-}
-
-public class GameOverController : MonoBehaviour
+public class GameOverHandler : MonoBehaviour
 {
     [SerializeField] private float _delayToResult;
     [SerializeField] private UnityEvent _gameOver;
@@ -42,17 +36,6 @@ public class GameOverController : MonoBehaviour
         _boss.BossHealth.Died += OnBossDied;
     }
 
-    private void OnBossDied()
-    {
-        StartCoroutine(AssignVictory(Winner.Player));
-    }
-
-    private void OnPlayerDied()
-    {
-        _boss.BossHealth.MakeInvulnerable();
-        StartCoroutine(AssignVictory(Winner.Boss));
-    }
-
     private IEnumerator AssignVictory(Winner winner)
     {
         yield return _waitTime;
@@ -64,5 +47,16 @@ public class GameOverController : MonoBehaviour
             _winning?.Invoke();
         else
             _defeat?.Invoke();
+    }
+
+    private void OnBossDied()
+    {
+        StartCoroutine(AssignVictory(Winner.Player));
+    }
+
+    private void OnPlayerDied()
+    {
+        _boss.BossHealth.MakeInvulnerable();
+        StartCoroutine(AssignVictory(Winner.Boss));
     }
 }

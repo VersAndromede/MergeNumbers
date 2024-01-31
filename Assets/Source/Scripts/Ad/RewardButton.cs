@@ -4,24 +4,26 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Upgrades;
 
 public class RewardButton : MonoBehaviour, IAd
 {
-    [SerializeField] private IncomeUpgrade _incomeUpgrade;
+    [SerializeField] private UpgradeWithMultiplicationValuePolicy _incomeUpgrade;
     [SerializeField] private Button _button;
-    [SerializeField] private float _defaulftRewardCount;
-    [SerializeField] private UnityEvent _rewardGetted;
+    [SerializeField] private float _defaultRewardCount;
+    [SerializeField] private UnityEvent _rewardReceived;
 
     private const uint MinRewardCount = 150;
-    private const float RewardAdDisplayDalay = 0.04f;
+    private const float RewardAdDisplayDelay = 0.04f;
 
     private Wallet _wallet;
-    private PauseController _pauseController;
+    private PauseSetter _pauseSetter;
+    private WaitForSecondsRealtime _waitDisplayDelay;
     private bool _isRewarded;
 
     public uint RewardCount { get; private set; }
 
-    public event Action RewardGetted;
+    public event Action RewardReceived;
     public event Action RewardChanged;
     public event Action<bool> AdRunning;
 
@@ -30,25 +32,26 @@ public class RewardButton : MonoBehaviour, IAd
         _incomeUpgrade.LevelChanged -= OnIncomeUpgradeLevelChanged;
     }
 
-    public void Init(PauseController pauseController, Wallet wallet)
+    public void Init(PauseSetter pauseSetter, Wallet wallet)
     {
         OnIncomeUpgradeLevelChanged();
-        _pauseController = pauseController;
+        _pauseSetter = pauseSetter;
         _wallet = wallet;
+        _waitDisplayDelay = new WaitForSecondsRealtime(RewardAdDisplayDelay);
         _incomeUpgrade.LevelChanged += OnIncomeUpgradeLevelChanged;
     }
 
-    public void GetReward()
+    public void WatchVideoAd()
     {
         _button.interactable = false;
         AdRunning?.Invoke(true);
-        _pauseController.SetPause(true);
-        StartCoroutine(StartGetReward());
+        _pauseSetter.Enable();
+        StartCoroutine(StartWatchVideoAd());
     }
 
-    private IEnumerator StartGetReward()
+    private IEnumerator StartWatchVideoAd()
     {
-        yield return new WaitForSecondsRealtime(RewardAdDisplayDalay);
+        yield return _waitDisplayDelay;
 
         VideoAd.Show(
         onRewardedCallback: () =>
@@ -60,8 +63,8 @@ public class RewardButton : MonoBehaviour, IAd
         {
             if (_isRewarded)
             {
-                _rewardGetted?.Invoke();
-                RewardGetted?.Invoke();
+                _rewardReceived?.Invoke();
+                RewardReceived?.Invoke();
             }
 
             Enable();
@@ -72,22 +75,22 @@ public class RewardButton : MonoBehaviour, IAd
         });
     }
 
+    private void Enable()
+    {
+        _isRewarded = false;
+        _pauseSetter.Disable();
+        _button.interactable = true;
+        AdRunning?.Invoke(false);
+    }
+
     private void OnIncomeUpgradeLevelChanged()
     {
-        uint rewardCount = (uint)Mathf.CeilToInt(_defaulftRewardCount * _incomeUpgrade.BonusValue);
+        uint rewardCount = (uint)Mathf.CeilToInt(_defaultRewardCount * _incomeUpgrade.BonusValue);
 
         if (rewardCount < MinRewardCount)
             rewardCount = MinRewardCount;
 
         RewardCount = rewardCount;
         RewardChanged?.Invoke();
-    }
-
-    private void Enable()
-    {
-        _isRewarded = false;
-        _pauseController.SetPause(false);
-        _button.interactable = true;
-        AdRunning?.Invoke(false);
     }
 }

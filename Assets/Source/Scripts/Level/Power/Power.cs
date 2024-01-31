@@ -16,7 +16,7 @@ public class Power
     {
         Value += count;
         Changed?.Invoke();
-        TryOver();
+        HandleOver();
     }
 
     public void Divide(int divider)
@@ -26,10 +26,10 @@ public class Power
 
         Value /= divider;
         Changed?.Invoke();
-        TryOver();
+        HandleOver();
     }
 
-    private void TryOver()
+    private void HandleOver()
     {
         if (Value < 0)
             Over?.Invoke();

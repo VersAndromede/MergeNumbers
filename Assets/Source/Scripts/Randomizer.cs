@@ -1,15 +1,29 @@
-using UnityEngine;
+using System;
+using Random = UnityEngine.Random;
 
 public static class Randomizer
 {
     public static bool GetBool()
     {
-        return Random.Range(0, 2) == 0;
+        const int DownBorderForRange = 0;
+        const int UpBorderForRange = 2;
+        const int ResultForSuccess = 1;
+
+        return Random.Range(DownBorderForRange, UpBorderForRange) == ResultForSuccess;
     }
 
-    public static bool CheckProbability(int probability)
+    public static bool TryProbability(float probability)
     {
-        float randomNumber = Random.Range(0.0f, 101.0f);
-        return randomNumber < probability;
+        const float MinProbability = 0;
+        const float MaxProbability = 100;
+
+        if (probability < MinProbability || probability > MaxProbability)
+            throw new ArgumentException();
+
+        if (probability == MinProbability)
+            return false;
+
+        float randomNumber = Random.Range(MinProbability, MaxProbability);
+        return randomNumber <= probability;
     }
 }

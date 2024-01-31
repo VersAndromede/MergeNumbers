@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using Upgrades;
 
 public class UpgradeButton : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class UpgradeButton : MonoBehaviour
         _wallet = wallet;
     }
 
-    public void TryBuyUpgrade(Upgrade upgrade)
+    public void BuyUpgrade(Upgrade upgrade)
     {
         if (upgrade.CanImprove && _wallet.IsSolvent(upgrade.Price))
         {

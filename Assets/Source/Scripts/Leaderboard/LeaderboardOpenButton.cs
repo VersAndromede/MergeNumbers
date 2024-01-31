@@ -8,7 +8,7 @@ public class LeaderboardOpenButton : MonoBehaviour
     [SerializeField] private UnityEvent _authorizationRequested;
     [SerializeField] private UnityEvent _authorizationPerformed;
 
-    public void TryOpenLeaderboard()
+    public void OpenLeaderboard()
     {
         if (PlayerAccount.IsAuthorized)
         {
@@ -20,7 +20,7 @@ public class LeaderboardOpenButton : MonoBehaviour
         _authorizationRequested?.Invoke();
     }
 
-    public void TryAuthorize()
+    public void Authorize()
     {
         PlayerAccount.Authorize(() => _authorizationPerformed?.Invoke());
     }

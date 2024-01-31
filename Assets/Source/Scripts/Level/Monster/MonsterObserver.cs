@@ -3,9 +3,21 @@ using UnityEngine;
 
 public class MonsterObserver : MonoBehaviour
 {
+    [SerializeField] private PlayerMovement _movement;
+
     private List<Monster> _monsters = new List<Monster>();
 
     public IReadOnlyList<Monster> Monsters => _monsters;
+
+    private void OnEnable()
+    {
+        _movement.StartedMoving += OnStartedMoving;
+    }
+
+    private void OnDisable()
+    {
+        _movement.StartedMoving -= OnStartedMoving;
+    }
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -13,7 +25,7 @@ public class MonsterObserver : MonoBehaviour
             _monsters.Add(monster);
     }
 
-    public void Clear()
+    private void OnStartedMoving()
     {
         _monsters = new List<Monster>();
     }

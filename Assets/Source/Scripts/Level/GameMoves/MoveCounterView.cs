@@ -1,10 +1,10 @@
 using TMPro;
 using UnityEngine;
 
-public class GameMovesView : MonoBehaviour
+public class MoveCounterView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
-    [SerializeField] private GameMoves _gameMoves;
+    [SerializeField] private MoveCounter _moveCounter;
 
     private void Start()
     {
@@ -13,16 +13,16 @@ public class GameMovesView : MonoBehaviour
 
     private void OnEnable()
     {
-        _gameMoves.Changed += OnChanged;
+        _moveCounter.Changed += OnChanged;
     }
 
     private void OnDisable()
     {
-        _gameMoves.Changed -= OnChanged;
+        _moveCounter.Changed -= OnChanged;
     }
 
     private void OnChanged()
     {
-        _text.text = _gameMoves.Count.ToString();
+        _text.text = _moveCounter.Count.ToString();
     }
 }

@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class HealthPresenter
+﻿public class HealthPresenter
 {
     private readonly Health _health;
     private readonly HealthBar _healthBar;
@@ -9,7 +7,7 @@ public class HealthPresenter
     {
         _health = health;
         _healthBar = healthBar;
-        _healthBar.UpdateUI(_health.Value, _health.MaxValue);
+        _healthBar.UpdateUIWithInstantTransition(_health.Value, _health.MaxValue);
     }
 
     public void Enable()
@@ -24,6 +22,6 @@ public class HealthPresenter
 
     private void OnChanged()
     {
-        _healthBar.UpdateSmoothUI(_health.Value, _health.MaxValue);
+        _healthBar.UpdateUIWithSmoothTransition(_health.Value, _health.MaxValue);
     }
 }

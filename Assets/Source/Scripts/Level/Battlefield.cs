@@ -1,11 +1,12 @@
 using System.Collections;
 using UnityEngine;
+using Upgrades;
 
 public class Battlefield : MonoBehaviour
 {
-    [SerializeField] private Player _player;
-    [SerializeField] private GameMoves _gameMoves;
-    [SerializeField] private DamageUpgrade _damageUpgrade;
+    [SerializeField] private PlayerDamage _playerDamage;
+    [SerializeField] private MoveCounter _moveCounter;
+    [SerializeField] private UpgradeWithMultiplicationValuePolicy _damageUpgrade;
     [SerializeField] private HealthSetup _bossHealthSetup;
     [SerializeField] public float _bossRechargeTime;
 
@@ -13,11 +14,11 @@ public class Battlefield : MonoBehaviour
     private Boss _boss;
     private Health _playerHealth;
 
-    private BossHealth _bossHealth => _boss.BossHealth;
+    private BossHealth BossHealth => _boss.BossHealth;
 
     private void OnDestroy()
     {
-        _gameMoves.Ended -= Fight;
+        _moveCounter.Ended -= Fight;
     }
 
     public void Init(Boss boss, Health playerHealth)
@@ -25,7 +26,7 @@ public class Battlefield : MonoBehaviour
         _boss = boss;
         _playerHealth = playerHealth;
         _waitTime = new WaitForSeconds(_bossRechargeTime);
-        _gameMoves.Ended += Fight;
+        _moveCounter.Ended += Fight;
     }
 
     private void Fight()
@@ -35,12 +36,12 @@ public class Battlefield : MonoBehaviour
 
     private IEnumerator StartFight()
     {
-        _player.UpgradeDamage(_damageUpgrade);
-        _boss.Init(_bossHealthSetup, _player.Damage);
-        StartCoroutine(_bossHealth.MakeVulnerable());
+        _playerDamage.Upgrade(_damageUpgrade);
+        _boss.Init(_bossHealthSetup, _playerDamage.Count);
+        StartCoroutine(BossHealth.MakeVulnerable());
         yield return _waitTime;
 
-        while (_playerHealth.IsDied == false && _playerHealth.Value >= 0 && _bossHealth.HealthCount> 0)
+        while (_playerHealth.IsDied == false && _playerHealth.Value >= 0 && BossHealth.HealthCount> 0)
         {
             _playerHealth.TakeDamage(_boss.Data.Damage);
             yield return _waitTime;

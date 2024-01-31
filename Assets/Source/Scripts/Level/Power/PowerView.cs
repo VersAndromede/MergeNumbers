@@ -1,27 +1,19 @@
 using TMPro;
 using UnityEngine;
 
-public class PowerView : MonoBehaviour
+public abstract class PowerView : MonoBehaviour
 {
-    [SerializeField] private Color _positiveColorPower;
-    [SerializeField] private Color _negativeColorPower;
-    [SerializeField] private Color _neutralColorPower;
+    [SerializeField] protected PowerColorsConfig PowerColorsConfig;
+
     [SerializeField] private TextMeshPro _text;
 
-    private void Start()
+    protected void SetValue(string value)
     {
-        UpdateUI(0);
+        _text.text = value;
     }
 
-    public void UpdateUI(int powerValue)
+    protected void SetColor(Color color)
     {
-        if (powerValue > 0)
-            _text.color = _positiveColorPower;
-        else if (powerValue < 0)
-            _text.color = _negativeColorPower;
-        else
-            _text.color = _neutralColorPower;
-
-        _text.text = $"{powerValue}";
+        _text.color = color;
     }
 }

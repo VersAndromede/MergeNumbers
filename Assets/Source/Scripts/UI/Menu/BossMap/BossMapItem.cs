@@ -26,14 +26,13 @@ public class BossMapItem : MonoBehaviour
         _button.Init(bossAward, wallet);
     }
 
-    public void SetLocked(bool value)
+    public void Lock()
     {
-        if (value)
-        {
-            SetLocked(true, false, _lockPanelColor);
-            return;
-        }
+        SetLocked(true, false, _lockPanelColor);
+    }
 
+    public void Unlock()
+    {
         SetLocked(false, true, _unlockPanelColor);
     }
 

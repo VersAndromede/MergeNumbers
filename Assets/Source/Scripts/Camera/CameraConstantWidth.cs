@@ -19,14 +19,17 @@ public class CameraConstantWidth : MonoBehaviour
     public bool IsPortraitOrientation => Screen.width / (float)Screen.height * AspectRatio.x <= AspectRatio.y;
     public bool IsLandscapeOrientation => Screen.height / (float)Screen.width * AspectRatio.x <= AspectRatio.y;
 
+    private float AspectRatioForVerticalFov => 1 / _targetAspect;
+
     private void Start()
     {
         _initialSize = _componentCamera.orthographicSize;
         _initialFov = _componentCamera.fieldOfView;
         IdentifyNewResolution();
-        _horizontalFov = CalcVerticalFov(_initialFov, 1 / _targetAspect);
 
-        float constantWidthFov = CalcVerticalFov(_horizontalFov, _componentCamera.aspect);
+        _horizontalFov = CalculateVerticalFov(_initialFov, AspectRatioForVerticalFov);
+
+        float constantWidthFov = CalculateVerticalFov(_horizontalFov, _componentCamera.aspect);
         _componentCamera.fieldOfView = Mathf.Lerp(constantWidthFov, _initialFov, ScalerMatch);
     }
 
@@ -41,33 +44,39 @@ public class CameraConstantWidth : MonoBehaviour
         }
         else
         {
-            float constantWidthFov = CalcVerticalFov(_horizontalFov, _componentCamera.aspect);
+            float constantWidthFov = CalculateVerticalFov(_horizontalFov, _componentCamera.aspect);
             _componentCamera.fieldOfView = Mathf.Lerp(constantWidthFov, _initialFov, ScalerMatch);
         }
     }
 
-    private float CalcVerticalFov(float hFovInDeg, float aspectRatio)
+    private float CalculateVerticalFov(float horizontalFovInDeg, float aspectRatio)
     {
-        float hFovInRads = hFovInDeg * Mathf.Deg2Rad;
-        float vFovInRads = 2 * Mathf.Atan(Mathf.Tan(hFovInRads / 2) / aspectRatio);
-        return vFovInRads * Mathf.Rad2Deg;
+        const float Factor = 2f;
+
+        float halfHorizontalFovInRads = horizontalFovInDeg * Mathf.Deg2Rad / 2;
+        float verticalFovInRads = Factor * Mathf.Atan(Mathf.Tan(halfHorizontalFovInRads) / aspectRatio);
+        return verticalFovInRads * Mathf.Rad2Deg;
     }
 
     private void IdentifyNewResolution()
     {
+        const int PortraitScalerMatch = 0;
+        const int LandscapeScalerMatch = 1;
+
         Vector2Int targetResolution = new Vector2Int(1920, 1080);
 
         if (IsPortraitOrientation)
-            SetNewResolution(targetResolution.y, targetResolution.x, 0);
+            SetNewResolution(targetResolution.y, targetResolution.x, PortraitScalerMatch);
         else
-            SetNewResolution(targetResolution.x, targetResolution.y, 1);
+            SetNewResolution(targetResolution.x, targetResolution.y, LandscapeScalerMatch);
     }
 
     private void CalculateHorizontalFov(int resolutionWidth, int resolutionHeight)
     {
         Resolution = new Vector2(resolutionWidth, resolutionHeight);
         _targetAspect = Resolution.x / Resolution.y;
-        _horizontalFov = CalcVerticalFov(_initialFov, 1 / _targetAspect);
+
+        _horizontalFov = CalculateVerticalFov(_initialFov, AspectRatioForVerticalFov);
     }
 
     private void SetNewResolution(int width, int height, int scalerMatch)

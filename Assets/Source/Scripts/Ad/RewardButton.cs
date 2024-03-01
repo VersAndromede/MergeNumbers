@@ -1,14 +1,14 @@
 using Agava.YandexGames;
-using Pause;
+using Scripts.WalletSystem;
+using Scripts.Pause;
 using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using Upgrades;
-using WalletSystem;
+using Scripts.UpgradeSystem;
 
-namespace Ad
+namespace Scripts.Ad
 {
     public class RewardButton : MonoBehaviour, IAd
     {
@@ -29,7 +29,8 @@ namespace Ad
 
         public event Action RewardReceived;
         public event Action RewardChanged;
-        public event Action<bool> AdRunning;
+        public event Action AdStarted;
+        public event Action AdEnded;
 
         private void OnDestroy()
         {
@@ -48,7 +49,7 @@ namespace Ad
         public void WatchVideoAd()
         {
             _button.interactable = false;
-            AdRunning?.Invoke(true);
+            AdStarted?.Invoke();
             _pauseSetter.Enable();
             StartCoroutine(StartWatchVideoAd());
         }
@@ -84,7 +85,7 @@ namespace Ad
             _isRewarded = false;
             _pauseSetter.Disable();
             _button.interactable = true;
-            AdRunning?.Invoke(false);
+            AdEnded?.Invoke();
         }
 
         private void OnIncomeUpgradeLevelChanged()

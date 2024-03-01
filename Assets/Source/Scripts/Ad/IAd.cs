@@ -1,9 +1,10 @@
 ﻿using System;
 
-namespace Ad
+namespace Scripts.Ad
 {
     public interface IAd
     {
-        public event Action<bool> AdRunning;
+        public event Action AdStarted;
+        public event Action AdEnded;
     }
 }

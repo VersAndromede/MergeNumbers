@@ -2,7 +2,7 @@ using Plugins.Audio.Core;
 using Plugins.Audio.Utils;
 using UnityEngine;
 
-namespace Audio
+namespace Scripts.Audio
 {
     public class AudioPlayer : MonoBehaviour
     {

@@ -1,4 +1,4 @@
-using GameLocalizationSetter;
+using Scripts.Localization;
 using UnityEditor;
 using UnityEngine;
 

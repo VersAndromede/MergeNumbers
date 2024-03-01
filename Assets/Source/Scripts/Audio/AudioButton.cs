@@ -1,17 +1,13 @@
 using System;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
 
-namespace Audio
+namespace Scripts.Audio
 {
     public class AudioButton : MonoBehaviour
     {
         [SerializeField] private AudioMixerGroup _audioMixerGroup;
         [SerializeField] private string _mixerName;
-        [SerializeField] private Image _image;
-        [SerializeField] private Color _disableColor;
-        [SerializeField] private Color _enableColor;
 
         private const int MaxMixerVolume = 0;
         private const int MinMixerVolume = -80;
@@ -31,22 +27,20 @@ namespace Audio
         public void Init(bool enabled)
         {
             Enabled = enabled;
-            _image.color = enabled ? _enableColor : _disableColor;
+            EnabledChanged?.Invoke();
         }
 
-        public void Switch()
+        public void Enable()
         {
-            if (Enabled)
-                Switch(MinMixerVolume, false);
-            else
-                Switch(MaxMixerVolume, true);
+            _audioMixerGroup.audioMixer.SetFloat(_mixerName, MinMixerVolume);
+            Enabled = true;
+            EnabledChanged?.Invoke();
         }
 
-        private void Switch(float mixerValue, bool enabled)
+        public void Disable()
         {
-            _audioMixerGroup.audioMixer.SetFloat(_mixerName, mixerValue);
-            Enabled = enabled;
-            _image.color = enabled ? _enableColor : _disableColor;
+            _audioMixerGroup.audioMixer.SetFloat(_mixerName, MaxMixerVolume);
+            Enabled = false;
             EnabledChanged?.Invoke();
         }
     }

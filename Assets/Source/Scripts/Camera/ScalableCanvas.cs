@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CameraSystems
+namespace Scripts.CameraSystem
 {
     public class ScalableCanvas : MonoBehaviour
     {
@@ -27,12 +27,18 @@ namespace CameraSystems
             Vector2 newResolutionForLandscapeOrientation = newResolution * _scaleForLandscapeOrientation;
             _canvasScaler.matchWidthOrHeight = _cameraConstantWidth.ScalerMatch;
 
-            if (_cameraConstantWidth.IsPortraitOrientation)
-                _canvasScaler.referenceResolution = newResolutionForPortraitOrientation;
-            else if (_cameraConstantWidth.IsLandscapeOrientation)
-                _canvasScaler.referenceResolution = newResolutionForLandscapeOrientation;
-            else
-                _canvasScaler.referenceResolution = new Vector2(newResolution.x, newResolution.y);
+            switch (_cameraConstantWidth.GetTargetOrientation())
+            {
+                case Orientation.Default:
+                    _canvasScaler.referenceResolution = new Vector2(newResolution.x, newResolution.y);
+                    break;
+                case Orientation.Portrait:
+                    _canvasScaler.referenceResolution = newResolutionForPortraitOrientation;
+                    break;
+                case Orientation.Landscape:
+                    _canvasScaler.referenceResolution = newResolutionForLandscapeOrientation;
+                    break;
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace HitDamage
+namespace Scripts.HitDamageCountView
 {
     public class HitDamageCountText : MonoBehaviour
     {

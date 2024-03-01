@@ -1,7 +1,7 @@
 using System;
 using Lean.Localization;
 
-namespace GameLocalizationSetter
+namespace Scripts.Localization
 {
     public class LocalizationSetter
     {

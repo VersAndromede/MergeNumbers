@@ -1,9 +1,9 @@
-using BossSystem;
 using DG.Tweening;
+using Scripts.Level.BossSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace HitDamage
+namespace Scripts.HitDamageCountView
 {
     public class AttackReadinessIndicator : MonoBehaviour
     {

@@ -1,19 +1,18 @@
-using BossSystem;
-using HealthSystem;
-using MoveCounterSystem;
-using PlayerSystem;
+using Scripts.Level.BossSystem;
+using Scripts.Level.HealthSystems;
+using Scripts.Level.MoveCounterSystem;
+using Scripts.Level.PlayerSystem;
 using System.Collections;
 using UnityEngine;
-using Upgrades;
+using Scripts.UpgradeSystem;
 
-namespace GameBattlefield
+namespace Scripts.Level
 {
     public class Battlefield : MonoBehaviour
     {
         [SerializeField] private PlayerDamage _playerDamage;
         [SerializeField] private MoveCounter _moveCounter;
         [SerializeField] private UpgradeWithMultiplicationValuePolicy _damageUpgrade;
-        [SerializeField] private HealthSetup _bossHealthSetup;
         [SerializeField] private float _bossRechargeTime;
 
         private WaitForSeconds _waitTime;
@@ -43,7 +42,7 @@ namespace GameBattlefield
         private IEnumerator StartFight()
         {
             _playerDamage.Upgrade(_damageUpgrade);
-            _boss.InitHealth(_bossHealthSetup, _playerDamage.Count);
+            _boss.BossHealth.SetDamageTaken(_playerDamage.Count);
             StartCoroutine(BossHealth.MakeVulnerable());
             yield return _waitTime;
 

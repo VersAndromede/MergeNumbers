@@ -1,7 +1,7 @@
-using BossSystem;
+using Scripts.Level.BossSystem;
 using UnityEngine;
 
-namespace HitDamage
+namespace Scripts.HitDamageCountView
 {
     public class HitDamageCountSpawner : MonoBehaviour
     {

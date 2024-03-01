@@ -1,13 +1,12 @@
 using System;
 using UnityEngine;
 
-namespace CameraSystems
+namespace Scripts.CameraSystem
 {
-    public class CameraConstantWidth : MonoBehaviour
+    public partial class CameraConstantWidth : MonoBehaviour
     {
-        [SerializeField] private Camera _componentCamera;
-
-        [field: SerializeField] public Vector2 AspectRatio { get; private set; }
+        [SerializeField] private Camera _camera;
+        [SerializeField] private Vector2 _aspectRatio;
 
         private float _initialSize;
         private float _targetAspect;
@@ -19,44 +18,58 @@ namespace CameraSystems
         public Vector2 Resolution { get; private set; }
         public float ScalerMatch { get; private set; }
 
-        public bool IsPortraitOrientation => Screen.width / (float)Screen.height * AspectRatio.x <= AspectRatio.y;
-        public bool IsLandscapeOrientation => Screen.height / (float)Screen.width * AspectRatio.x <= AspectRatio.y;
-
         private float AspectRatioForVerticalFov => 1 / _targetAspect;
 
         private void Start()
         {
-            _initialSize = _componentCamera.orthographicSize;
-            _initialFov = _componentCamera.fieldOfView;
+            _initialSize = _camera.orthographicSize;
+            _initialFov = _camera.fieldOfView;
             IdentifyNewResolution();
 
             _horizontalFov = CalculateVerticalFov(_initialFov, AspectRatioForVerticalFov);
-
-            float constantWidthFov = CalculateVerticalFov(_horizontalFov, _componentCamera.aspect);
-            _componentCamera.fieldOfView = Mathf.Lerp(constantWidthFov, _initialFov, ScalerMatch);
+            SetFov();
         }
 
         private void Update()
         {
             IdentifyNewResolution();
 
-            if (_componentCamera.orthographic)
+            if (_camera.orthographic)
             {
-                float constantWidthSize = _initialSize * (_targetAspect / _componentCamera.aspect);
-                _componentCamera.orthographicSize = Mathf.Lerp(constantWidthSize, _initialSize, ScalerMatch);
+                float constantWidthSize = _initialSize * (_targetAspect / _camera.aspect);
+                _camera.orthographicSize = GetLerpFov(constantWidthSize);
+                return;
             }
-            else
-            {
-                float constantWidthFov = CalculateVerticalFov(_horizontalFov, _componentCamera.aspect);
-                _componentCamera.fieldOfView = Mathf.Lerp(constantWidthFov, _initialFov, ScalerMatch);
-            }
+
+            SetFov();
+        }
+
+        public Orientation GetTargetOrientation()
+        {
+            if (Screen.width / (float)Screen.height * _aspectRatio.x <= _aspectRatio.y)
+                return Orientation.Portrait;
+            else if (Screen.height / (float)Screen.width * _aspectRatio.x <= _aspectRatio.y)
+                return Orientation.Landscape;
+            else 
+                return Orientation.Default;
+        }
+
+        private void SetFov()
+        {
+            float constantWidthFov = CalculateVerticalFov(_horizontalFov, _camera.aspect);
+            _camera.fieldOfView = GetLerpFov(constantWidthFov);
+        }
+
+        private float GetLerpFov(float fov)
+        {
+            return Mathf.Lerp(fov, _initialFov, ScalerMatch);
         }
 
         private float CalculateVerticalFov(float horizontalFovInDeg, float aspectRatio)
         {
             const float Factor = 2f;
 
-            float halfHorizontalFovInRads = horizontalFovInDeg * Mathf.Deg2Rad / 2;
+            float halfHorizontalFovInRads = horizontalFovInDeg * Mathf.Deg2Rad / Factor;
             float verticalFovInRads = Factor * Mathf.Atan(Mathf.Tan(halfHorizontalFovInRads) / aspectRatio);
             return verticalFovInRads * Mathf.Rad2Deg;
         }
@@ -65,13 +78,13 @@ namespace CameraSystems
         {
             const int PortraitScalerMatch = 0;
             const int LandscapeScalerMatch = 1;
+            const int TargetWidth = 1920;
+            const int TargetHeight = 1080;
 
-            Vector2Int targetResolution = new Vector2Int(1920, 1080);
-
-            if (IsPortraitOrientation)
-                SetNewResolution(targetResolution.y, targetResolution.x, PortraitScalerMatch);
+            if (GetTargetOrientation() == Orientation.Portrait)
+                SetNewResolution(TargetHeight, TargetWidth, PortraitScalerMatch);
             else
-                SetNewResolution(targetResolution.x, targetResolution.y, LandscapeScalerMatch);
+                SetNewResolution(TargetWidth, TargetHeight, LandscapeScalerMatch);
         }
 
         private void CalculateHorizontalFov(int resolutionWidth, int resolutionHeight)

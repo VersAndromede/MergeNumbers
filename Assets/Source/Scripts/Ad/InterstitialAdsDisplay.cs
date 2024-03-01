@@ -1,15 +1,16 @@
 using Agava.YandexGames;
-using Pause;
+using Scripts.Pause;
 using System;
 using UnityEngine;
 
-namespace Ad
+namespace Scripts.Ad
 {
     public class InterstitialAdsDisplay : MonoBehaviour, IAd
     {
         private PauseSetter _pauseSetter;
 
-        public event Action<bool> AdRunning;
+        public event Action AdStarted;
+        public event Action AdEnded;
 
         public void Init(PauseSetter pauseSetter)
         {
@@ -25,7 +26,7 @@ namespace Ad
             }
 
             _pauseSetter.Enable();
-            AdRunning?.Invoke(true);
+            AdStarted?.Invoke();
 
             InterstitialAd.Show(
                 onCloseCallback: value => Enable(adOver));
@@ -34,7 +35,7 @@ namespace Ad
         private void Enable(Action adOver)
         {
             _pauseSetter.Disable();
-            AdRunning?.Invoke(false);
+            AdEnded?.Invoke();
             adOver?.Invoke();
         }
     }

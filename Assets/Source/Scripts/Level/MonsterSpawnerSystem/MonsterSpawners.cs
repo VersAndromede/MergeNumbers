@@ -8,8 +8,11 @@ namespace Scripts.Level.MonsterSpawnerSystem
         private MonsterSpawner[] _monsterSpawners;
 
         public int AllCount { get; private set; }
+
         public int DividersCount { get; private set; }
+
         public int MaxAllCount => 4;
+
         public int MaxDividersCount => 2;
 
         private void Start()
@@ -36,8 +39,10 @@ namespace Scripts.Level.MonsterSpawnerSystem
         public void FillFieldWithMonstersAdding()
         {
             foreach (MonsterSpawner monsterSpawner in _monsterSpawners)
+            {
                 if (monsterSpawner.HasPlayerAtStart == false)
                     monsterSpawner.InstantiateMonsterAdding();
+            }
         }
 
         public void OnMonsterSpawned(Monster monster, int power)

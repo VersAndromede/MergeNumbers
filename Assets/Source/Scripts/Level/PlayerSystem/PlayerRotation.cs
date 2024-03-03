@@ -6,10 +6,10 @@ namespace Scripts.Level.PlayerSystem
 {
     public class PlayerRotation : MonoBehaviour
     {
+        private const float ForcedStopTime = 0.3f;
+
         [SerializeField] private MoveCounter _moveCounter;
         [SerializeField] private float _travelTime;
-
-        private const float ForcedStopTime = 0.3f;
 
         private Coroutine _rotationJob;
         private Coroutine _endMovementJob;

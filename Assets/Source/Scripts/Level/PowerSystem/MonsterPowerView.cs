@@ -5,9 +5,9 @@ namespace Scripts.Level.PowerSystem
 {
     public class MonsterPowerView : PowerView
     {
-        [SerializeField] private Monster _monster;
-
         private const string FirstSymbolForDivider = "/";
+
+        [SerializeField] private Monster _monster;
 
         private void Start()
         {

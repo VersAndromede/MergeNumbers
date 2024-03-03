@@ -12,9 +12,12 @@ namespace Scripts.Level.GameOver
         [SerializeField] private ParticleSystem _particle;
 
         [Header("Translation Victory")]
-        [SerializeField, LeanTranslationName] private string _translationVictory;
+        [LeanTranslationName]
+        [SerializeField] private string _translationVictory;
+
         [Header("Translation Defeat")]
-        [SerializeField, LeanTranslationName] private string _translationDefeat;
+        [LeanTranslationName]
+        [SerializeField] private string _translationDefeat;
 
         private void OnEnable()
         {

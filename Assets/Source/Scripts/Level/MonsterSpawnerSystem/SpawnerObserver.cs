@@ -10,6 +10,7 @@ namespace Scripts.Level.MonsterSpawnerSystem
         [SerializeField] private MoveCounter _moveCounter;
 
         public Player Player { get; private set; }
+
         public Monster Monster { get; private set; }
 
         private void OnEnable()

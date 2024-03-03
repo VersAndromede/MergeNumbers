@@ -9,10 +9,10 @@ namespace Scripts.Level.BossSystem
     [Serializable]
     public class BossAudioSystem
     {
+        private const int MaxRepeatCount = 3;
+
         [SerializeField] private SourceAudio _audioSource;
         [SerializeField] private List<AudioDataProperty> _hitClips;
-
-        private const int MaxRepeatCount = 3;
 
         private AudioDataProperty _currentAudioClip;
         private int _repeatCount;

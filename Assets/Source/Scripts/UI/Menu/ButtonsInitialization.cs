@@ -1,10 +1,10 @@
 ﻿using Scripts.Ad;
 using Scripts.Audio;
 using Scripts.FocusObserverSystem;
-using Scripts.UI.Game;
 using Scripts.Pause;
-using UnityEngine;
+using Scripts.UI.Game;
 using Scripts.WalletSystem;
+using UnityEngine;
 
 namespace Scripts.UI.Menu
 {
@@ -15,7 +15,9 @@ namespace Scripts.UI.Menu
         [SerializeField] private ReturnToMenuButton[] _returnToMenuButtons;
 
         [field: SerializeField] public RewardButton RewardButton { get; private set; }
+
         [field: SerializeField] public AudioButton SoundButton { get; private set; }
+
         [field: SerializeField] public AudioButton MusicButton { get; private set; }
 
         public PauseSetter PauseSetter { get; private set; }

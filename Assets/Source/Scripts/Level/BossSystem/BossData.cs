@@ -7,11 +7,15 @@ namespace Scripts.Level.BossSystem
     public class BossData : ScriptableObject
     {
         [field: Header("Translation Name")]
-        [field: SerializeField, LeanTranslationName] public string TranslationName { get; private set; }
+        [field: LeanTranslationName]
+        [field: SerializeField] public string TranslationName { get; private set; }
 
         [field: SerializeField] public Boss Prefab { get; private set; }
+
         [field: SerializeField] public int Health { get; private set; }
+
         [field: SerializeField] public int Damage { get; private set; }
+
         [field: SerializeField] public uint Award { get; private set; }
     }
 }

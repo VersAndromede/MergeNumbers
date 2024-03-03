@@ -5,12 +5,12 @@ namespace Scripts.Level.BossSystem
 {
     public class BossAnimator : MonoBehaviour
     {
+        private readonly int _wakesUpAnimation = Animator.StringToHash("Boss Wakes Up");
+        private readonly int _dieAnimation = Animator.StringToHash("Boss Die");
+
         [SerializeField] private Boss _boss;
         [SerializeField] private Animator _animator;
         [SerializeField] private ParticleSystem _particleSystem;
-
-        private readonly int _wakesUpAnimation = Animator.StringToHash("Boss Wakes Up");
-        private readonly int _dieAnimation = Animator.StringToHash("Boss Die");
 
         private MoveCounter _moveCounter;
 

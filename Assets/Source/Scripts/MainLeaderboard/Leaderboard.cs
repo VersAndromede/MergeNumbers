@@ -1,19 +1,19 @@
 using Agava.YandexGames;
-using System;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace Scripts.MainLeaderboard
 {
     public class Leaderboard : MonoBehaviour
     {
-        [SerializeField] private LeaderboardView _leaderboardView;
-
         public const string AnonymousName = "AnonymousName";
 
         private const string LeaderboardName = "LeaderboardName";
 
         private readonly List<LeaderboardPlayerData> _leaderboardPlayers = new List<LeaderboardPlayerData>();
+
+        [SerializeField] private LeaderboardView _leaderboardView;
 
         public void SetPlayer(int score)
         {

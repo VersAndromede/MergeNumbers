@@ -13,6 +13,7 @@ namespace Scripts.Level.BossSystem
         public event Action<Boss> Loaded;
 
         public int BossDataIndex { get; private set; }
+
         public Boss CurrentBoss { get; private set; }
 
         private void OnDestroy()

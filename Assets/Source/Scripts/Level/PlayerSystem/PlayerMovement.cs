@@ -40,7 +40,6 @@ namespace Scripts.Level.PlayerSystem
 
             if (_endMoveJob != null)
                 StopCoroutine(_endMoveJob);
-
             _endMoveJob = StartCoroutine(EndMovement());
 
             while (Vector3.Distance(transform.position, targetPosition) > 0)

@@ -1,36 +1,36 @@
 using Agava.YandexGames;
-using Scripts.WalletSystem;
 using Scripts.Pause;
+using Scripts.UpgradeSystem;
+using Scripts.WalletSystem;
 using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using Scripts.UpgradeSystem;
 
 namespace Scripts.Ad
 {
     public class RewardButton : MonoBehaviour, IAd
     {
+        private const uint MinRewardCount = 150;
+        private const float RewardAdDisplayDelay = 0.04f;
+
         [SerializeField] private UpgradeWithMultiplicationValuePolicy _incomeUpgrade;
         [SerializeField] private Button _button;
         [SerializeField] private float _defaultRewardCount;
         [SerializeField] private UnityEvent _rewardReceived;
-
-        private const uint MinRewardCount = 150;
-        private const float RewardAdDisplayDelay = 0.04f;
 
         private Wallet _wallet;
         private PauseSetter _pauseSetter;
         private WaitForSecondsRealtime _waitDisplayDelay;
         private bool _isRewarded;
 
-        public uint RewardCount { get; private set; }
-
         public event Action RewardReceived;
         public event Action RewardChanged;
         public event Action AdStarted;
         public event Action AdEnded;
+
+        public uint RewardCount { get; private set; }
 
         private void OnDestroy()
         {

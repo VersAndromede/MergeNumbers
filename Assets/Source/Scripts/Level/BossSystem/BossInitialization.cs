@@ -1,7 +1,7 @@
-﻿using Scripts.UI.Menu.BossAchievements;
-using Scripts.GameSaveSystem;
+﻿using Scripts.GameSaveSystem;
 using Scripts.HitDamageCountView;
 using Scripts.Level.MoveCounterSystem;
+using Scripts.UI.Menu.BossAchievements;
 using Scripts.WalletSystem;
 using UnityEngine;
 
@@ -16,6 +16,7 @@ namespace Scripts.Level.BossSystem
         [SerializeField] private AttackReadinessIndicator _attackReadinessIndicator;
 
         [field: SerializeField] public BossLoader BossLoader { get; private set; }
+
         [field: SerializeField] public BossMapScroll BossMapScroll { get; private set; }
 
         public void Init(SaveData saveData, Wallet wallet, MoveCounter moveCounter)

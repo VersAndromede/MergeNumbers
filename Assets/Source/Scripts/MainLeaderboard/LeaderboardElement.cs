@@ -12,7 +12,8 @@ namespace Scripts.MainLeaderboard
         [SerializeField] private LeanLocalizedTextMeshProUGUI _localizedAnonymousName;
 
         [Header("Translation Anonymous")]
-        [SerializeField, LeanTranslationName] private string _translationAnonymous;
+        [LeanTranslationName] 
+        [SerializeField] private string _translationAnonymous;
 
         public void Init(int rank, string name, int score)
         {

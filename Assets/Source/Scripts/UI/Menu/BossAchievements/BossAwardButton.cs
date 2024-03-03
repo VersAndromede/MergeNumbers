@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Scripts.WalletSystem;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using Scripts.WalletSystem;
 
 namespace Scripts.UI.Menu.BossAchievements
 {

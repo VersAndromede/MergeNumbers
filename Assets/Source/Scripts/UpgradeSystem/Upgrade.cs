@@ -5,20 +5,23 @@ namespace Scripts.UpgradeSystem
 {
     public abstract class Upgrade : MonoBehaviour
     {
-        [SerializeField] private int _id;
-
-        [field: SerializeField] public int MaxLevel { get; private set; }
-        [field: SerializeField] public int Price { get; private set; }
-        [field: SerializeField] public int BonusValue { get; private set; }
-
         private const int MinLevel = 1;
+
+        [SerializeField] private int _id;
 
         private IPriceChangeAlgorithm _priceChangeAlgorithm;
         private IValueChangeAlgorithm _valueChangeAlgorithm;
 
         public event Action LevelChanged;
 
+        [field: SerializeField] public int MaxLevel { get; private set; }
+
+        [field: SerializeField] public int Price { get; private set; }
+
+        [field: SerializeField] public int BonusValue { get; private set; }
+
         public int Level { get; private set; } = MinLevel;
+
         public bool CanImprove => Level < MaxLevel;
 
         private void OnValidate()
@@ -28,8 +31,6 @@ namespace Scripts.UpgradeSystem
             if (_id < 0 || _id > MaxId)
                 _id = Mathf.Clamp(_id, 0, MaxId);
         }
-
-        protected virtual void OnInit() { }
 
         public void Init(int level, int price, int bonusValue)
         {
@@ -55,6 +56,8 @@ namespace Scripts.UpgradeSystem
             if (Level > MaxLevel)
                 throw new ArgumentOutOfRangeException();
         }
+
+        protected abstract void OnInit();
 
         protected void SetPriceChangeAlgorithm(IPriceChangeAlgorithm priceChangeAlgorithm)
         {

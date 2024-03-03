@@ -1,23 +1,23 @@
-using Scripts.Ad;
-using Scripts.Localization;
 using Agava.YandexGames;
-using Scripts.UI.Menu.BossAchievements;
+using Scripts.Ad;
 using Scripts.GameSaveSystem;
-using Scripts.MainLeaderboard;
-using System.Collections.Generic;
-using Scripts.TrainingSystem;
-using UnityEngine;
-using UnityEngine.UI;
-using Scripts.UpgradeSystem;
-using Scripts.WalletSystem;
-using Scripts.Level.PowerSystem;
+using Scripts.Level;
 using Scripts.Level.BossSystem;
 using Scripts.Level.GameInput;
 using Scripts.Level.GameOver;
-using Scripts.Level;
-using Scripts.Level.MoveCounterSystem;
 using Scripts.Level.HealthSystems;
+using Scripts.Level.MoveCounterSystem;
+using Scripts.Level.PowerSystem;
+using Scripts.Localization;
+using Scripts.MainLeaderboard;
+using Scripts.TrainingSystem;
+using Scripts.UI.Menu.BossAchievements;
 using Scripts.UI.Menu;
+using Scripts.UpgradeSystem;
+using Scripts.WalletSystem;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Scripts.EntryPoint
 {
@@ -90,13 +90,13 @@ namespace Scripts.EntryPoint
 
         private void InitSaver(Wallet wallet, List<BossAward> bossAwards, Training training)
         {
-            _saver = new GameSaver(_gameOverHandler, 
+            _saver = new GameSaver(_gameOverHandler,
                 wallet,
-                _bossInitialization.BossLoader, 
+                _bossInitialization.BossLoader,
                 _upgradesInitializion.Upgrades,
-                bossAwards, 
+                bossAwards,
                 _bossMapExitButton,
-                _bossInitialization.BossMapScroll, 
+                _bossInitialization.BossMapScroll,
                 training,
                 _buttonsInitialization.RewardButton,
                 _buttonsInitialization.SoundButton,

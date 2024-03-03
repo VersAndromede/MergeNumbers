@@ -36,5 +36,4 @@ namespace Scripts.WalletSystem
             CoinsChanged?.Invoke();
         }
     }
-
 }

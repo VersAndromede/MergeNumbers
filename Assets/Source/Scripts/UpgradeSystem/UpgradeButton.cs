@@ -1,6 +1,6 @@
+using Scripts.WalletSystem;
 using UnityEngine;
 using UnityEngine.Events;
-using Scripts.WalletSystem;
 
 namespace Scripts.UpgradeSystem
 {

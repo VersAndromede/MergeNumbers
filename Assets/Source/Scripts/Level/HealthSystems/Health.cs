@@ -5,17 +5,19 @@ namespace Scripts.Level.HealthSystems
 {
     public class Health
     {
-        public event Action Changed;
-        public event Action Died;
-
-        public int MaxValue { get; private set; }
-        public int Value { get; private set; }
-        public bool IsDied => Value <= 0;
-
         public Health(uint maxHealthValue)
         {
             SetMax(maxHealthValue);
         }
+
+        public event Action Changed;
+        public event Action Died;
+
+        public int MaxValue { get; private set; }
+
+        public int Value { get; private set; }
+
+        public bool IsDied => Value <= 0;
 
         public void TakeDamage(int damage)
         {

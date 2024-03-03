@@ -17,7 +17,6 @@ namespace Scripts.Level.BossSystem
         private bool _isInvulnerable = true;
 
         public event Action<int> DamageReceived;
-
         public event Action<float> InvulnerabilityHasBegun;
         public event Action Died;
 

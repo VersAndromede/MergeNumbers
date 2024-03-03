@@ -4,13 +4,13 @@ namespace Scripts.Level.PowerSystem
 {
     public class Power
     {
-        public event Action Changed;
-        public event Action Over;
-
         public Power(int value)
         {
             Value = value;
         }
+
+        public event Action Changed;
+        public event Action Over;
 
         public int Value { get; private set; }
 

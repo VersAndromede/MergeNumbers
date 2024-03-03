@@ -6,15 +6,15 @@ namespace Scripts.Audio
 {
     public class AudioButton : MonoBehaviour
     {
-        [SerializeField] private AudioMixerGroup _audioMixerGroup;
-        [SerializeField] private string _mixerName;
-
         private const int MaxMixerVolume = 0;
         private const int MinMixerVolume = -80;
 
-        public bool Enabled { get; private set; }
+        [SerializeField] private AudioMixerGroup _audioMixerGroup;
+        [SerializeField] private string _mixerName;
 
         public event Action EnabledChanged;
+
+        public bool Enabled { get; private set; }
 
         private void Start()
         {

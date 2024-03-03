@@ -1,6 +1,6 @@
 using Scripts.Level.GameOver;
-using UnityEngine;
 using Scripts.WalletSystem;
+using UnityEngine;
 
 namespace Scripts.MainLeaderboard
 {

@@ -1,9 +1,9 @@
-﻿using Scripts.Level.BossSystem;
-using Lean.Localization;
+﻿using Lean.Localization;
+using Scripts.Level.BossSystem;
+using Scripts.WalletSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Scripts.WalletSystem;
 
 namespace Scripts.UI.Menu.BossAchievements
 {

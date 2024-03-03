@@ -14,9 +14,12 @@ namespace Scripts.UpgradeSystem
         [SerializeField] private Slider _slider;
 
         [Header("Translation Max Level")]
-        [SerializeField, LeanTranslationName] private string _translationMaxLevel;
+        [LeanTranslationName]
+        [SerializeField] private string _translationMaxLevel;
+
         [Header("Translation Level")]
-        [SerializeField, LeanTranslationName] private string _translationLevel;
+        [LeanTranslationName]
+        [SerializeField] private string _translationLevel;
 
         private void OnEnable()
         {

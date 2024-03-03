@@ -1,24 +1,27 @@
-﻿using System;
+﻿using Scripts.WalletSystem;
+using System;
 using UnityEngine;
-using Scripts.WalletSystem;
 
 namespace Scripts.UI.Menu.BossAchievements
 {
     [Serializable]
     public class BossAward
     {
-        [field: SerializeField] public uint Count { get; private set; }
-        [field: SerializeField] public bool IsTaken { get; private set; }
-        [field: SerializeField] public bool CanBeTaken { get; private set; }
-        [field: SerializeField] public int Id { get; private set; }
-
-        public event Action<BossAward> Taken;
-
         public BossAward(uint count, int id)
         {
             Count = count;
             Id = id;
         }
+
+        public event Action<BossAward> Taken;
+
+        [field: SerializeField] public uint Count { get; private set; }
+
+        [field: SerializeField] public bool IsTaken { get; private set; }
+
+        [field: SerializeField] public bool CanBeTaken { get; private set; }
+
+        [field: SerializeField] public int Id { get; private set; }
 
         public void LetTake()
         {

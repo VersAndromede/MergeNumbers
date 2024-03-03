@@ -1,20 +1,20 @@
 using Scripts.Level.MonsterSystem;
 using Scripts.Level.MoveCounterSystem;
-using System;
 using Scripts.TrainingSystem;
+using System;
 using UnityEngine;
 
 namespace Scripts.Level.GameInput
 {
     public class InputHandler : MonoBehaviour
     {
+        private readonly MonsterFromRay _monsterFromRay = new MonsterFromRay();
+
         [SerializeField] private InputGetter _inputGetter;
         [SerializeField] private PlayerMoverToMonster _playerMoverToMonster;
         [SerializeField] private MoveCounter _moveCounter;
         [SerializeField] private LayerMask _layerMask;
         [SerializeField] private Transform _player;
-
-        private readonly MonsterFromRay _monsterFromRay = new MonsterFromRay();
 
         private IInput _input;
         private Training _training;

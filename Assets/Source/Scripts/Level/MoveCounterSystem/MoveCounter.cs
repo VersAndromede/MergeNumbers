@@ -1,10 +1,10 @@
 using Scripts.Level.PlayerSystem;
+using Scripts.UI.Menu;
+using Scripts.UpgradeSystem;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using Scripts.UpgradeSystem;
-using Scripts.UI.Menu;
 
 namespace Scripts.Level.MoveCounterSystem
 {
@@ -16,10 +16,10 @@ namespace Scripts.Level.MoveCounterSystem
         [SerializeField] private Image _inputHandler;
         [SerializeField] private UnityEvent _ended;
 
-        [field: SerializeField] public int Count { get; private set; }
-
         public event Action Changed;
         public event Action Ended;
+
+        [field: SerializeField] public int Count { get; private set; }
 
         private void OnEnable()
         {

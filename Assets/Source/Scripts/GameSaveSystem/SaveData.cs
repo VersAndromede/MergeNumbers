@@ -26,5 +26,4 @@ namespace Scripts.GameSaveSystem
         [field: Preserve]
         public bool IsMusicButtonEnabled = true;
     }
-
 }

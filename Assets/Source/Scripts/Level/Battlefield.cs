@@ -2,9 +2,9 @@ using Scripts.Level.BossSystem;
 using Scripts.Level.HealthSystems;
 using Scripts.Level.MoveCounterSystem;
 using Scripts.Level.PlayerSystem;
+using Scripts.UpgradeSystem;
 using System.Collections;
 using UnityEngine;
-using Scripts.UpgradeSystem;
 
 namespace Scripts.Level
 {

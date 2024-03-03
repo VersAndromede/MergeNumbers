@@ -1,4 +1,3 @@
-using Scripts.Level.MonsterSpawnerSystem;
 using Scripts.Extensions.Randomizer;
 using Scripts.Level.MonsterSystem;
 using Scripts.Level.MoveCounterSystem;
@@ -16,8 +15,6 @@ namespace Scripts.Level.MonsterSpawnerSystem
         [SerializeField] private MonsterFabric _monsterFabric;
         [SerializeField] private float _monsterYPositionOffset;
 
-        [field: SerializeField] public bool HasPlayerAtStart { get; private set; }
-
         private Monster _currentMonster;
         private IMonsterNegativeCounter _monsterNegativeCounter;
         private int _currentMinPower;
@@ -26,7 +23,10 @@ namespace Scripts.Level.MonsterSpawnerSystem
         public event Action<Monster, int> Spawned;
         public event Action CounterRestartRequired;
 
+        [field: SerializeField] public bool HasPlayerAtStart { get; private set; }
+
         private Vector3 MonsterPosition => _observer.transform.position + new Vector3(0, _monsterYPositionOffset, 0);
+
         private int MonsterPower => Random.Range(_currentMinPower, _currentMaxPower);
 
         private void OnDestroy()

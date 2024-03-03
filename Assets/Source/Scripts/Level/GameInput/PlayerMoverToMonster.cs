@@ -35,8 +35,10 @@ namespace Scripts.Level.GameInput
                 return false;
 
             foreach (Monster monster in _monsterObserver.Monsters)
+            {
                 if (monster == wanted)
                     return true;
+            }
 
             return false;
         }

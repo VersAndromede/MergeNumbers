@@ -5,15 +5,7 @@ namespace Scripts.TrainingSystem
 {
     public class Training
     {
-        [field: SerializeField] public bool IsViewed { get; private set; }
-
         private readonly GameObject[] _pageContent;
-
-        public int CurrentPageIndex { get; private set; }
-        public int LastPageIndex => _pageContent.Length - 1;
-
-        public event Action PageSwitched;
-        public event Action Viewed;
 
         public Training(bool isViewed, GameObject[] pageContent)
         {
@@ -21,6 +13,15 @@ namespace Scripts.TrainingSystem
             _pageContent = pageContent;
             _pageContent[CurrentPageIndex].SetActive(true);
         }
+
+        public event Action PageSwitched;
+        public event Action Viewed;
+
+        [field: SerializeField] public bool IsViewed { get; private set; }
+
+        public int CurrentPageIndex { get; private set; }
+
+        public int LastPageIndex => _pageContent.Length - 1;
 
         public void Complete()
         {

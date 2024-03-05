@@ -21,6 +21,7 @@ namespace Scripts.Level.MonsterSpawnerSystem
         private int _currentMaxPower;
 
         public event Action<Monster, int> Spawned;
+
         public event Action CounterRestartRequired;
 
         [field: SerializeField] public bool HasPlayerAtStart { get; private set; }

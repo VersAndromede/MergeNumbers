@@ -9,5 +9,4 @@ namespace Scripts.UpgradeSystem
         public int Price;
         public int BonusValue;
     }
-
 }

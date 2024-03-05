@@ -10,6 +10,7 @@ namespace Scripts.Ad
         private PauseSetter _pauseSetter;
 
         public event Action AdStarted;
+
         public event Action AdEnded;
 
         public void Init(PauseSetter pauseSetter)

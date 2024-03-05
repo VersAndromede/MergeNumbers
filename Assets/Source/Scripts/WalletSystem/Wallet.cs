@@ -5,6 +5,7 @@ namespace Scripts.WalletSystem
     public class Wallet
     {
         public event Action CoinsChanged;
+
         public event Action Loaded;
 
         public int Coins { get; private set; }

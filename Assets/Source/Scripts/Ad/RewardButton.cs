@@ -26,8 +26,11 @@ namespace Scripts.Ad
         private bool _isRewarded;
 
         public event Action RewardReceived;
+
         public event Action RewardChanged;
+
         public event Action AdStarted;
+
         public event Action AdEnded;
 
         public uint RewardCount { get; private set; }

@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using Scripts.Level.BossSystem;
 using Scripts.WalletSystem;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Scripts.UI.Menu.BossAchievements

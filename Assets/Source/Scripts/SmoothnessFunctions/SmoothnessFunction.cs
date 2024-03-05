@@ -12,7 +12,7 @@ namespace Scripts.SmoothnessFunctions
             const float CubicPower = 3f;
             const float Divider = 2f;
 
-            float cubicBase = -2 * x + 2f;
+            float cubicBase = (-2 * x) + 2f;
 
             if (x < HalfAnimationProgress)
                 return CubicCoefficient * x * x * x;

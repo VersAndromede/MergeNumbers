@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using Scripts.UpgradeSystem;
+﻿using Scripts.UpgradeSystem;
+using UnityEngine;
 
 namespace Scripts.Level.PlayerSystem
 {

@@ -10,6 +10,7 @@ namespace Scripts.Level.PowerSystem
         }
 
         public event Action Changed;
+
         public event Action Over;
 
         public int Value { get; private set; }

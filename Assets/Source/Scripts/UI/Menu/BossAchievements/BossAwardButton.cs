@@ -15,6 +15,7 @@ namespace Scripts.UI.Menu.BossAchievements
         private Wallet _wallet;
 
         public event Action Initialized;
+
         public event Action AwardReceived;
 
         public bool AwardTaken => _bossAward.IsTaken;

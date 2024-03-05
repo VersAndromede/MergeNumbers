@@ -15,6 +15,7 @@ namespace Scripts.TrainingSystem
         }
 
         public event Action PageSwitched;
+
         public event Action Viewed;
 
         [field: SerializeField] public bool IsViewed { get; private set; }

@@ -1,5 +1,6 @@
 using Agava.YandexGames;
 using Scripts.Ad;
+using System.Collections.Generic;
 using Scripts.GameSaveSystem;
 using Scripts.Level;
 using Scripts.Level.BossSystem;
@@ -11,11 +12,10 @@ using Scripts.Level.PowerSystem;
 using Scripts.Localization;
 using Scripts.MainLeaderboard;
 using Scripts.TrainingSystem;
-using Scripts.UI.Menu.BossAchievements;
 using Scripts.UI.Menu;
+using Scripts.UI.Menu.BossAchievements;
 using Scripts.UpgradeSystem;
 using Scripts.WalletSystem;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 

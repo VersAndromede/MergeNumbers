@@ -16,6 +16,7 @@ namespace Scripts.Level.PlayerSystem
         private float _elapsedTime;
 
         public event Action StartedMoving;
+
         public event Action FinishedMoving;
 
         private void Start()

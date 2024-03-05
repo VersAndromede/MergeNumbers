@@ -11,6 +11,7 @@ namespace Scripts.Level.HealthSystems
         }
 
         public event Action Changed;
+
         public event Action Died;
 
         public int MaxValue { get; private set; }

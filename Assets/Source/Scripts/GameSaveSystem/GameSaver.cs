@@ -1,12 +1,12 @@
 using Scripts.Ad;
 using Scripts.Audio;
+using System.Collections.Generic;
 using Scripts.Level.BossSystem;
 using Scripts.Level.GameOver;
 using Scripts.TrainingSystem;
 using Scripts.UI.Menu.BossAchievements;
 using Scripts.UpgradeSystem;
 using Scripts.WalletSystem;
-using System.Collections.Generic;
 using UnityEngine.UI;
 
 namespace Scripts.GameSaveSystem
@@ -108,7 +108,7 @@ namespace Scripts.GameSaveSystem
             {
                 for (int i = 0; i < _upgrades.Count; i++)
                 {
-                    data.UpgradeDatas[i] = new()
+                    data.UpgradeDatas[i] = new ()
                     {
                         Level = _upgrades[i].Level,
                         Price = _upgrades[i].Price,

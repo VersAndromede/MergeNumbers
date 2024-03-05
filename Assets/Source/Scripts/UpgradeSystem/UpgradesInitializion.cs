@@ -1,5 +1,5 @@
-﻿using Scripts.WalletSystem;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Scripts.WalletSystem;
 using UnityEngine;
 
 namespace Scripts.UpgradeSystem

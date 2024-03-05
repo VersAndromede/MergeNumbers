@@ -17,6 +17,7 @@ namespace Scripts.Level.MoveCounterSystem
         [SerializeField] private UnityEvent _ended;
 
         public event Action Changed;
+
         public event Action Ended;
 
         [field: SerializeField] public int Count { get; private set; }

@@ -16,6 +16,7 @@ namespace Scripts.CameraSystem
         public event Action ScalerMatchChanged;
 
         public Vector2 Resolution { get; private set; }
+
         public float ScalerMatch { get; private set; }
 
         private float AspectRatioForVerticalFov => 1 / _targetAspect;
@@ -50,7 +51,7 @@ namespace Scripts.CameraSystem
                 return Orientation.Portrait;
             else if (Screen.height / (float)Screen.width * _aspectRatio.x <= _aspectRatio.y)
                 return Orientation.Landscape;
-            else 
+            else
                 return Orientation.Default;
         }
 

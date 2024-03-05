@@ -10,7 +10,9 @@ namespace Scripts.TrainingSystem
         [SerializeField] private Button _completeButton;
 
         public event Action RequestedNextPageSwitching;
+
         public event Action RequestedBackPageSwitching;
+
         public event Action RequestedTrainingCompletion;
 
         private void OnEnable()

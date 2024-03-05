@@ -27,13 +27,13 @@ namespace Scripts.UI.Menu
             _focusObserver.Disable();
         }
 
-        public void Init(bool isSoundButtonEnabled, bool IsMusicButtonEnabled, InterstitialAdsDisplay adsDisplay, Wallet wallet)
+        public void Init(bool isSoundButtonEnabled, bool isMusicButtonEnabled, InterstitialAdsDisplay adsDisplay, Wallet wallet)
         {
             PauseSetter pauseSetter = new PauseSetter();
             _pauseButton.Init(pauseSetter);
             RewardButton.Init(pauseSetter, wallet);
             SoundButton.Init(isSoundButtonEnabled);
-            MusicButton.Init(IsMusicButtonEnabled);
+            MusicButton.Init(isMusicButtonEnabled);
             _focusObserver.Init(pauseSetter, _pauseButton, RewardButton, adsDisplay);
             _focusObserver.Enable();
 

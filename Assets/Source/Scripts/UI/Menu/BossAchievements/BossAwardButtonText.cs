@@ -11,11 +11,11 @@ namespace Scripts.UI.Menu.BossAchievements
         [SerializeField] private LeanLocalizedTextMeshProUGUI _localizedTextMeshPro;
 
         [Header("Translation Received String")]
-        [LeanTranslationName] 
+        [LeanTranslationName]
         [SerializeField] private string _translationReceivedString;
 
         [Header("Translation Take String")]
-        [LeanTranslationName] 
+        [LeanTranslationName]
         [SerializeField] private string _translationTakeString;
 
         private void Start()

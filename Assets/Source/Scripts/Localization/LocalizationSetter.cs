@@ -1,5 +1,5 @@
-using Lean.Localization;
 using System;
+using Lean.Localization;
 
 namespace Scripts.Localization
 {

@@ -1,5 +1,5 @@
-﻿using Scripts.WalletSystem;
-using System;
+﻿using System;
+using Scripts.WalletSystem;
 using UnityEngine;
 
 namespace Scripts.UI.Menu.BossAchievements

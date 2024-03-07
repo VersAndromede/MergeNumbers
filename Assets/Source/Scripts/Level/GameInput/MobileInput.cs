@@ -12,14 +12,22 @@ namespace Scripts.Level.GameInput
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (eventData.delta.x < -_minDelta)
-                Received?.Invoke(Direction.Left);
-            else if (eventData.delta.x > _minDelta)
-                Received?.Invoke(Direction.Right);
-            else if (eventData.delta.y < -_minDelta)
-                Received?.Invoke(Direction.Down);
-            else if (eventData.delta.y > _minDelta)
-                Received?.Invoke(Direction.Up);
+            Direction direction = GetDirection(eventData.delta);
+            Received?.Invoke(direction);
+        }
+
+        private Direction GetDirection(Vector2 delta)
+        {
+            if (delta.x < -_minDelta)
+                return Direction.Left;
+            else if (delta.x > _minDelta)
+                return Direction.Right;
+            else if (delta.y < -_minDelta)
+                return Direction.Down;
+            else if (delta.y > _minDelta)
+                return Direction.Up;
+            else 
+                return Direction.None;
         }
     }
 }

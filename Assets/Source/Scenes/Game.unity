@@ -321,6 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 599c732b2c38ad945892161734e42558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _moveCounter: {fileID: 5908088581273655455}
   _travelTime: 0.1
 --- !u!95 &17564390
 Animator:
@@ -355,9 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 17564390}
-  _moveCounter: {fileID: 5908088581273655455}
   _gameOverHandler: {fileID: 46323247}
-  _playerRotation: {fileID: 17564389}
 --- !u!1 &30441120
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,7 +1821,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 131920778}
-  _rewardButton: {fileID: 1579475106}
 --- !u!1001 &134398564
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4619,6 +4617,7 @@ MonoBehaviour:
   _damageUpgrade: {fileID: 1438119914}
   _incomeUpgrade: {fileID: 1768760226}
   _movesUpgrade: {fileID: 1864263724}
+  _upgradeButtons: []
 --- !u!1 &598033255
 GameObject:
   m_ObjectHideFlags: 0
@@ -5131,9 +5130,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioMixerGroup: {fileID: -3749986981131474191, guid: 970b8685c25449f4dad0a8da1b92d78e, type: 2}
   _mixerName: SoundVolume
-  _image: {fileID: 2093573362}
-  _disableColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
-  _enableColor: {r: 0.3764706, g: 1, b: 0.3529412, a: 1}
 --- !u!114 &624185841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8261,17 +8257,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   translationName: OK
   FallbackText: OK
---- !u!114 &854905464 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8824315407234586853, guid: a394659a9cf1a6b4192028c9ae21970f, type: 3}
-  m_PrefabInstance: {fileID: 2007600633}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfee15faefd9a11489d716743232141f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &858360833
 GameObject:
   m_ObjectHideFlags: 0
@@ -8961,6 +8946,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194235}
   - component: {fileID: 963194231}
   - component: {fileID: 963194232}
   - component: {fileID: 963194233}
@@ -9066,8 +9052,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5432433b87a47414d86929fd42dc8b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentCamera: {fileID: 963194227}
-  <AspectRatio>k__BackingField: {x: 16, y: 9}
+  _orientationGetter: {fileID: 963194235}
+  _camera: {fileID: 963194227}
 --- !u!114 &963194231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9093,46 +9079,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c5784bc2646a647b507ca6a9f80c89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _walletSetup: {fileID: 946430448}
-  _bossLoader: {fileID: 1750772146}
-  _gameOverHandler: {fileID: 46323247}
-  _damageToCoinTranslator: {fileID: 946430447}
-  _moveCounter: {fileID: 5908088581273655455}
-  _battlefield: {fileID: 1750772144}
-  _bossDamageView: {fileID: 281172487}
-  _upgradesInitializer: {fileID: 595990290}
-  _upgradeButtons:
-  - {fileID: 1710119735}
-  - {fileID: 854905464}
-  - {fileID: 342247119}
-  _bossMap: {fileID: 810858244}
-  _bossMapExitButton: {fileID: 374937619}
-  _bossMapScroll: {fileID: 1171229276}
-  _pageContent:
-  - {fileID: 1179031320}
-  - {fileID: 1810411516}
-  - {fileID: 1772897519}
-  - {fileID: 1464421242}
-  _trainingSetup: {fileID: 1703765196}
-  _currentTrainingPageView: {fileID: 1126864389}
-  _trainingCursor: {fileID: 1339261539}
-  _soundButton: {fileID: 624185840}
-  _musicButton: {fileID: 1793667837}
-  _rewardButton: {fileID: 1579475106}
-  _pauseButton: {fileID: 545301216}
-  _returnToMenuButtons:
-  - {fileID: 815899824}
-  - {fileID: 1593943144}
+  _walletInitialization: {fileID: 0}
+  _powerInitialization: {fileID: 0}
+  _bossInitialization: {fileID: 0}
+  _videoAdDisplaySetup: {fileID: 0}
+  _buttonsInitialization: {fileID: 0}
+  _trainingInitialization: {fileID: 0}
+  _upgradesInitializion: {fileID: 0}
   _interstitialAdsDisplay: {fileID: 963194233}
-  _focusObserver: {fileID: 963194234}
-  _lockPanel: {fileID: 207670496}
-  _leaderboardUpdater: {fileID: 2100726158}
   _inputHandler: {fileID: 306451388}
-  _hitDamageCountSpawner: {fileID: 2047549300}
-  _attackReadinessIndicator: {fileID: 1923173745}
-  _player: {fileID: 1832405562}
-  _powerSetup: {fileID: 291443931}
-  _playerMergeAbility: {fileID: 8955322502694165248}
+  _leaderboardUpdater: {fileID: 2100726158}
+  _gameOverHandler: {fileID: 46323247}
+  _battlefield: {fileID: 1750772144}
+  _moveCounter: {fileID: 5908088581273655455}
+  _bossMapExitButton: {fileID: 374937619}
+  _lockPanel: {fileID: 207670496}
 --- !u!114 &963194233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9157,6 +9118,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc96b0c286b413a4393cbaab0c0de5fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &963194235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f23436f2f0968549a82cb35261be650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _aspectRatio: {x: 16, y: 9}
 --- !u!1 &973553319
 GameObject:
   m_ObjectHideFlags: 0
@@ -13558,45 +13532,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  _authorizationPerformed:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1501574021}
-        m_TargetAssemblyTypeName: LeaderboardOpenButton, Assembly-CSharp
-        m_MethodName: TryOpenLeaderboard
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1759524959}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 539800487}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1509630066
 GameObject:
   m_ObjectHideFlags: 0
@@ -14365,9 +14300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b19e48d39622f340b0113b13da7d2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _incomeUpgrade: {fileID: 1768760226}
   _button: {fileID: 1579475107}
-  _defaultRewardCount: 150
   _rewardReceived:
     m_PersistentCalls:
       m_Calls: []
@@ -16127,17 +16060,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 202
   m_TargetDisplay: 0
---- !u!114 &1710119735 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8824315407234586853, guid: a394659a9cf1a6b4192028c9ae21970f, type: 3}
-  m_PrefabInstance: {fileID: 7201339508844738129}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfee15faefd9a11489d716743232141f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1719593119
 GameObject:
   m_ObjectHideFlags: 0
@@ -16426,7 +16348,6 @@ MonoBehaviour:
   _playerDamage: {fileID: 8955322502694165249}
   _moveCounter: {fileID: 5908088581273655455}
   _damageUpgrade: {fileID: 1438119914}
-  _bossHealthSetup: {fileID: 858360839}
   _bossRechargeTime: 0.75
 --- !u!4 &1750772145
 Transform:
@@ -16460,6 +16381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bossDatas: {fileID: 11400000, guid: 9e23790b9228ef145a81fe30e664f6ce, type: 2}
   _container: {fileID: 1342098115}
+  _bossHealthSetup: {fileID: 0}
 --- !u!1 &1752591600
 GameObject:
   m_ObjectHideFlags: 1
@@ -17281,9 +17203,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioMixerGroup: {fileID: 7580184506434984169, guid: 970b8685c25449f4dad0a8da1b92d78e, type: 2}
   _mixerName: MusicVolume
-  _image: {fileID: 1793667839}
-  _disableColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
-  _enableColor: {r: 0.3764706, g: 1, b: 0.3529412, a: 1}
 --- !u!114 &1793667838
 MonoBehaviour:
   m_ObjectHideFlags: 0

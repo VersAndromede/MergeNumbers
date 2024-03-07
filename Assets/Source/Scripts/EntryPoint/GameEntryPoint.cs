@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using Agava.YandexGames;
 using Scripts.Ad;
-using System.Collections.Generic;
 using Scripts.GameSaveSystem;
 using Scripts.Level;
 using Scripts.Level.BossSystem;
@@ -11,6 +11,7 @@ using Scripts.Level.MoveCounterSystem;
 using Scripts.Level.PowerSystem;
 using Scripts.Localization;
 using Scripts.MainLeaderboard;
+using Scripts.Pause;
 using Scripts.TrainingSystem;
 using Scripts.UI.Menu;
 using Scripts.UI.Menu.BossAchievements;
@@ -26,6 +27,7 @@ namespace Scripts.EntryPoint
         [SerializeField] private WalletInitialization _walletInitialization;
         [SerializeField] private PowerInitialization _powerInitialization;
         [SerializeField] private BossInitialization _bossInitialization;
+        [SerializeField] private VideoAdDisplaySetup _videoAdDisplaySetup;
         [SerializeField] private ButtonsInitialization _buttonsInitialization;
         [SerializeField] private TrainingInitialization _trainingInitialization;
         [SerializeField] private UpgradesInitializion _upgradesInitializion;
@@ -39,6 +41,7 @@ namespace Scripts.EntryPoint
         [SerializeField] private Image _lockPanel;
 
         private GameSaver _saver;
+        private VideoAdDisplay _videoAdDisplay;
 
         private Wallet Wallet => _walletInitialization.Wallet;
 
@@ -54,21 +57,25 @@ namespace Scripts.EntryPoint
             saveSystem.Load(saveData =>
             {
                 InitLocalization();
+                PauseSetter pauseSetter = new PauseSetter();
                 Health playerHealth = new Health(0);
+                _videoAdDisplay = new VideoAdDisplay(pauseSetter, this);
                 _walletInitialization.Init(saveData.Coins);
                 _powerInitialization.Init(playerHealth);
                 _bossInitialization.Init(saveData, Wallet, _moveCounter);
+                _videoAdDisplaySetup.Init(_videoAdDisplay, Wallet);
                 _buttonsInitialization.Init(
                     saveData.IsSoundButtonEnabled,
                     saveData.IsMusicButtonEnabled,
                     _interstitialAdsDisplay,
-                    Wallet);
+                    _videoAdDisplay,
+                    pauseSetter);
 
                 BossLoader bossLoader = _bossInitialization.BossLoader;
                 BossHealth bossHealth = bossLoader.CurrentBoss.BossHealth;
                 _trainingInitialization.Init(bossHealth, saveData.BossDataIndex, saveData.TrainingIsViewed);
                 _upgradesInitializion.Init(saveData.UpgradeDatas, Wallet);
-                _interstitialAdsDisplay.Init(_buttonsInitialization.PauseSetter);
+                _interstitialAdsDisplay.Init(pauseSetter);
                 _inputHandler.Init(_trainingInitialization.Training);
                 _leaderboardUpdater.Init(Wallet);
                 _gameOverHandler.Init(bossLoader.CurrentBoss, _powerInitialization.Power, playerHealth);
@@ -98,7 +105,7 @@ namespace Scripts.EntryPoint
                 _bossMapExitButton,
                 _bossInitialization.BossMapScroll,
                 training,
-                _buttonsInitialization.RewardButton,
+                _videoAdDisplay,
                 _buttonsInitialization.SoundButton,
                 _buttonsInitialization.MusicButton);
 

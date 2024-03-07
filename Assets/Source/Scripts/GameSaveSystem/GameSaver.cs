@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using Scripts.Ad;
 using Scripts.Audio;
-using System.Collections.Generic;
 using Scripts.Level.BossSystem;
 using Scripts.Level.GameOver;
 using Scripts.TrainingSystem;
@@ -23,7 +23,7 @@ namespace Scripts.GameSaveSystem
         private readonly Button _bossMapExitButton;
         private readonly BossMapScroll _bossMapScroll;
         private readonly Training _training;
-        private readonly RewardButton _rewardButton;
+        private readonly VideoAdDisplay _videoAdDisplay;
         private readonly AudioButton _soundButton;
         private readonly AudioButton _musicButton;
 
@@ -36,7 +36,7 @@ namespace Scripts.GameSaveSystem
             Button bossMapExitButton,
             BossMapScroll bossMapScroll,
             Training training,
-            RewardButton rewardButton,
+            VideoAdDisplay videoAdDisplay,
             AudioButton soundButton,
             AudioButton musicButton)
         {
@@ -48,7 +48,7 @@ namespace Scripts.GameSaveSystem
             _bossMapExitButton = bossMapExitButton;
             _bossMapScroll = bossMapScroll;
             _training = training;
-            _rewardButton = rewardButton;
+            _videoAdDisplay = videoAdDisplay;
             _soundButton = soundButton;
             _musicButton = musicButton;
         }
@@ -57,7 +57,7 @@ namespace Scripts.GameSaveSystem
         {
             _gameOverHandler.GameOver += OnGameOver;
             _training.Viewed += OnTrainingViewed;
-            _rewardButton.RewardReceived += OnRewardGetted;
+            _videoAdDisplay.RewardReceived += OnRewardGetted;
             _soundButton.EnabledChanged += OnSoundButtonEnabledChanged;
             _musicButton.EnabledChanged += OnMusicButtonEnabledChanged;
             _bossMapExitButton.onClick.AddListener(OnBossMapExitButton);
@@ -73,7 +73,7 @@ namespace Scripts.GameSaveSystem
         {
             _gameOverHandler.GameOver -= OnGameOver;
             _training.Viewed -= OnTrainingViewed;
-            _rewardButton.RewardReceived -= OnRewardGetted;
+            _videoAdDisplay.RewardReceived -= OnRewardGetted;
             _soundButton.EnabledChanged -= OnSoundButtonEnabledChanged;
             _musicButton.EnabledChanged -= OnMusicButtonEnabledChanged;
             _bossMapExitButton.onClick.RemoveListener(OnBossMapExitButton);

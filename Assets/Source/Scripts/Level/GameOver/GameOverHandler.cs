@@ -1,8 +1,8 @@
+using System;
+using System.Collections;
 using Scripts.Level.BossSystem;
 using Scripts.Level.HealthSystems;
 using Scripts.Level.PowerSystem;
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 

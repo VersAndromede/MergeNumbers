@@ -25,9 +25,10 @@ namespace Scripts.CameraSystem
             Vector2 newResolution = _cameraConstantWidth.Resolution;
             Vector2 newResolutionForPortraitOrientation = newResolution / _scaleForPortraitOrientation;
             Vector2 newResolutionForLandscapeOrientation = newResolution * _scaleForLandscapeOrientation;
+
             _canvasScaler.matchWidthOrHeight = _cameraConstantWidth.ScalerMatch;
 
-            switch (_cameraConstantWidth.GetTargetOrientation())
+            switch (_cameraConstantWidth.Orientation)
             {
                 case Orientation.Default:
                     _canvasScaler.referenceResolution = new Vector2(newResolution.x, newResolution.y);

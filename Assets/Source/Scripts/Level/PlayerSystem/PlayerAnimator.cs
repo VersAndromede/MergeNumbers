@@ -9,7 +9,6 @@ namespace Scripts.Level.PlayerSystem
 
         [SerializeField] private Animator _animator;
         [SerializeField] private GameOverHandler _gameOverHandler;
-        [SerializeField] private PlayerRotation _playerRotation;
 
         private void OnEnable()
         {

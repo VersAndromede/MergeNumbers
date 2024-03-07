@@ -1,5 +1,5 @@
-using Scripts.Level.PowerSystem;
 using System;
+using Scripts.Level.PowerSystem;
 using UnityEngine;
 using UnityEngine.Events;
 

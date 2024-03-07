@@ -11,15 +11,23 @@ namespace Scripts.Level.GameInput
         {
             float horizontal = Input.GetAxisRaw(Axes.Horizontal);
             float vertical = Input.GetAxisRaw(Axes.Vertical);
+            Direction direction = GetDirection(horizontal, vertical);
+            
+            Received?.Invoke(direction);
+        }
 
+        private Direction GetDirection(float horizontal, float vertical)
+        {
             if (horizontal < 0)
-                Received?.Invoke(Direction.Left);
+                return Direction.Left;
             else if (horizontal > 0)
-                Received?.Invoke(Direction.Right);
+                return Direction.Right;
             else if (vertical < 0)
-                Received?.Invoke(Direction.Down);
+                return Direction.Down;
             else if (vertical > 0)
-                Received?.Invoke(Direction.Up);
+                return Direction.Up;
+            else
+                return Direction.None;
         }
     }
 }

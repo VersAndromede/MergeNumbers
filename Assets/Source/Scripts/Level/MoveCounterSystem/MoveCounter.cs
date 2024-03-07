@@ -1,7 +1,7 @@
+using System;
 using Scripts.Level.PlayerSystem;
 using Scripts.UI.Menu;
 using Scripts.UpgradeSystem;
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;

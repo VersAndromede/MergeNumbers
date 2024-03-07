@@ -3,7 +3,6 @@ using Scripts.Audio;
 using Scripts.FocusObserverSystem;
 using Scripts.Pause;
 using Scripts.UI.Game;
-using Scripts.WalletSystem;
 using UnityEngine;
 
 namespace Scripts.UI.Menu
@@ -20,21 +19,22 @@ namespace Scripts.UI.Menu
 
         [field: SerializeField] public AudioButton MusicButton { get; private set; }
 
-        public PauseSetter PauseSetter { get; private set; }
-
         private void OnDestroy()
         {
             _focusObserver.Disable();
         }
 
-        public void Init(bool isSoundButtonEnabled, bool isMusicButtonEnabled, InterstitialAdsDisplay adsDisplay, Wallet wallet)
+        public void Init(
+            bool isSoundButtonEnabled, 
+            bool isMusicButtonEnabled, 
+            InterstitialAdsDisplay adsDisplay, 
+            VideoAdDisplay videoAdDisplay,
+            PauseSetter pauseSetter)
         {
-            PauseSetter pauseSetter = new PauseSetter();
             _pauseButton.Init(pauseSetter);
-            RewardButton.Init(pauseSetter, wallet);
             SoundButton.Init(isSoundButtonEnabled);
             MusicButton.Init(isMusicButtonEnabled);
-            _focusObserver.Init(pauseSetter, _pauseButton, RewardButton, adsDisplay);
+            _focusObserver.Init(pauseSetter, _pauseButton, videoAdDisplay, adsDisplay);
             _focusObserver.Enable();
 
             for (int i = 0; i < _returnToMenuButtons.Length; i++)

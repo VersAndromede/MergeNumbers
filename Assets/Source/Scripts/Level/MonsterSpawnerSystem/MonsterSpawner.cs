@@ -1,7 +1,7 @@
+using System;
 using Scripts.Extensions.Randomizer;
 using Scripts.Level.MonsterSystem;
 using Scripts.Level.MoveCounterSystem;
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

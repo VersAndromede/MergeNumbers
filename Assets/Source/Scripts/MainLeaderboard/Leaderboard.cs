@@ -1,6 +1,6 @@
-using Agava.YandexGames;
 using System;
 using System.Collections.Generic;
+using Agava.YandexGames;
 using UnityEngine;
 
 namespace Scripts.MainLeaderboard
@@ -22,18 +22,11 @@ namespace Scripts.MainLeaderboard
 
             Agava.YandexGames.Leaderboard.GetPlayerEntry(LeaderboardName, _ =>
             {
-                Agava.YandexGames.Leaderboard.SetScore(LeaderboardName, score);
-            });
-        }
-
-        public void FetchScore(Action<int> onReceivedScore)
-        {
-            if (Application.isEditor || PlayerAccount.IsAuthorized == false)
-                return;
-
-            Agava.YandexGames.Leaderboard.GetPlayerEntry(LeaderboardName, response =>
-            {
-                onReceivedScore?.Invoke(response.score);
+                FetchScore(oldScore =>
+                {
+                    if (score > oldScore)
+                        Agava.YandexGames.Leaderboard.SetScore(LeaderboardName, score);
+                });
             });
         }
 
@@ -59,6 +52,17 @@ namespace Scripts.MainLeaderboard
                 }
 
                 _leaderboardView.CreateLeaderboard(_leaderboardPlayers);
+            });
+        }
+
+        private void FetchScore(Action<int> onReceivedScore)
+        {
+            if (Application.isEditor || PlayerAccount.IsAuthorized == false)
+                return;
+
+            Agava.YandexGames.Leaderboard.GetPlayerEntry(LeaderboardName, response =>
+            {
+                onReceivedScore?.Invoke(response.score);
             });
         }
     }

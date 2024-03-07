@@ -14,7 +14,7 @@ namespace Scripts.UI.Menu.BossAchievements
         [SerializeField] private TextMeshProUGUI _health;
         [SerializeField] private TextMeshProUGUI _damage;
         [SerializeField] private TextMeshProUGUI _award;
-        [SerializeField] private BossAwardButton _button;
+        [SerializeField] private BossAwardDispenserSetup _bossAwardDispenserSetup;
         [SerializeField] private GameObject _unlockContainer;
         [SerializeField] private GameObject _lockContainer;
         [SerializeField] private Image _panel;
@@ -27,7 +27,7 @@ namespace Scripts.UI.Menu.BossAchievements
             _health.text = bossData.Health.ToString();
             _damage.text = bossData.Damage.ToString();
             _award.text = bossData.Award.ToString();
-            _button.Init(bossAward, wallet);
+            _bossAwardDispenserSetup.Init(bossAward, wallet);
         }
 
         public void Lock()

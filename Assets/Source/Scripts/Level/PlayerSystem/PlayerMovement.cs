@@ -1,6 +1,6 @@
-using Scripts.SmoothnessFunctions;
 using System;
 using System.Collections;
+using Scripts.SmoothnessFunctions;
 using UnityEngine;
 
 namespace Scripts.Level.PlayerSystem

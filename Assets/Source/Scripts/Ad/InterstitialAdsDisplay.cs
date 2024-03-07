@@ -1,6 +1,6 @@
+using System;
 using Agava.YandexGames;
 using Scripts.Pause;
-using System;
 using UnityEngine;
 
 namespace Scripts.Ad

@@ -24,11 +24,7 @@ namespace Scripts.MainLeaderboard
 
         public void UpdateLeaderboard()
         {
-            _leaderboard.FetchScore(score =>
-            {
-                if (_wallet.Coins > score)
-                    _leaderboard.SetPlayer(_wallet.Coins);
-            });
+            _leaderboard.SetPlayer(_wallet.Coins);
         }
 
         private void OnGameOver(Winner winner)

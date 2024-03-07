@@ -1,7 +1,7 @@
+using System;
 using Scripts.Level.MonsterSystem;
 using Scripts.Level.MoveCounterSystem;
 using Scripts.TrainingSystem;
-using System;
 using UnityEngine;
 
 namespace Scripts.Level.GameInput
@@ -46,6 +46,8 @@ namespace Scripts.Level.GameInput
 
             switch (direction)
             {
+                case Direction.None:
+                    return;
                 case Direction.Left:
                     newDirection = Vector3.left;
                     break;

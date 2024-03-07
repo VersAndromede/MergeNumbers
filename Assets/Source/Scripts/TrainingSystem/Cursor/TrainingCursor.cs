@@ -1,6 +1,6 @@
+using System.Collections;
 using DG.Tweening;
 using Scripts.Level.BossSystem;
-using System.Collections;
 using UnityEngine;
 
 namespace Scripts.TrainingSystem.Cursor

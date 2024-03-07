@@ -6,21 +6,23 @@ namespace Scripts.Ad
     public class AdRewardCountDisplay : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _text;
-        [SerializeField] private RewardButton _rewardButton;
+        
+        private RewardForVideoAd _rewardForVideoAd;
 
-        private void OnEnable()
+        private void OnDestroy()
         {
-            _rewardButton.RewardChanged += OnRewardChanged;
+            _rewardForVideoAd.Changed -= OnChanged;
         }
 
-        private void OnDisable()
+        public void Init(RewardForVideoAd rewardForVideoAd)
         {
-            _rewardButton.RewardChanged -= OnRewardChanged;
+            _rewardForVideoAd = rewardForVideoAd;
+            _rewardForVideoAd.Changed += OnChanged;
         }
 
-        private void OnRewardChanged()
+        private void OnChanged()
         {
-            _text.text = $"+{_rewardButton.RewardCount}";
+            _text.text = $"+{_rewardForVideoAd.Count}";
         }
     }
 }

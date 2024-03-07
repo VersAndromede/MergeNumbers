@@ -6,7 +6,6 @@ namespace Scripts.UI.Menu.BossAchievements
 {
     public class BossAwardButtonText : MonoBehaviour
     {
-        [SerializeField] private BossAwardButton _bossAwardButton;
         [SerializeField] private TextMeshProUGUI _text;
         [SerializeField] private LeanLocalizedTextMeshProUGUI _localizedTextMeshPro;
 
@@ -18,34 +17,14 @@ namespace Scripts.UI.Menu.BossAchievements
         [LeanTranslationName]
         [SerializeField] private string _translationTakeString;
 
-        private void Start()
+        public void SetReceived()
         {
-            _bossAwardButton.Initialized += OnInitialized;
-            _bossAwardButton.AwardReceived += OnAwardReceived;
+            _localizedTextMeshPro.TranslationName = LeanLocalization.GetTranslation(_translationReceivedString).Name;
         }
 
-        private void OnDestroy()
+        public void SetTake()
         {
-            _bossAwardButton.Initialized -= OnInitialized;
-            _bossAwardButton.AwardReceived -= OnAwardReceived;
-        }
-
-        private void UpdateText()
-        {
-            if (_bossAwardButton.AwardTaken)
-                _localizedTextMeshPro.TranslationName = LeanLocalization.GetTranslation(_translationReceivedString).Name;
-            else
-                _localizedTextMeshPro.TranslationName = LeanLocalization.GetTranslation(_translationTakeString).Name;
-        }
-
-        private void OnInitialized()
-        {
-            UpdateText();
-        }
-
-        private void OnAwardReceived()
-        {
-            UpdateText();
+            _localizedTextMeshPro.TranslationName = LeanLocalization.GetTranslation(_translationTakeString).Name;
         }
     }
 }

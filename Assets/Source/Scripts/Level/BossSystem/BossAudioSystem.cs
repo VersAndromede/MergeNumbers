@@ -1,7 +1,7 @@
-﻿using Plugins.Audio.Core;
-using Plugins.Audio.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Plugins.Audio.Core;
+using Plugins.Audio.Utils;
 using UnityEngine;
 
 namespace Scripts.Level.BossSystem

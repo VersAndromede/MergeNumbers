@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace Scripts.CameraSystem
 {
-    public partial class CameraConstantWidth : MonoBehaviour
+    public class CameraConstantWidth : MonoBehaviour
     {
+        [SerializeField] private OrientationGetter _orientationGetter;
         [SerializeField] private Camera _camera;
-        [SerializeField] private Vector2 _aspectRatio;
 
         private float _initialSize;
         private float _targetAspect;
@@ -14,6 +14,8 @@ namespace Scripts.CameraSystem
         private float _horizontalFov = 120f;
 
         public event Action ScalerMatchChanged;
+
+        public Orientation Orientation => _orientationGetter.Get();
 
         public Vector2 Resolution { get; private set; }
 
@@ -27,7 +29,7 @@ namespace Scripts.CameraSystem
             _initialFov = _camera.fieldOfView;
             IdentifyNewResolution();
 
-            _horizontalFov = CalculateVerticalFov(_initialFov, AspectRatioForVerticalFov);
+            _horizontalFov = GetHorizontalFov(_initialFov, AspectRatioForVerticalFov);
             SetFov();
         }
 
@@ -45,19 +47,9 @@ namespace Scripts.CameraSystem
             SetFov();
         }
 
-        public Orientation GetTargetOrientation()
-        {
-            if (Screen.width / (float)Screen.height * _aspectRatio.x <= _aspectRatio.y)
-                return Orientation.Portrait;
-            else if (Screen.height / (float)Screen.width * _aspectRatio.x <= _aspectRatio.y)
-                return Orientation.Landscape;
-            else
-                return Orientation.Default;
-        }
-
         private void SetFov()
         {
-            float constantWidthFov = CalculateVerticalFov(_horizontalFov, _camera.aspect);
+            float constantWidthFov = GetHorizontalFov(_horizontalFov, _camera.aspect);
             _camera.fieldOfView = GetLerpFov(constantWidthFov);
         }
 
@@ -66,13 +58,21 @@ namespace Scripts.CameraSystem
             return Mathf.Lerp(fov, _initialFov, ScalerMatch);
         }
 
-        private float CalculateVerticalFov(float horizontalFovInDeg, float aspectRatio)
+        private void CalculateHorizontalFov(int resolutionWidth, int resolutionHeight)
+        {
+            Resolution = new Vector2(resolutionWidth, resolutionHeight);
+            _targetAspect = Resolution.x / Resolution.y;
+
+            _horizontalFov = GetHorizontalFov(_initialFov, AspectRatioForVerticalFov);
+        }
+
+        private float GetHorizontalFov(float horizontalFovInDeg, float aspectRatio)
         {
             const float Factor = 2f;
 
             float halfHorizontalFovInRads = horizontalFovInDeg * Mathf.Deg2Rad / Factor;
-            float verticalFovInRads = Factor * Mathf.Atan(Mathf.Tan(halfHorizontalFovInRads) / aspectRatio);
-            return verticalFovInRads * Mathf.Rad2Deg;
+            float horizontalFovInRads = Factor * Mathf.Atan(Mathf.Tan(halfHorizontalFovInRads) / aspectRatio);
+            return horizontalFovInRads * Mathf.Rad2Deg;
         }
 
         private void IdentifyNewResolution()
@@ -82,18 +82,15 @@ namespace Scripts.CameraSystem
             const int TargetWidth = 1920;
             const int TargetHeight = 1080;
 
-            if (GetTargetOrientation() == Orientation.Portrait)
-                SetNewResolution(TargetHeight, TargetWidth, PortraitScalerMatch);
-            else
-                SetNewResolution(TargetWidth, TargetHeight, LandscapeScalerMatch);
-        }
-
-        private void CalculateHorizontalFov(int resolutionWidth, int resolutionHeight)
-        {
-            Resolution = new Vector2(resolutionWidth, resolutionHeight);
-            _targetAspect = Resolution.x / Resolution.y;
-
-            _horizontalFov = CalculateVerticalFov(_initialFov, AspectRatioForVerticalFov);
+            switch (Orientation)
+            {
+                case Orientation.Portrait:
+                    SetNewResolution(TargetHeight, TargetWidth, PortraitScalerMatch);
+                    break;
+                default:
+                    SetNewResolution(TargetWidth, TargetHeight, LandscapeScalerMatch);
+                    break;
+            }
         }
 
         private void SetNewResolution(int width, int height, int scalerMatch)

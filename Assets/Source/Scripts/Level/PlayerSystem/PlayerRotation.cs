@@ -1,5 +1,5 @@
-using Scripts.Level.MoveCounterSystem;
 using System.Collections;
+using Scripts.Level.MoveCounterSystem;
 using UnityEngine;
 
 namespace Scripts.Level.PlayerSystem
